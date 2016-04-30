@@ -18,6 +18,7 @@ client/dist/
 
 #lib
 client/lib/
+client/app/js/
 
 # Node modules
 node_modules/
