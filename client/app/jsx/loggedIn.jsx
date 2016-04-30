@@ -1,7 +1,8 @@
 var LoggedIn = React.createClass({
   callApi: function() {
+    var AWS_URL = AWS_URL || 'http://localhost:3000/secured/ping'
     $.ajax({
-      url: 'http://localhost:3001/secured/ping',
+      url: AWS_URL,
       method: 'GET'
     }).then(function(data, textStatus, jqXHR) {
       alert("The request to the secured enpoint was successfull");
@@ -18,6 +19,7 @@ var LoggedIn = React.createClass({
 
   componentDidMount: function() {
     this.props.lock.getProfile(this.props.idToken, function (err, profile) {
+      console.log(profile);
       if (err) {
         console.log("Error loading the Profile", err);
         alert("Error loading the Profile");

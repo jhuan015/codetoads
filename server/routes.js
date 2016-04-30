@@ -14,6 +14,9 @@ module.exports = function(app) {
   });
 
   app.get('/secured/ping', authenticate, function(req, res) {
+    console.log(req.profile);
+    console.log(req.user);
+    console.log(req.headers.authorization);
     res.status(200).send("All good. You only get this message if you're authenticated");
   });
 
