@@ -20,4 +20,6 @@ module.exports = function(app) {
     res.status(200).send("All good. You only get this message if you're authenticated");
   });
 
+  app.post('/api/saveUser', authenticate, handler.saveUser);
+
 }
