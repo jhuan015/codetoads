@@ -4,7 +4,7 @@
   "description": "> MERN stack, Competitive Coding Challenge App",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "build": "babel client/app/jsx -d ./client/app/js"
   },
   "repository": {
     "type": "git",
@@ -24,10 +24,8 @@
     "dotenv": "^2.0.0",
     "express": "~4.13.4",
     "express-jwt": "^3.3.0",
+    "mongoose": "^4.4.14",
     "morgan": "~1.7.0"
-  },
-  "scripts": {
-  "build": "babel client/app/jsx -d ./client/app/js"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
