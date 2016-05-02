@@ -1,8 +1,9 @@
 body {
   font-family: "proxima-nova", sans-serif;
-  text-align: center;
-  font-size: 300%;
+  text-align: center;/*
+  font-size: 300%;*/
   font-weight: 100;
+  padding:70px 0 0;
 }
 input[type=checkbox],
 input[type=radio] {
@@ -92,4 +93,12 @@ label {
 }
 .login-page .login-box {
   padding: 100px 0;
+}
+
+/*Custom Styles*/
+.intro {
+  min-height:70vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
