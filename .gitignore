@@ -3,6 +3,7 @@
 .LSOverride
 azure.err
 iisnode.yml
+.gitignore
 
 # Icon must ends with two \r.
 Icon
@@ -19,10 +20,12 @@ client/dist/
 #lib
 client/lib/
 client/app/js/
+client/app/bundle.js
 
 # Node modules
 node_modules/
 .env
+server/npm-debug.log
 
 # WebStorm files
 .idea/

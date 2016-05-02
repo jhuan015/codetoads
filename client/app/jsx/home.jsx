@@ -10,6 +10,9 @@ var Home = React.createClass({
       <h3>Auth0 Example</h3>
       <p>Zero friction identity infrastructure, built for developers</p>
       <a onClick={this.showLock} className="btn btn-primary btn-lg btn-login btn-block">Sign In</a>
-    </div>);
+    </div>
+    );
   }
 });
+
+module.exports = Home;
