@@ -8,6 +8,6 @@ var gameSchema = mongoose.Schema({
   winner: {type: mongoose.Schema.ObjectId, ref: 'User', childPath: 'gamesPlayed'},
 });
 
-var User = mongoose.model('Game', userSchema);
+var Game = mongoose.model('Game', gameSchema);
 
 module.exports = Game;
