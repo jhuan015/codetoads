@@ -1,7 +1,6 @@
 const React = require('react')
 const LoggedIn = require('./loggedIn')
 const Home = require('./home')
-const AUTH0 = require('../../auth0-variables.js')
 
 var Auth = React.createClass({
   componentWillMount: function() {
