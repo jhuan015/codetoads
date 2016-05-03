@@ -1,8 +1,10 @@
 const Profile = require('./profile')
 const GameMode = require("./gameMode")
 
+const ChatApp = require("./pond")
+
 class Lobby extends React.Component {
-  
+
   render () {
     return (
       <div>
@@ -19,7 +21,11 @@ class Lobby extends React.Component {
             </div>
           </div>
         </section>
+        <div>
+          <ChatApp />
+        </div>
       </div>
+
     )
   }
 }
