@@ -14,6 +14,7 @@ const App = () => (
       <IndexRoute component={HomeContent} />
       <Route path='/signup' component={Auth} />
       <Route path='/lobby' component={Lobby} />
+      <Route path="*" component={HomeContent}/>
     </Route>
   </Router>
 )

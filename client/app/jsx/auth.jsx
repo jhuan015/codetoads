@@ -1,6 +1,7 @@
 const React = require('react')
 const LoggedIn = require('./loggedIn')
 const Home = require('./home')
+const AUTH0 = require('../../auth0-variables.js')
 
 var Auth = React.createClass({
   componentWillMount: function() {
@@ -9,7 +10,7 @@ var Auth = React.createClass({
     this.setState({idToken: this.getIdToken()})
   },
   createLock: function() {
-    this.lock = new Auth0Lock('', "");
+    this.lock = new Auth0Lock(AUTH0.clientID, AUTH0.domain);
   },
   setupAjax: function() {
     $.ajaxSetup({
