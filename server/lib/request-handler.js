@@ -78,35 +78,31 @@ module.exports.submitAnswer = function(req, res) {
        'cache-control': 'no-cache',
        'content-type': 'application/json',
        output_format: 'raw',
-       authorization: '8YMabNyQ6jsivYrFoCfh' },
-    body: { code: 'function greet(){return \'hello world\'}' },
+       authorization: process.env.cwKey
+     },
+    body: { code: req.body.code }, // 'function greet(){return \'hello world\'}'
     json: true };
-
-  console.log(options.url);
   //post
-  console.log('before post');
   request.post(options, function(err, response, body) {
     if (err) {
-      return console.log('failed', err);
+      return console.error('failed', err);
     }
-    //res.send(body);
-    //need to make this async or delayed
     if (body.success) {
-      console.log(body.dmid);
       var innerOptions = {
+        url: 'https://www.codewars.com/api/v1/deferred/' +
+        body.dmid,
         headers: {
           Authorization: process.env.cwKey
         },
-        url: 'https://www.codewars.com/api/v1/deferred/' +
-              body.dmid
       }
-
-      request.get(innerOptions, function(err, response, innerBody) {
-        if (err) {
-          return console.log('failed defer', err);
-        }
-        res.send(innerBody);
-      });
+      setTimeout(function() {
+          request.get(innerOptions, function(err, response, innerBody) {
+            if (err) {
+              return console.error('failed defer', err);
+            }
+          res.send(innerBody);
+        });
+      }, 1500);
     }
   });
 }
