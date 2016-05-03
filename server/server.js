@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var dotenv = require('dotenv');
 var cors = require('cors');
 
+
 var app = express();
 
 dotenv.load();
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(__dirname + '/../client'));
+
 
 //routes set up
 require('./routes')(app);
