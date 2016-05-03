@@ -1,22 +1,24 @@
 const React = require('react')
 const ReactRouter = require('react-router')
 const Nav = require('./navbar')
+const Footer = require('./footer')
 const { Link } = ReactRouter
 
 class Layout extends React.Component {
   constructor (){
     super();
     this.state = {
-      status: 'signup'
+      status: 'Signup'
     };
   }
   render () {
     return (
-      <div className="main-container">
+      <div className="clearfix">
         <Nav status={this.state.status} />
-        <div className="container">
+        <div className="body-wrap">
           {this.props.children}
         </div>
+        <Footer/>
       </div>
       );
     };
