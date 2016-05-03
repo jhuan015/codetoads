@@ -17,12 +17,6 @@ var med = [
   'i-love-big-nums-and-i-cannot-lie'
 ];
 
-var options = {
-  headers: {
-    'Authorization': process.env.cwKey
-  }
-}
-
 module.exports.saveUser = function(req, res) {
   User.create({
       auth_id: req.body.user_id,
@@ -42,9 +36,14 @@ module.exports.grabPrompt = function(req, res) {
   } else {
     var rand = med[Math.floor(Math.random() * med.length)];
   }
-  //generate API url
-  options.url = 'https://www.codewars.com/api/v1/code-challenges/' +
-  rand + '/javascript/train',
+  //generate query
+  var options = {
+    headers: {
+      Authorization: process.env.cwKey
+    },
+    url : 'https://www.codewars.com/api/v1/code-challenges/' +
+    rand + '/javascript/train'
+  }
 
   //grab prompt and send back
   request.post(options, function(err, response, body) {
@@ -62,3 +61,53 @@ module.exports.grabPrompt = function(req, res) {
 
   });
 }
+
+module.exports.submitAnswer = function(req, res) {
+  // var project_id = '5727dcf97fc662c6970009e2';
+  // var solution_id = '5727dcf90838ffce0f000918';
+
+  //add to options for post query
+  var options = { method: 'POST',
+    url: 'https://www.codewars.com/api/v1/code-challenges/projects/' +
+          req.body.project_id +
+          '/solutions/' +
+          req.body.solution_id +
+          '/attempt',
+    headers:
+     {
+       'cache-control': 'no-cache',
+       'content-type': 'application/json',
+       output_format: 'raw',
+       authorization: '8YMabNyQ6jsivYrFoCfh' },
+    body: { code: 'function greet(){return \'hello world\'}' },
+    json: true };
+
+  console.log(options.url);
+  //post
+  console.log('before post');
+  request.post(options, function(err, response, body) {
+    if (err) {
+      return console.log('failed', err);
+    }
+    //res.send(body);
+    //need to make this async or delayed
+    if (body.success) {
+      console.log(body.dmid);
+      var innerOptions = {
+        headers: {
+          Authorization: process.env.cwKey
+        },
+        url: 'https://www.codewars.com/api/v1/deferred/' +
+              body.dmid
+      }
+
+      request.get(innerOptions, function(err, response, innerBody) {
+        if (err) {
+          return console.log('failed defer', err);
+        }
+        res.send(innerBody);
+      });
+    }
+  });
+}
+// }
