@@ -19,4 +19,4 @@ const App = () => (
   </Router>
 )
 
-ReactDOM.render(<App />, document.getElementById('login-page'))
+ReactDOM.render(<App />, document.getElementById('App'))

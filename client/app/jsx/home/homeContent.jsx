@@ -3,22 +3,12 @@ const LandingSections = require('./landingSections')
 class HomeContent extends React.Component{
   constructor (){
     super();
-    this.state = {
-      disease:'Aids'
-    };
+    this.state = {};
   }
   render (){
    return (
-      <div>
-        <LandingSections />  
-      </div>
+      <LandingSections />      
     );
-  };
-  _arth (){
-    this.setState({disease:'Arthritis'})
-  };
-  _cancer (){
-    this.setState({disease:'Cancer'})
   };
 
 }  
