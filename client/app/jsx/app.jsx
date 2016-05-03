@@ -22,8 +22,6 @@ var App = React.createClass({
     var authHash = this.lock.parseHash(window.location.hash);
     if (!idToken && authHash) {
       if (authHash.id_token) {
-        //need to save user onto db by accessing method
-        //LoggedIn.saveUser();
         idToken = authHash.id_token
         localStorage.setItem('userToken', authHash.id_token);
       }
