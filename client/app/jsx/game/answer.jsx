@@ -19,7 +19,6 @@ class Answer extends React.Component {
   render (){
     return (
       <div>
-        <p>{JSON.stringify(this.props.session)}</p>
         <textArea
           value={this.state.term}
           onChange={event => this._onInputChange(event.target.value)}
