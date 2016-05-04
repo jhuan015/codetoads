@@ -1,10 +1,13 @@
 const React = require('react');
 
 class Question extends React.Component {
+  constructor () {
+    super()
+  }
   render (){
     return (
       <div>
-        Ask question here.
+        {this.props.question}
       </div>
     )  
   } 
