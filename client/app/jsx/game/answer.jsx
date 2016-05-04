@@ -23,6 +23,22 @@ class Answer extends React.Component {
     this.setState({term});
   }
   
+  _submitHandler(){
+    
+    var ans = {}
+    
+    ans.code = this.state.term;
+    ans.project_id = this.state.projID;
+    ans.solution_id = this.state.slnID;
+    
+    //console.log(ans);
+    
+    this.props.submitAttempt(ans);
+  }
+  //project_id
+  //solution_id
+  //code
+  
   render (){
     return (
       <div>
