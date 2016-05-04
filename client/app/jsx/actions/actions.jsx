@@ -14,7 +14,7 @@ export function fetchPrompt() {
 }
 
 export function submitAttempt(ans) {
-  const request = axios.post('/api/submitAttempt', ans);
+  const request =  axios.post('/api/submitAttempt', ans)
   
   return {
     type: SUBMIT_ATTEMPT,
