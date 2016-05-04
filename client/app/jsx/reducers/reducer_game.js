@@ -1,6 +1,6 @@
  import { FETCH_PROMPT } from '../actions/actions';
 
-const INITIAL_STATE = {prompt: ''};
+const INITIAL_STATE = { prompt: {} };
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
