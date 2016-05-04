@@ -7,7 +7,8 @@ class Question extends React.Component {
   render (){
     return (
       <div>
-        {this.props.question}
+        <h5>{this.props.name}</h5>
+        <p>{this.props.description}</p>
       </div>
     )  
   } 
