@@ -1,9 +1,15 @@
-const React = require('react');
-const Race = require('./race');
-const Question = require('./question');
-const Answer = require('./answer');
+import React from 'react';
+import { connect } from 'react-redux';
+import { fetchPrompt } from '../actions/actions';
+import Race from './race';
+import Question from './question';
+import Answer from './answer';
 
 class Game extends React.Component {
+  componentWillMount() {
+    this.props.fetchPrompt();
+  }
+  
   render (){
     return (
       <div>
@@ -17,4 +23,8 @@ class Game extends React.Component {
   } 
 }
 
-module.exports = Game
+function mapStateToProps(state) {
+  return { prompt: state.game.prompt };
+}
+
+export default connect(mapStateToProps, { fetchPrompt })(Game);
