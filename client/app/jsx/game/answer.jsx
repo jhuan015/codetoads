@@ -1,14 +1,21 @@
 const React = require('react');
+const {Button} = require('react-bootstrap')
 
 class Answer extends React.Component {
   constructor (){
     super()
-    this.state = { term: '' };
+    this.state = { 
+      term: '',
+      projID: '',
+      slnID: ''
+    };
   }
   
   componentWillReceiveProps (nextProps) {
     this.setState({
-      term: nextProps.session.setup
+      term: nextProps.session.setup,
+      projID: nextProps.session.projectId,
+      slnID: nextProps.session.solutionId
     });
   }
   
