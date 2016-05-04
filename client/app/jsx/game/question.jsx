@@ -10,4 +10,4 @@ class Question extends React.Component {
   } 
 }
 
-module.exports = Game
+module.exports = Question
