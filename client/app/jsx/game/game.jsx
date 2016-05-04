@@ -17,14 +17,15 @@ class Game extends React.Component {
           <Race />
         </div>
         <Question name={this.props.prompt.name} description={this.props.prompt.description} />
-        <Answer session={this.props.prompt.session}/>
+        <Answer submitAttempt={this.props.submitAttempt} session={this.props.prompt.session}/>
       </div>
     )  
   } 
 }
 
 function mapStateToProps(state) {
-  return { prompt: state.game.prompt };
+  return { prompt: state.game.prompt,
+           attempt: state.game.attempt };
 }
 
-export default connect(mapStateToProps, { fetchPrompt })(Game);
+export default connect(mapStateToProps, { fetchPrompt, submitAttempt })(Game);
