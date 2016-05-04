@@ -62,7 +62,7 @@ module.exports.grabPrompt = function(req, res) {
   });
 }
 
-module.exports.submitAnswer = function(req, res) {
+module.exports.submitAttempt = function(req, res) {
   // var project_id = '5727dcf97fc662c6970009e2';
   // var solution_id = '5727dcf90838ffce0f000918';
 
