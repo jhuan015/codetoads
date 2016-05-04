@@ -14,9 +14,10 @@ class Game extends React.Component {
     return (
       <div>
         <div className='col-xs-12'>
+
           <Race />
         </div>
-        <Question />
+        <Question question={this.props.prompt.description} />
         <Answer />
       </div>
     )  
