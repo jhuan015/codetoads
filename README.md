@@ -1,4 +1,4 @@
-# Project CodeTode
+# Project CodeToad
 
 > MERN stack, Competitive Coding Challenge App
 
