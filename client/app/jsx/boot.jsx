@@ -1,22 +1,20 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
-const HomeContent = require('./home/homeContent')
-const Signup = require('./home')
-const Lobby = require('./lobby/lobby')
-const Layout = require('./layout')
-const Auth = require('./auth')
-const ReactRouter = require('react-router')
-const { Router, Route, hashHistory, IndexRoute } = ReactRouter
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers/rootReducer';
+import { Router, hashHistory } from 'react-router';
+import routes from './routes';
+import promise from 'redux-promise';
+
+const createStoreWithMiddleware = applyMiddleware(
+  promise
+)(createStore);
 
 const App = () => (
-  <Router history={hashHistory}>
-    <Route path='/' component={Layout}>
-      <IndexRoute component={HomeContent} />
-      <Route path='/signup' component={Auth} />
-      <Route path='/lobby' component={Lobby} />
-      <Route path="*" component={HomeContent}/>
-    </Route>
-  </Router>
+  <Provider store={createStoreWithMiddleware(reducers)}>
+    <Router history={hashHistory} routes={routes} />
+  </Provider>
 )
 
 ReactDOM.render(<App />, document.getElementById('App'))
