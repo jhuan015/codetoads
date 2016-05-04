@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompt } from '../actions/actions';
+import { fetchPrompt, submitAttempt } from '../actions/actions';
 import Race from './race';
 import Question from './question';
 import Answer from './answer';
@@ -14,11 +14,10 @@ class Game extends React.Component {
     return (
       <div>
         <div className='col-xs-12'>
-
           <Race />
         </div>
-        <Question question={this.props.prompt.description} />
-        <Answer />
+        <Question name={this.props.prompt.name} description={this.props.prompt.description} />
+        <Answer session={this.props.prompt.session}/>
       </div>
     )  
   } 
