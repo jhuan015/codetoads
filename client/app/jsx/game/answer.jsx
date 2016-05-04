@@ -30,7 +30,7 @@ class Answer extends React.Component {
           value={this.state.term}
           onChange={event => this._onInputChange(event.target.value)}
          />
-        <button>Submit</button>
+        <Button onClick={this._submitHandler.bind(this)}>Submit</Button>
       </div>
     )  
   } 
