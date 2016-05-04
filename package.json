@@ -35,6 +35,7 @@
     "mongoose-relationship": "^0.1.5",
     "morgan": "~1.7.0",
     "react": "^15.0.2",
+    "react-bootstrap": "^0.29.3",
     "react-dom": "^15.0.2",
     "react-router": "^2.4.0",
     "request": "^2.72.0",

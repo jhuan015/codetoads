@@ -7,25 +7,15 @@ class Lobby extends React.Component {
 
   render () {
     return (
-      <div>
-        <div>
-          YAY!
-        </div>
-        <section className='pond'>
-          <div className='container'>
-            <div className='col-sm-3'>
-              <Profile />
-            </div>
-            <div className='col-sm-9'>
-              <GameMode />
-            </div>
-          </div>
-        </section>
-        <div>
+      <div className='lobby row'>
+        <div className='col-sm-4 profile-panel'>
+          <Profile />
           <ChatApp />
         </div>
-      </div>
-
+        <div className='col-sm-8 game-panel'>
+          <GameMode />
+        </div>      
+      </div>  
     )
   }
 }
