@@ -28,6 +28,21 @@ body {
   color:#fff;
   border-color:#C33A2D;
 }
+.console-it h6 {
+    color: #6F6C6C !important;
+    font-weight: normal !important;
+}
+
+.console-it div.console-failed {
+    color: red;
+}
+.console-it div.console-success {
+    color: green; 
+}
+.console-describe h6 {
+    color: black;
+    font-weight: bold;
+}
 .content, .content-alt {
   padding: 50px 0;
 }
@@ -234,8 +249,15 @@ footer{
 .selection-panel .tab-content {
   padding: 20px;
 }
+.testInitial {
+    color: #FF8402;
+    font-size: 1.5em;
+}
 .testResults{
-  color: #FF6000;
-  font-size: 2em;
-  font-weight: bold;
+  font-weight: bold;/*
+  white-space: pre-wrap;*/
+}
+.testResults__body {
+    color: red;
+    white-space: pre-wrap;
 }
