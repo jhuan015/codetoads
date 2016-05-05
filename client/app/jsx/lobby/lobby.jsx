@@ -12,7 +12,7 @@ class Lobby extends React.Component {
           <Profile />
           <ChatApp />
         </div>
-        <div className='col-sm-8 game-panel'>
+        <div className='col-sm-8 selection-panel'>
           <GameMode />
         </div>      
       </div>  

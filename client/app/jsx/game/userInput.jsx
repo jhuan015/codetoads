@@ -42,11 +42,12 @@ class UserInput extends React.Component {
   render (){
     return (
       <div>
-        <textArea
+      <h2>Your Solution Below</h2>
+        <textArea rows={25} className='input-panel__textarea'
           value={this.state.term}
           onChange={event => this._onInputChange(event.target.value)}
          />
-        <Button onClick={this._submitHandler.bind(this)}>Submit</Button>
+        <Button bsStyle='primary' className='pull-right' bsSize='large' onClick={this._submitHandler.bind(this)}>Submit</Button>
       </div>
     )  
   } 

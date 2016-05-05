@@ -5,6 +5,7 @@ import Race from './race';
 import Prompt from './prompt';
 import UserInput from './userInput';
 import TestResults from './testResults';
+const {Tabs, Tab} = require('react-bootstrap');
 
 class Game extends React.Component {
   componentWillMount() {
@@ -13,13 +14,23 @@ class Game extends React.Component {
   
   render (){
     return (
-      <div>
-        <div className='col-xs-12'>
+      <div className='game'>
+        <div className='race clearfix'>
           <Race />
+        </div>        
+        <div className='prompt-panel col-sm-4'>
+          <Tabs defaultActiveKey={1} id='detailsSelection'>
+            <Tab eventKey={1} title="Prompt">
+              <Prompt name={this.props.prompt.name} description={this.props.prompt.description} />
+            </Tab>
+            <Tab eventKey={2} title="Test Results">
+              <TestResults output={this.props.attempt.output} reason={this.props.attempt.reason}/>            
+            </Tab>
+          </Tabs>          
         </div>
-        <Prompt name={this.props.prompt.name} description={this.props.prompt.description} />
-        <UserInput submitAttempt={this.props.submitAttempt} session={this.props.prompt.session}/>
-        <TestResults output={this.props.attempt.output} reason={this.props.attempt.reason}/>
+        <div className='input-panel col-sm-8'>
+          <UserInput submitAttempt={this.props.submitAttempt} session={this.props.prompt.session}/>
+        </div>
       </div>
     )  
   } 

@@ -3,7 +3,7 @@ body {
   font-family:"Open sans", sans-serif;
   padding:50px 0 0;
 }
-.body-wrap,.game-panel, .profile-panel {
+.body-wrap,.selection-panel, .profile-panel {
   min-height:calc(100vh - 200px);
 }
 .btn {
@@ -27,6 +27,21 @@ body {
 .btn-primary, .btn-primary:hover {
   color:#fff;
   border-color:#C33A2D;
+}
+.console-it h6 {
+    color: #6F6C6C !important;
+    font-weight: normal !important;
+}
+
+.console-it div.console-failed {
+    color: red;
+}
+.console-it div.console-success {
+    color: green; 
+}
+.console-describe h6 {
+    color: black;
+    font-weight: bold;
 }
 .content, .content-alt {
   padding: 50px 0;
@@ -61,30 +76,22 @@ footer{
 .footer-menu-divider {
   color:#828282;
 }
+.game {
+    display: flex;
+    min-height: calc(100vh - 200px);
+}
 .game-panel {
-    background-color: #C1BEC5;
+
 }
-.game-panel h2 {
-    color: #36313C;
+.input-panel {
+    background: #DDE5EC;
+    padding-top:40px;
+    padding-bottom:40px;
 }
-.game-panel .nav-tabs>li>a {    
-    border-radius: 4px 4px 0 0;
-    background-color: #696075;
-    color: white;
-}
-.game-panel .nav>li>a:focus,.game-panel  .nav>li>a:hover {
-    text-decoration: none;
-    background-color: #4B4454;
-    color: white;
-    border:1px solid transparent;
-}
-.game-panel .nav-tabs>li.active>a,.game-panel  .nav-tabs>li.active>a:focus,.game-panel  .nav-tabs>li.active>a:hover {
-    color: #555;
-    cursor: default;
-    background-color: #fff;
-    /* border: 1px solid #ddd; */
-    border-bottom-color: transparent;
-    border-radius: 4px 4px 0 0;
+.input-panel__textarea {
+  background-color:#fff;
+  height:initial;
+  margin-bottom:30px;
 }
 .intro {
   min-height:70vh;
@@ -112,6 +119,9 @@ footer{
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
     font-size:2em;
     font-style:italic;
+}
+.lobby{
+  display:flex;
 }
 .lead {
   font-size:18px;
@@ -155,20 +165,99 @@ footer{
 .profile-panel__group:last-child {
     border-bottom: none;
 }
+.prompt-panel {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border-right: 1px solid black;
+    background: #141D27;
+    color: white;
+}
+.prompt-panel .nav-tabs>li>a {    
+    border-radius: 4px 4px 0 0;
+    background-color: #5F778C;
+    color: white;
+    border-bottom:none;
+}
+.prompt-panel .nav-tabs>li>a:hover, .prompt-panel .nav-tabs>li>a:hover:focus {
+    border-bottom: 1px solid transparent;
+    background: #6096D2;
+    text-decoration: none;
+    color:white;
+    border-color:#6096D2;
+    border-bottom:none;
+}
+.prompt__title {
+    margin: 0;
+    /* padding: 20px; */
+    color: #141D27;
+    text-align: center;
+}
+.prompt__body {
+    white-space: pre-wrap;
+    max-height: 80vh;
+    overflow-y: scroll;
+    border: 1px solid white;
+    padding: 15px;
+    background: #777777;
+    color: #FFFFFF;
+}
+.race {
+  display:none;
+}
 .rad-inline {
   margin-right:30px;
 }
 .row {
   margin-bottom:0;
 }
+.selection-panel {
+    background-color: #C1BEC5;
+}
+.selection-panel h2 {
+    color: #36313C;
+}
+.selection-panel .nav-tabs>li>a {    
+    border-radius: 4px 4px 0 0;
+    background-color: #696075;
+    color: white;
+}
+.selection-panel .nav>li>a:focus,.selection-panel  .nav>li>a:hover {
+    text-decoration: none;
+    background-color: #4B4454;
+    color: white;
+    border:1px solid transparent;
+}
+
+.selection-panel .nav-tabs>li.active>a,.selection-panel  .nav-tabs>li.active>a:focus,.selection-panel  .nav-tabs>li.active>a:hover,.prompt-panel .nav-tabs>li.active>a,.prompt-panel  .nav-tabs>li.active>a:focus,.prompt-panel  .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #fff; 
+    border-bottom-color: transparent;
+    border-radius: 4px 4px 0 0;
+}
 .solo-dropdown {
   margin-bottom:50px;
 }
-.tab-content {
+.selection-panel .tab-content,.prompt-panel .tab-content {
     min-height: 500px;
-    background: rgb(255, 255, 255);
-    padding: 20px;
+    background: rgb(255, 255, 255);    
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.selection-panel .tab-content {
+  padding: 20px;
+}
+.testInitial {
+    color: #FF8402;
+    font-size: 1.5em;
+}
+.testResults{
+  font-weight: bold;/*
+  white-space: pre-wrap;*/
+}
+.testResults__body {
+    color: red;
+    white-space: pre-wrap;
 }

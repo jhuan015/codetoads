@@ -28,7 +28,7 @@ class Multigame extends React.Component {
             <FormControl type="text" placeholder="Enter Password" />
           </FormGroup>
           <div className='text-center multi-btn-submit'>
-            <Button type='submit' bsSize='large' bsStyle='primary'>Enter</Button>
+            <Button type='submit' href='#/play' bsSize='large' bsStyle='primary'>Enter</Button>
           </div>
         </form>      
       </div>
