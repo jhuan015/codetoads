@@ -1,6 +1,6 @@
  import { FETCH_PROMPT, SUBMIT_ATTEMPT } from '../actions/actions';
 
-const INITIAL_STATE = { prompt: {}, attempt: {} };
+const INITIAL_STATE = { prompt: {}, attempt: { ouput: [], reason: ''} };
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
