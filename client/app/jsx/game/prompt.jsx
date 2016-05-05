@@ -1,6 +1,6 @@
 const React = require('react');
 
-class Question extends React.Component {
+class Prompt extends React.Component {
   constructor () {
     super()
   }
@@ -14,4 +14,4 @@ class Question extends React.Component {
   } 
 }
 
-module.exports = Question
+module.exports = Prompt

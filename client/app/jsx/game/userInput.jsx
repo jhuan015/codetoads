@@ -1,7 +1,7 @@
 const React = require('react');
 const {Button} = require('react-bootstrap')
 
-class Answer extends React.Component {
+class UserInput extends React.Component {
   constructor (){
     super()
     this.state = { 
@@ -52,4 +52,4 @@ class Answer extends React.Component {
   } 
 }
 
-module.exports = Answer
+module.exports = UserInput
