@@ -5,7 +5,7 @@ const DiffButton = require('./difficultybutton')
 class Multigame extends React.Component {
   render(){
     return (
-      <div>        
+      <div>
         <form>
           <span className='rad-inline'>
             <input className="with-gap" name="action" type="radio" id="create"/>
@@ -15,10 +15,7 @@ class Multigame extends React.Component {
             <input className="with-gap" name="action" type="radio" id="join"/>
             <label htmlFor="join">Join</label>
           </span>          
-          <div className='clearfix multi-btn-select text-center'>
-            <h5>Select Difficulty</h5>
             <DiffButton/>
-          </div>
           <FormGroup controlId="room">
             <ControlLabel>Room Name</ControlLabel>
             <FormControl type="text" placeholder="Enter Room Name" />
@@ -30,9 +27,9 @@ class Multigame extends React.Component {
           <div className='text-center multi-btn-submit'>
             <Button type='submit' href='#/play' bsSize='large' bsStyle='primary'>Enter</Button>
           </div>
-        </form>      
+        </form>
       </div>
-        
+
       )
   }
   _getValues(){
