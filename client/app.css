@@ -33,11 +33,11 @@ body {
     font-weight: normal !important;
 }
 
-.console-it div.console-failed {
+div.console-failed {
     color: red;
 }
-.console-it div.console-success {
-    color: green; 
+div.console-passed {
+    color: green;
 }
 .console-describe h6 {
     color: black;
@@ -46,7 +46,7 @@ body {
 .content, .content-alt {
   padding: 50px 0;
 }
-.content {    
+.content {
     background-color: #f8f8f8;
 }
 .content-alt {
@@ -172,7 +172,7 @@ footer{
     background: #141D27;
     color: white;
 }
-.prompt-panel .nav-tabs>li>a {    
+.prompt-panel .nav-tabs>li>a {
     border-radius: 4px 4px 0 0;
     background-color: #5F778C;
     color: white;
@@ -216,7 +216,7 @@ footer{
 .selection-panel h2 {
     color: #36313C;
 }
-.selection-panel .nav-tabs>li>a {    
+.selection-panel .nav-tabs>li>a {
     border-radius: 4px 4px 0 0;
     background-color: #696075;
     color: white;
@@ -232,7 +232,7 @@ footer{
     color: #555;
     cursor: default;
     background-color: #fff;
-    border: 1px solid #fff; 
+    border: 1px solid #fff;
     border-bottom-color: transparent;
     border-radius: 4px 4px 0 0;
 }
@@ -241,7 +241,7 @@ footer{
 }
 .selection-panel .tab-content,.prompt-panel .tab-content {
     min-height: 500px;
-    background: rgb(255, 255, 255);    
+    background: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     align-items: center;
