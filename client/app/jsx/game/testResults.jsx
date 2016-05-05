@@ -7,13 +7,13 @@ class TestResults extends React.Component {
   render (){
     if(!this.props.output || !this.props.reason){
       return (
-        <div>Make an attempt!</div>  
+        <div className='testResults'>Make an attempt!</div>  
       )
     }
     return (
-      <div>
-        <p>{this.props.output}</p>
-        <p>{this.props.reason}</p>
+      <div className='testResults'>
+        <div className='testResults__title'>{this.props.output}</div>
+        <div className='testResults__body'>{this.props.reason}</div>
       </div>
     )  
   } 

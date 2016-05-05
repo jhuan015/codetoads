@@ -6,9 +6,9 @@ class Prompt extends React.Component {
   }
   render (){
     return (
-      <div>
-        <h5>{this.props.name}</h5>
-        <p>{this.props.description}</p>
+      <div className='prompt'>        
+        <h5 className='prompt__title'>{this.props.name}</h5>
+        <div className='prompt__body'>{this.props.description}</div>
       </div>
     )  
   } 
