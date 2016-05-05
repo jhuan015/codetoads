@@ -11,10 +11,10 @@ var easy = [
 ];
 
 var med = [
-  'wheel-of-fortune',
-  'special-multiples',
-  'dna-sequence-tester',
-  'i-love-big-nums-and-i-cannot-lie'
+    'wheel-of-fortune',
+    'special-multiples',
+    'dna-sequence-tester',
+    'i-love-big-nums-and-i-cannot-lie'
 ];
 
 module.exports.saveUser = function(req, res) {
@@ -93,14 +93,14 @@ module.exports.submitAttempt = function(req, res) {
         body.dmid,
         headers: {
           Authorization: process.env.cwKey
-        },
+        }
       }
       setTimeout(function() {
           request.get(innerOptions, function(err, response, innerBody) {
             if (err) {
               return console.error('failed defer', err);
             }
-          res.send(innerBody);
+          res.send({response: innerBody, setup: req.body.code});
         });
       }, 1500);
     }
