@@ -9,8 +9,7 @@ class Sologame extends React.Component {
         <div className='clearfix solo-dropdown'>
           <DiffButton/>
         </div>
-        <Button bsStyle='primary' bsSize='large'>Start</Button>
-        
+        <Button href='#/play' bsStyle='primary' bsSize='large'>Start</Button>        
       </div>
       );
   }
