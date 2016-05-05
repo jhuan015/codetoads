@@ -13,7 +13,7 @@ class UserInput extends React.Component {
   
   componentWillReceiveProps (nextProps) {
     this.setState({
-      term: nextProps.session.setup,
+      term: nextProps.setup,
       projID: nextProps.session.projectId,
       slnID: nextProps.session.solutionId
     });
