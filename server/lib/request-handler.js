@@ -1,7 +1,6 @@
 var db = require('./../db/config');
 var request = require('request');
-var Game = db.Game;
-var User = db.User;
+var User = require('./../db/db').User;
 
 var easy = [
   'sum-of-multiples',
