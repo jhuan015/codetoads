@@ -1,8 +1,9 @@
 const React = require('react')
-const LoggedIn = require('./loggedIn')
+const LoggedIn = require('./loggedin')
 const Home = require('./home')
 
 var Auth = React.createClass({
+
   componentWillMount: function() {
     this.setupAjax();
     this.createLock();
@@ -23,11 +24,14 @@ var Auth = React.createClass({
   },
   getIdToken: function() {
     var idToken = localStorage.getItem('userToken');
+    debugger;
     var authHash = this.lock.parseHash(window.location.hash);
     if (!idToken && authHash) {
       if (authHash.id_token) {
         idToken = authHash.id_token
+        console.log('CALLING');
         localStorage.setItem('userToken', authHash.id_token);
+        this.saveUser();
       }
       if (authHash.error) {
         console.log("Error signing in", authHash);
@@ -40,10 +44,6 @@ var Auth = React.createClass({
       return (<LoggedIn lock={this.lock} idToken={this.state.idToken} />);
     }
       return (<Home lock={this.lock} />);
-    // return <div>WOOT</div>
-    // let status = 'Signup';
-    // if (this.state.idToken){ status = 'Logout'; }
-    //   return <HomeContent status={status} />
   }
 });
 

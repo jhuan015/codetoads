@@ -7,12 +7,15 @@ class DiffButton extends React.Component {
   }
   render (){
     return (
-      <SplitButton title={this.state.title} pullRight id="split-button-pull-right" onSelect={this._changeSelection.bind(this)} >
+      <div className='clearfix multi-btn-select text-center'>
+        <h5>Select Difficulty</h5>
+        <SplitButton title={this.state.title} pullRight id="split-button-pull-right" onSelect={this._changeSelection.bind(this)} >
         <MenuItem eventKey="Easy,Tadpole">Tadpole</MenuItem>
         <MenuItem eventKey="Medium,Toadlet" >Toadlet</MenuItem>
         <MenuItem eventKey="Hard,Toad">Toad</MenuItem>
         <MenuItem eventKey="Insane,Toad Legend">Toad Legend</MenuItem>
-      </SplitButton>
+        </SplitButton>
+      </div>
       );
   }
   _changeSelection (val){

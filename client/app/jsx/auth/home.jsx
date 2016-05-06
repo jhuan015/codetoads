@@ -7,8 +7,8 @@ var Home = React.createClass({
     return (
     <div className="login-box auth0-box before">
       <img src="https://i.cloudup.com/StzWWrY34s.png" />
-      <h3>Auth0 Example</h3>
-      <p>Zero friction identity infrastructure, built for developers</p>
+      <h3>CodeToads</h3>
+      <p>Sign in to Battle</p>
       <a onClick={this.showLock} className="btn btn-primary btn-lg btn-login btn-block">Sign In</a>
     </div>
     );

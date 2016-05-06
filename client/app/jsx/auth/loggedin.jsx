@@ -9,7 +9,6 @@ var LoggedIn = React.createClass({
     }, function() {
       alert("You need to download the server seed and start it to call this API");
     });
-    // this.saveUser();
   },
 
   logOut: function() {
@@ -39,7 +38,6 @@ var LoggedIn = React.createClass({
 
   componentDidMount: function() {
     this.props.lock.getProfile(this.props.idToken, function (err, profile) {
-      console.log(profile);
       if (err) {
         console.log("Error loading the Profile", err);
         alert("Error loading the Profile");
@@ -50,7 +48,6 @@ var LoggedIn = React.createClass({
 
   render: function() {
     if (this.state.profile) {
-      //this.saveUser();
       return (
         <div className="logged-in-box auth0-box logged-in">
           <h1 id="logo"><img src="https://cdn.auth0.com/blog/auth0_logo_final_blue_RGB.png" /></h1>
@@ -68,3 +65,5 @@ var LoggedIn = React.createClass({
     }
   }
 });
+
+module.exports = LoggedIn;
