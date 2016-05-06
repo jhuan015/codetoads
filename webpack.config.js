@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'eval',
   context: __dirname,
   entry: './client/app/jsx/boot.jsx',
   output: {
