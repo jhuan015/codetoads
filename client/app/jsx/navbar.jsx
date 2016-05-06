@@ -8,7 +8,7 @@ const Navigation = (props) => (
       <Link className="navbar-brand" to="/">CodeToads</Link>
       <Navbar.Toggle />
     </Navbar.Header>
-    <Navbar.Collapse>      
+    <Navbar.Collapse>
       <Nav pullRight>
         <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
         <li><IndexLink to="/lobby" activeClassName="active">Lobby</IndexLink></li>
@@ -16,7 +16,7 @@ const Navigation = (props) => (
       </Nav>
     </Navbar.Collapse>
   </Navbar>
-  
+
 )
 
 module.exports = Navigation

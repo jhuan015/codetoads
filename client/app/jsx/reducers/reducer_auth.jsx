@@ -1,4 +1,4 @@
-import { LOCK_SUCCESS, LOGOUT_SUCCESS } from '../actions/Auth_Actions';
+import { LOCK_SUCCESS, LOGOUT_SUCCESS } from '../actions/authActions';
 
 // Setting authentication based on if token exists in localStorage
 export default function(state = {
