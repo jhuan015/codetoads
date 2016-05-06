@@ -13,5 +13,14 @@ export default function(state = {
       isAuthenticated: true,
       errorMessage: '',
     });
+  case LOGOUT_SUCCESS:
 
+      // When lock fails to authenticate set to false
+    return Object.assign({}, state, {
+      isFetching: true,
+      isAuthenticated: false,
+      });
+    default:
+      return state;
+    }
 }
