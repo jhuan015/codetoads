@@ -31,15 +31,18 @@ class UserInput extends React.Component {
     ans.project_id = this.state.projID;
     ans.solution_id = this.state.slnID;
     
-    //console.log(ans);
-    
     this.props.submitAttempt(ans);
   }
-  //project_id
-  //solution_id
-  //code
   
   render (){
+    if (this.props.passed) {
+      return (
+        <div>
+          <p>Success!</p>
+          <Button bsStyle='primary' bsSize='large' onClick={this.props.fetchPrompt}>Next Prompt</Button>
+        </div>
+        )
+    }
     return (
       <div>
       <h2>Your Solution Below</h2>

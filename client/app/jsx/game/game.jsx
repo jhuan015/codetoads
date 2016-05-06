@@ -29,7 +29,12 @@ class Game extends React.Component {
           </Tabs>          
         </div>
         <div className='input-panel col-sm-8'>
-          <UserInput submitAttempt={this.props.submitAttempt} session={this.props.prompt.session} setup={this.props.setup}/>
+          <UserInput
+            fetchPrompt={this.props.fetchPrompt}
+            submitAttempt={this.props.submitAttempt}
+            session={this.props.prompt.session}
+            setup={this.props.setup}
+            passed={this.props.passed}/>
         </div>
       </div>
     )  
@@ -39,7 +44,8 @@ class Game extends React.Component {
 function mapStateToProps(state) {
   return { prompt: state.game.prompt,
            attempt: state.game.attempt,
-           setup: state.game.setup };
+           setup: state.game.setup,
+           passed: state.game.passed };
 }
 
 export default connect(mapStateToProps, { fetchPrompt, submitAttempt })(Game);

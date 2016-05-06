@@ -10,10 +10,12 @@ var easy = [
 ];
 
 var med = [
-    'wheel-of-fortune',
-    'special-multiples',
-    'dna-sequence-tester',
-    'i-love-big-nums-and-i-cannot-lie'
+    // 'wheel-of-fortune',
+    // 'special-multiples',
+    // 'dna-sequence-tester',
+    // 'i-love-big-nums-and-i-cannot-lie'
+    'multiply',
+    'jennys-secret-message'
 ];
 
 module.exports.saveUser = function(req, res) {
