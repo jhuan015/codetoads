@@ -21,6 +21,7 @@ client/dist/
 client/lib/
 client/app/js/
 client/app/bundle.js
+client/app/bundle.js.map
 
 # Node modules
 node_modules/
@@ -32,3 +33,6 @@ server/npm-debug.log
 
 #Auth0 keys
 client/auth0-variables.js
+
+#rethink
+rethinkdb_data

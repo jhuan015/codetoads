@@ -23,6 +23,7 @@ var Auth = React.createClass({
     });
   },
   getIdToken: function() {
+    console.log('calling token')
     var idToken = localStorage.getItem('userToken');
     debugger;
     var authHash = this.lock.parseHash(window.location.hash);
