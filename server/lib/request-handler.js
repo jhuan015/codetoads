@@ -3,7 +3,7 @@ var request = require('request');
 var Game = db.Game;
 var User = db.User;
 
-//easy, eedium, hard, insane
+//easy, medium, hard, insane
 var easy = [
   'sum-of-multiples',
   'name-on-billboard',
@@ -11,19 +11,19 @@ var easy = [
   'printing-array-elements-with-comma-delimiters'
 ];
 
-var med = [
-    'wheel-of-fortune',
-    'special-multiples',
-    'dna-sequence-tester',
-    'i-love-big-nums-and-i-cannot-lie'
+var medium = [
+  'wheel-of-fortune',
+  'special-multiples',
+  'dna-sequence-tester',
+  'i-love-big-nums-and-i-cannot-lie'
 ];
 
-var grabPrompt = function(level, iterator) {
+var grabPrompt = function(level, index, iterator) {
   //randomly pick challenge based on choice posted
   if (level === 'easy') {
-    var rand = easy[Math.floor(Math.random() * easy.length)];
+    var prompt = easy[index];
   } else {
-    var rand = med[Math.floor(Math.random() * med.length)];
+    var prompt = med[index];
   }
   //generate query
   var options = {
@@ -31,7 +31,7 @@ var grabPrompt = function(level, iterator) {
       Authorization: process.env.cwKey
     },
     url : 'https://www.codewars.com/api/v1/code-challenges/' +
-    rand + '/javascript/train'
+    prompt + '/javascript/train'
   }
   //grab prompt and send back
   request.post(options, function(err, response, body) {
@@ -39,7 +39,22 @@ var grabPrompt = function(level, iterator) {
     //async data
     iterator(info);
   });
-}
+};
+
+//Used to shuffle promptS
+var shuffle = function(array) {
+  var arr = Array.prototype.slice(array);
+
+  array.forEach(function(value, index){
+    //generates random whole number with range 0 to array length
+    var random = Math.max(0,(Math.floor(Math.random() * arr.length)));
+    //swaps current index/value with random index/value
+    arr[index] = arr[random];
+    arr[random] = value;
+  });
+
+  return arr;
+};
 
 module.exports.saveUser = function(req, res) {
   User.create({
@@ -55,11 +70,21 @@ module.exports.saveUser = function(req, res) {
 
 module.exports.makeGame = function(req, res) {
   var result = [];
-  for (var i = 0; i < 3; i++) {
-    grabPrompt('easy', function(info) {
+  var randomArray = [];
+  //generate random indexes for prompts
+  //currently use 4 because only 4 prompts each difficulty
+  for (var i = 0; i < 4; i++) {
+    randomArray.push(i);
+  }
+  //randomize the prompts
+  randomArray = shuffle(randomArray);
+  for (var i = 0; i < req.body.numPrompt; i++) {
+    index = randomArray[i];
+    //make the calls to generate prompts
+    grabPrompt(req.body.difficulty, index, function(info) {
       result.push(info);
-      //send result array when question amount is hit
-      if (result.length === 3) {
+      //send result array when prompt amount is hit
+      if (result.length === req.body.numPrompt) {
         res.send(result);
       }
     });
