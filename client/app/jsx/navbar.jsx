@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Login from './auth/login';
 import Logout from './auth/logout';
-import { login, logout } from './actions/authActions';
+import { login, logoutUser } from './actions/authActions';
 import { IndexLink, Link } from 'react-router';
 const { Navbar, Nav } = require('react-bootstrap');
 
@@ -28,7 +28,8 @@ class Navigation extends Component {
 
                   {isAuthenticated &&
                     <Logout onLogoutClick={() => dispatch(logoutUser())} />
-                  }</li>
+                  }
+          </li>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

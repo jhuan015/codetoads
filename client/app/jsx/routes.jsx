@@ -22,7 +22,7 @@ function checkAuth(nextState, replace) {
 export default (
     <Route path='/' component={Layout}>
       <IndexRoute component={HomeContent} />
-      <Route path='/lobby' component={Lobby} />
+      <Route path='/lobby' component={Lobby} onEnter={checkAuth} />
       <Route path='/play' component={Game} />
       <Route path="*" component={HomeContent}/>
     </Route>
