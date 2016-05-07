@@ -28,7 +28,7 @@ class Game extends React.Component {
               <TestResults output={this.props.attempt.output} reason={this.props.attempt.reason}/>
             </Tab>
           </Tabs>
-          <Chat2 />
+          <Chat2 name={this.props.params.name} />
         </div>
         <div className='input-panel col-sm-8'>
           <UserInput

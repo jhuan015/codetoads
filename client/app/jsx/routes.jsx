@@ -24,9 +24,9 @@ function checkAuth(nextState, replace) {
 export default (
     <Route path='/' component={Layout}>
       <IndexRoute component={HomeContent} />
-      <Route path='/lobby' component={Lobby} onEnter={checkAuth} />
+      <Route path='/lobby' component={Lobby} />
       <Route path='/play' component={Game} />
-      <Route path='/play/:test' component={Game2} />
+      <Route path='/multiplay/:name' component={Game2} />
       <Route path="*" component={HomeContent}/>
     </Route>
 )

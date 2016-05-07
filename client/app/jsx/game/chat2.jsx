@@ -1,12 +1,11 @@
 const React = require('react');
 const ReactRouter = require('react-router')
-var socket = io.connect();
 
 class UsersList extends React.Component {
 	render() {
 		return (
 			<div className='users'>
-				<h3> Online Users </h3>
+				<h3> TOAD Users </h3>
 				<ul>
 					{
 						this.props.users.map((user, i) => {
@@ -134,6 +133,10 @@ class ChatApp extends React.Component {
       text: '',
       user: ''
     };
+  }
+
+  componentWillMount() {
+    window.socket = io.connect({query: this.props.name });
   }
 
 	componentDidMount() {

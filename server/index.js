@@ -7,7 +7,7 @@ var port = process.env.PORT || 3000;
 var io = require('socket.io').listen(http);
 var socket = require('./socket.js');
 
-io.sockets.on('connection', socket);
+io.on('connection', socket);
 
 http.listen(port, function () {
   console.log('ROUTING server listening on port: ' + port);
