@@ -44,7 +44,7 @@ var grabPrompt = function(level, index, iterator) {
   if (level === 'easy') {
     var prompt = easy[index];
   } else {
-    var prompt = med[index];
+    var prompt = medium[index];
   }
   //generate query
   var options = {
