@@ -5,6 +5,8 @@ import HomeContent from './home/homeContent';
 import Lobby from './lobby/lobby';
 import Layout from './layout';
 import Game from './game/game';
+import Game2 from './game/game2';
+
 
 function checkAuth(nextState, replace) {
 
@@ -24,6 +26,7 @@ export default (
       <IndexRoute component={HomeContent} />
       <Route path='/lobby' component={Lobby} onEnter={checkAuth} />
       <Route path='/play' component={Game} />
+      <Route path='/play/:test' component={Game2} />
       <Route path="*" component={HomeContent}/>
     </Route>
 )
