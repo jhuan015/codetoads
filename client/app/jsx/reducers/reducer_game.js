@@ -1,21 +1,19 @@
- import { FETCH_PROMPT, SUBMIT_ATTEMPT } from '../actions/actions';
+ import { FETCH_PROMPTS, SUBMIT_ATTEMPT } from '../actions/actions';
 
-const INITIAL_STATE = { prompt: {}, attempt: { ouput: [], reason: ''} , setup: "", passed: false };
+const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''} , passed: false };
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
-  case FETCH_PROMPT:
+  case FETCH_PROMPTS:
     return { 
-      prompt: action.payload.data, 
-      attempt: state.attempt, 
-      setup: action.payload.data.session.setup,
+      prompts: action.payload.data, 
+      attempt: state.attempt,
       passed: false
     };
   case SUBMIT_ATTEMPT:
     return {
-      prompt: state.prompt,
+      prompts: state.prompts.slice(),
       attempt: JSON.parse(action.payload.data.response),
-      setup: action.payload.data.setup,
       passed: (JSON.parse(action.payload.data.response)).passed
     };
   default:

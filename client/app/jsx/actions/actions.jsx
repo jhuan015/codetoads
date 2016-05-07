@@ -1,15 +1,13 @@
 import axios from 'axios';
 
-export const FETCH_PROMPT = 'FETCH_PROMPT';
+export const FETCH_PROMPTS = 'FETCH_PROMPTS';
 export const SUBMIT_ATTEMPT = 'SUBMIT_ATTEMPT';
 export const CREATE_DIFFICULTY = 'CREATE_DIFFICULTY';
 
-export function fetchPrompt() {
-  const request = axios.post('/api/grabPrompt');
-  // console.log(request)
-
+export function fetchPrompts(difficulty, numPrompt) {
+  const request = axios.post('/api/makeGame', { "difficulty": 'easy', "numPrompt": 2});
   return {
-    type: FETCH_PROMPT,
+    type: FETCH_PROMPTS,
     payload: request
   };
 }
