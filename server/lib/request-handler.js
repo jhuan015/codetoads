@@ -3,6 +3,7 @@ var request = require('request');
 var Game = db.Game;
 var User = db.User;
 
+//easy, eedium, hard, insane
 var easy = [
   'sum-of-multiples',
   'name-on-billboard',
@@ -17,21 +18,9 @@ var med = [
     'i-love-big-nums-and-i-cannot-lie'
 ];
 
-module.exports.saveUser = function(req, res) {
-  User.create({
-      auth_id: req.body.user_id,
-      username: req.body.nickname,
-      firstname: req.body.given_name,
-      lastname: req.body.family_name
-    }, function(error, doc) {
-      console.log(doc);
-    });
-
-}
-
-module.exports.grabPrompt = function(req, res) {
+var grabPrompt = function(level, iterator) {
   //randomly pick challenge based on choice posted
-  if (req.body.challenge === 'easy') {
+  if (level === 'easy') {
     var rand = easy[Math.floor(Math.random() * easy.length)];
   } else {
     var rand = med[Math.floor(Math.random() * med.length)];
@@ -44,22 +33,37 @@ module.exports.grabPrompt = function(req, res) {
     url : 'https://www.codewars.com/api/v1/code-challenges/' +
     rand + '/javascript/train'
   }
-
   //grab prompt and send back
   request.post(options, function(err, response, body) {
     var info = JSON.parse(body);
-    res.send(info);
-
-    /*
-      Front end needs to send choice.. easy or med currently
-      '<p>Example:</p>' +
-      '<h1>' + info.name + '</h1>' +
-      '<p>' + info.description + '</p>' +
-      '<p>' + info.session.setup + '</p>' +
-      '<p>' + info.session.exampleFixture + '</p>' +
-    */
-
+    //async data
+    iterator(info);
   });
+}
+
+module.exports.saveUser = function(req, res) {
+  User.create({
+      auth_id: req.body.user_id,
+      username: req.body.nickname,
+      firstname: req.body.given_name,
+      lastname: req.body.family_name
+    }, function(error, doc) {
+      console.log(doc);
+    });
+
+}
+
+module.exports.makeGame = function(req, res) {
+  var result = [];
+  for (var i = 0; i < 3; i++) {
+    grabPrompt('easy', function(info) {
+      result.push(info);
+      //send result array when question amount is hit
+      if (result.length === 3) {
+        res.send(result);
+      }
+    });
+  }
 }
 
 module.exports.submitAttempt = function(req, res) {
