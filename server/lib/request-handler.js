@@ -8,14 +8,16 @@ var easy = [
   'sum-of-multiples',
   'name-on-billboard',
   'fix-your-code-before-the-garden-dies',
-  'printing-array-elements-with-comma-delimiters'
+  'printing-array-elements-with-comma-delimiters',
+  'function-1-hello-world'
 ];
 
 var medium = [
   'wheel-of-fortune',
   'special-multiples',
   'dna-sequence-tester',
-  'i-love-big-nums-and-i-cannot-lie'
+  'i-love-big-nums-and-i-cannot-lie',
+  'exes-and-ohs'
 ];
 
 var grabPrompt = function(level, index, iterator) {
@@ -65,15 +67,14 @@ module.exports.saveUser = function(req, res) {
     }, function(error, doc) {
       console.log(doc);
     });
-
-}
+};
 
 module.exports.makeGame = function(req, res) {
   var result = [];
   var randomArray = [];
   //generate random indexes for prompts
   //currently use 4 because only 4 prompts each difficulty
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < 5; i++) {
     randomArray.push(i);
   }
   //randomize the prompts
@@ -89,7 +90,7 @@ module.exports.makeGame = function(req, res) {
       }
     });
   }
-}
+};
 
 module.exports.submitAttempt = function(req, res) {
   // var project_id = '5727dcf97fc662c6970009e2';
@@ -134,5 +135,4 @@ module.exports.submitAttempt = function(req, res) {
       }, 1500);
     }
   });
-}
-// }
+};
