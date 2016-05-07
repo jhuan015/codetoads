@@ -27,4 +27,15 @@ class Layout extends React.Component {
     };
 }
 
-module.exports = Layout
+function mapStateToProps(state) {
+  console.log(state);
+  const { auth } = state;
+  const { isAuthenticated, errorMessage } = auth;
+
+  return {
+    isAuthenticated,
+    errorMessage,
+  };
+};
+
+export default connect(mapStateToProps)(Layout);
