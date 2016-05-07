@@ -15,7 +15,7 @@ var medium = [
   // 'wheel-of-fortune',
   // 'special-multiples',
   'multiply',
-  'jennys-secret-message'
+  'jennys-secret-message',
   'dna-sequence-tester',
   'i-love-big-nums-and-i-cannot-lie',
   'exes-and-ohs'
