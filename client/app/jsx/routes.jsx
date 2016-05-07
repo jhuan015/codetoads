@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import HomeContent from './home/homeContent';
-// import Signup from './auth/home';
 import Lobby from './lobby/lobby';
 import Layout from './layout';
 import Game from './game/game';
