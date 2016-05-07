@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+const React = require('react');
 import { connect } from 'react-redux';
 import Nav from './navbar';
 const { Link } = require('react-router');
