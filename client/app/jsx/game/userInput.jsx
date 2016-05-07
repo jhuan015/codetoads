@@ -4,6 +4,7 @@ const {Button} = require('react-bootstrap')
 class UserInput extends React.Component {
   constructor (){
     super()
+    
     this.state = { 
       term: '',
       projID: '',
@@ -11,11 +12,11 @@ class UserInput extends React.Component {
     };
   }
   
-  componentWillReceiveProps (nextProps) {
+  componentWillMount () {
     this.setState({
-      term: nextProps.setup,
-      projID: nextProps.session.projectId,
-      slnID: nextProps.session.solutionId
+      term: this.props.session.setup,
+      projID: this.props.session.projectId,
+      slnID: this.props.session.solutionId
     });
   }
   
@@ -39,7 +40,7 @@ class UserInput extends React.Component {
       return (
         <div>
           <p>Success!</p>
-          <Button bsStyle='primary' bsSize='large' onClick={this.props.fetchPrompt}>Next Prompt</Button>
+          <Button bsStyle='primary' bsSize='large' onClick={this.props.fetchPrompts}>Next Prompt</Button>
         </div>
         )
     }
