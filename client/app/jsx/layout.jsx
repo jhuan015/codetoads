@@ -8,9 +8,6 @@ class Layout extends React.Component {
 
   render () {
     const { dispatch, isAuthenticated, errorMessage } = this.props;
-    console.log(this.props);
-    console.log(dispatch);
-    console.log(isAuthenticated);
     return (
       <div className="clearfix">
       <Nav
@@ -28,7 +25,6 @@ class Layout extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   const { auth } = state;
   const { isAuthenticated, errorMessage } = auth;
 
