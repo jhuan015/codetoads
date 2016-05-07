@@ -2,20 +2,28 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import HomeContent from './home/homeContent';
-import Signup from './auth/home';
 import Lobby from './lobby/lobby';
 import Layout from './layout';
-import Auth from './auth/auth';
 import Game from './game/game';
-import LoggedIn from './auth/loggedin';
+
+function checkAuth(nextState, replace) {
+
+  var authenticated = localStorage.getItem('id_token') ? true : false;
+  if (!authenticated) {
+    replace({
+      pathname: '/',
+      state: {
+        nextPathname: nextState.location.pathname,
+      },
+    });
+  }
+}
 
 export default (
     <Route path='/' component={Layout}>
       <IndexRoute component={HomeContent} />
-      <Route path='/signup' component={Auth} />
-      <Route path='/lobby' component={Lobby} />
+      <Route path='/lobby' component={Lobby} onEnter={checkAuth} />
       <Route path='/play' component={Game} />
-      <Route path="/loggedin" component={LoggedIn}/>
       <Route path="*" component={HomeContent}/>
     </Route>
 )

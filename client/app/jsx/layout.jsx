@@ -1,20 +1,20 @@
-const React = require('react')
-const ReactRouter = require('react-router')
-const Nav = require('./navbar')
-const Footer = require('./footer')
-const { Link } = ReactRouter
+const React = require('react');
+import { connect } from 'react-redux';
+import Nav from './navbar';
+const { Link } = require('react-router');
+const Footer = require('./footer');
 
 class Layout extends React.Component {
-  constructor (){
-    super();
-    this.state = {
-      status: 'Signup'
-    };
-  }
+
   render () {
+    const { dispatch, isAuthenticated, errorMessage } = this.props;
     return (
       <div className="clearfix">
-        <Nav status={this.state.status} />
+      <Nav
+        isAuthenticated={isAuthenticated}
+        errorMessage={errorMessage}
+        dispatch={dispatch}
+      />
         <div className="body-wrap">
           {this.props.children}
         </div>
@@ -24,4 +24,14 @@ class Layout extends React.Component {
     };
 }
 
-module.exports = Layout
+function mapStateToProps(state) {
+  const { auth } = state;
+  const { isAuthenticated, errorMessage } = auth;
+
+  return {
+    isAuthenticated,
+    errorMessage,
+  };
+};
+
+export default connect(mapStateToProps)(Layout);
