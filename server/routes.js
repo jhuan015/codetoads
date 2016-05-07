@@ -22,8 +22,8 @@ module.exports = function(app) {
 
   app.post('/api/saveUser', authenticate, handler.saveUser);
 
-  app.post('/api/grabPrompt', handler.grabPrompt);
-
   app.post('/api/submitAttempt', handler.submitAttempt);
+
+  app.post('/api/makeGame', handler.makeGame);
 
 }

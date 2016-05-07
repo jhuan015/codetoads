@@ -2,20 +2,23 @@ var db = require('./../db/config');
 var request = require('request');
 var User = require('./../db/db').User;
 
+//easy, medium, hard, insane
 var easy = [
   'sum-of-multiples',
   'name-on-billboard',
   'fix-your-code-before-the-garden-dies',
-  'printing-array-elements-with-comma-delimiters'
+  'printing-array-elements-with-comma-delimiters',
+  'function-1-hello-world'
 ];
 
-var med = [
-    // 'wheel-of-fortune',
-    // 'special-multiples',
-    // 'dna-sequence-tester',
-    // 'i-love-big-nums-and-i-cannot-lie'
-    'multiply',
-    'jennys-secret-message'
+var medium = [
+  // 'wheel-of-fortune',
+  // 'special-multiples',
+  'multiply',
+  'jennys-secret-message',
+  'dna-sequence-tester',
+  'i-love-big-nums-and-i-cannot-lie',
+  'exes-and-ohs'
 ];
 
 module.exports.saveUser = function(req, res) {
@@ -36,12 +39,12 @@ module.exports.saveUser = function(req, res) {
       });
 }
 
-module.exports.grabPrompt = function(req, res) {
+var grabPrompt = function(level, index, iterator) {
   //randomly pick challenge based on choice posted
-  if (req.body.challenge === 'easy') {
-    var rand = easy[Math.floor(Math.random() * easy.length)];
+  if (level === 'easy') {
+    var prompt = easy[index];
   } else {
-    var rand = med[Math.floor(Math.random() * med.length)];
+    var prompt = medium[index];
   }
   //generate query
   var options = {
@@ -49,25 +52,53 @@ module.exports.grabPrompt = function(req, res) {
       Authorization: process.env.cwKey
     },
     url : 'https://www.codewars.com/api/v1/code-challenges/' +
-    rand + '/javascript/train'
+    prompt + '/javascript/train'
   }
-
   //grab prompt and send back
   request.post(options, function(err, response, body) {
     var info = JSON.parse(body);
-    res.send(info);
-
-    /*
-      Front end needs to send choice.. easy or med currently
-      '<p>Example:</p>' +
-      '<h1>' + info.name + '</h1>' +
-      '<p>' + info.description + '</p>' +
-      '<p>' + info.session.setup + '</p>' +
-      '<p>' + info.session.exampleFixture + '</p>' +
-    */
-
+    //async data
+    iterator(info);
   });
-}
+};
+
+//Used to shuffle promptS
+var shuffle = function(array) {
+  var arr = Array.prototype.slice(array);
+
+  array.forEach(function(value, index){
+    //generates random whole number with range 0 to array length
+    var random = Math.max(0,(Math.floor(Math.random() * arr.length)));
+    //swaps current index/value with random index/value
+    arr[index] = arr[random];
+    arr[random] = value;
+  });
+
+  return arr;
+};
+
+module.exports.makeGame = function(req, res) {
+  var result = [];
+  var randomArray = [];
+  //generate random indexes for prompts
+  //currently use 4 because only 4 prompts each difficulty
+  for (var i = 0; i < 5; i++) {
+    randomArray.push(i);
+  }
+  //randomize the prompts
+  randomArray = shuffle(randomArray);
+  for (var i = 0; i < req.body.numPrompt; i++) {
+    index = randomArray[i];
+    //make the calls to generate prompts
+    grabPrompt(req.body.difficulty, index, function(info) {
+      result.push(info);
+      //send result array when prompt amount is hit
+      if (result.length === req.body.numPrompt) {
+        res.send(result);
+      }
+    });
+  }
+};
 
 module.exports.submitAttempt = function(req, res) {
   // var project_id = '5727dcf97fc662c6970009e2';
@@ -112,5 +143,4 @@ module.exports.submitAttempt = function(req, res) {
       }, 1500);
     }
   });
-}
-// }
+};
