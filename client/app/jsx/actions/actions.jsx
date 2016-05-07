@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const FETCH_PROMPT = 'FETCH_PROMPT';
 export const SUBMIT_ATTEMPT = 'SUBMIT_ATTEMPT';
+export const CREATE_DIFFICULTY = 'CREATE_DIFFICULTY';
 
 export function fetchPrompt() {
   const request = axios.post('/api/grabPrompt');
@@ -21,3 +22,10 @@ export function submitAttempt(ans) {
     payload: request
   }
 }
+export function createDifficulty(difficulty) {
+  return {
+    type:CREATE_DIFFICULTY,
+    difficulty:difficulty
+  }
+}
+
