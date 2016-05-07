@@ -1,18 +1,27 @@
 const React = require('react');
 const {Button} = require('react-bootstrap');
 const DiffButton = require('./difficultybutton');
+const {connect} = require('react-redux')
+const {createDifficulty} = require('../actions/actions')
+
 
 class Sologame extends React.Component {
-  render(){
+  render(){    
     return (
       <div className='text-center'>
+      <div>{this.props.difficulty}, {this.props.amount}</div>
         <div className='clearfix solo-dropdown'>
-          <DiffButton/>
+          <DiffButton difficulty={this.props.difficulty} createDifficulty={this.props.createDifficulty}/>
         </div>
-        <Button href='#/play' bsStyle='primary' bsSize='large'>Start</Button>        
-      </div>
+        <Button href='#/play' bsStyle='primary' bsSize='large'>Start</Button>
+     </div>
       );
   }
 }
-
-module.exports = Sologame;
+function mapGame(state) {
+  return {
+    amount: state.soloSelection.amount,
+    difficulty: state.soloSelection.difficulty
+  };
+}
+module.exports = connect(mapGame, {createDifficulty})(Sologame);
