@@ -1,6 +1,5 @@
 const React = require('react');
 const ReactRouter = require('react-router')
-window.socket = io.connect({query: "chatroom=pond" });
 
 class UsersList extends React.Component {
 	render() {
@@ -134,6 +133,11 @@ class ChatApp extends React.Component {
       text: '',
       user: ''
     };
+  }
+
+  componentWillMount() {
+  	//force socket room to the pond
+  	window.socket = io.connect({query: "chatroom=pond" });
   }
 
 	componentDidMount() {
