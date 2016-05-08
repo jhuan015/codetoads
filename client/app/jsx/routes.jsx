@@ -5,6 +5,8 @@ import HomeContent from './home/homeContent';
 import Lobby from './lobby/lobby';
 import Layout from './layout';
 import Game from './game/game';
+import MultiGame from './game/multiplayer/multiGame';
+
 
 function checkAuth(nextState, replace) {
 
@@ -24,6 +26,7 @@ export default (
       <IndexRoute component={HomeContent} />
       <Route path='/lobby' component={Lobby} />
       <Route path='/play' component={Game} />
+      <Route path='/multiplay/:name' component={MultiGame} />
       <Route path="*" component={HomeContent}/>
     </Route>
 )

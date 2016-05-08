@@ -5,7 +5,7 @@ class UsersList extends React.Component {
 	render() {
 		return (
 			<div className='users'>
-				<h3> Online Users </h3>
+				<h3> TOAD Users </h3>
 				<ul>
 					{
 						this.props.users.map((user, i) => {
@@ -136,8 +136,8 @@ class ChatApp extends React.Component {
   }
 
   componentWillMount() {
-  	//force socket room to the pond
-  	window.socket = io.connect({query: "chatroom=pond" });
+  	//joins socket according to multiplay/:NAME
+    window.socket = io.connect({query: "chatroom="+this.props.name });
   }
 
 	componentDidMount() {
