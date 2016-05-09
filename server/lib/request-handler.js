@@ -4,15 +4,11 @@ var User = require('./../db/db').User;
 
 //easy, medium, hard, insane
 var easy = [
-  // 'sum-of-multiples',
-  // 'name-on-billboard',
-  // 'fix-your-code-before-the-garden-dies',
-  // 'printing-array-elements-with-comma-delimiters',
-  // 'function-1-hello-world',
-  'multiply',
-  'jennys-secret-message',
-  'multiply',
-  'jennys-secret-message'
+  'sum-of-multiples',
+  'name-on-billboard',
+  'fix-your-code-before-the-garden-dies',
+  'printing-array-elements-with-comma-delimiters',
+  'function-1-hello-world'
 ];
 
 var medium = [
