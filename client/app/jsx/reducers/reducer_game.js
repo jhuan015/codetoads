@@ -1,4 +1,4 @@
- import { FETCH_PROMPTS, SUBMIT_ATTEMPT, NEXT_PROMPT } from '../actions/actions';
+ import { FETCH_PROMPTS, SUBMIT_ATTEMPT, NEXT_PROMPT, CHEAT } from '../actions/actions';
 
 const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: false, index: 0};
 
@@ -24,6 +24,13 @@ export default function(state = INITIAL_STATE, action) {
       attempt: state.attempt,
       passed: false,
       index: action.index
+    }
+  case CHEAT:
+    return {
+      prompts: state.prompts.slice(),
+      attempt: state.attempt,
+      passed: true,
+      index: state.index
     }
   default:
     return state;

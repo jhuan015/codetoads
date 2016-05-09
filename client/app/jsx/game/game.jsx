@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, nextPrompt } from '../actions/actions';
+import { fetchPrompts, submitAttempt, nextPrompt, cheatMe } from '../actions/actions';
 import Race from './race';
 import Prompt from './prompt';
 import UserInput from './userInput';
@@ -39,6 +39,7 @@ class Game extends React.Component {
             fetchPrompts={this.props.fetchPrompts}
             submitAttempt={this.props.submitAttempt}
             nextPrompt={this.props.nextPrompt}
+            cheatMe={this.props.cheatMe}
             session={this.props.prompts[this.props.index].session}
             passed={this.props.passed}
             index={this.props.index}
@@ -59,5 +60,5 @@ function mapStateToProps(state) {
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt })(Game);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe })(Game);
 

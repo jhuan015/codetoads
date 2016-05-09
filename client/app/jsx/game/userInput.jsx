@@ -1,5 +1,6 @@
 const React = require('react');
-const {Button} = require('react-bootstrap')
+const { Button } = require('react-bootstrap')
+const { Link } = require('react-router')
 
 class UserInput extends React.Component {
   constructor (){
@@ -52,6 +53,7 @@ class UserInput extends React.Component {
         return (
           <div>
             <p>YOU WIN!</p>
+            <Link to="/lobby">Go back to lobby</Link>
           </div>          
           )
       }
@@ -69,6 +71,7 @@ class UserInput extends React.Component {
           value={this.state.term}
           onChange={event => this._onInputChange(event.target.value)}
          />
+        <Button bsStyle='primary' className='pull-right' bsSize='large' onClick={this.props.cheatMe}>Cheat!</Button>
         <Button bsStyle='primary' className='pull-right' bsSize='large' onClick={this._submitHandler.bind(this)}>Submit</Button>
       </div>
     )  

@@ -5,6 +5,7 @@ export const SUBMIT_ATTEMPT = 'SUBMIT_ATTEMPT';
 export const CREATE_DIFFICULTY = 'CREATE_DIFFICULTY';
 export const SAVE_USER = 'SAVE_USER';
 export const NEXT_PROMPT = 'NEXT_PROMPT';
+export const CHEAT = 'CHEAT';
 
 export function fetchPrompts(difficulty, numPrompt) {
   const request = axios.post('/api/makeGame', { "difficulty": 'easy', "numPrompt": 2});
@@ -39,4 +40,9 @@ export function nextPrompt(index) {
     index: index
   };
 }
-
+export function cheatMe(){
+  console.log('cheat');
+  return {
+    type: CHEAT
+  }
+}
