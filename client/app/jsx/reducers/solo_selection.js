@@ -1,6 +1,6 @@
 import { CREATE_DIFFICULTY } from '../actions/actions';
 
-const INIT_STATE = {amount:5, difficulty:'easy'};
+const INIT_STATE = {amount:2, difficulty:'easy'};
 
 export default function (state = INIT_STATE, action){
   switch (action.type){

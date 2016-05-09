@@ -63,12 +63,18 @@ var grabPrompt = function(level, index, iterator) {
     },
     url : 'https://www.codewars.com/api/v1/code-challenges/' +
     prompt + '/javascript/train'
-  }
+  };
   //grab prompt and send back
   request.post(options, function(err, response, body) {
-    var info = JSON.parse(body);
-    //async data
-    iterator(info);
+    if(err){
+      iterator(err, null, null);
+    } else if (body.indexOf('!DOCTYPE')<0){     
+      var info = JSON.parse(body);
+      //async data
+      iterator(null, null, info)
+    } else {
+      iterator(null, 500, null)
+    }
   });
 };
 
@@ -100,11 +106,18 @@ module.exports.makeGame = function(req, res) {
   for (var i = 0; i < req.body.numPrompt; i++) {
     index = randomArray[i];
     //make the calls to generate prompts
-    grabPrompt(req.body.difficulty, index, function(info) {
-      result.push(info);
-      //send result array when prompt amount is hit
-      if (result.length === req.body.numPrompt) {
-        res.send(result);
+    grabPrompt(req.body.difficulty, index, function(err, status, info) {
+      if(err){
+        res.send({error: err})
+      }
+      else if(status){
+        res.send({statusCode: 500});
+      } else {      
+        result.push(info);
+        //send result array when prompt amount is hit
+        if (result.length === req.body.numPrompt) {
+          res.send(result);
+        }
       }
     });
   }
