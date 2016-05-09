@@ -1,8 +1,8 @@
 const React = require('react');
 const {SplitButton, MenuItem} = require('react-bootstrap');
-class DiffButton extends React.Component {   
+class DiffButton extends React.Component {
   constructor(){
-    super();    
+    super();
     this.state={title:'easy'};
   }
   componentWillReceiveProps (nextProps){
@@ -28,7 +28,7 @@ class DiffButton extends React.Component {
       );
   }
   _changeSelection (val){
-    this.props.createDifficulty(val); 
+    this.props.createDifficulty(val);
   }
 }
 

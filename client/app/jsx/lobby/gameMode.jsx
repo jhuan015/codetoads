@@ -7,7 +7,7 @@ class GameMode extends React.Component {
   render (){
     return (
       <div>
-        <h2>Toad Mode</h2>       
+        <h2>Toad Mode</h2>
         <Tabs defaultActiveKey={1} id='ModeSelection'>
           <Tab eventKey={1} title="Solo Toad">
             <Solo/>
@@ -17,8 +17,8 @@ class GameMode extends React.Component {
           </Tab>
         </Tabs>
       </div>
-    )  
-  } 
+    )
+  }
 }
 
 module.exports = GameMode

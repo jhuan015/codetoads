@@ -13,7 +13,7 @@ class Profile extends React.Component {
       quits: 322,
       fastest: '4 Minutes 30 Seconds'
     };
-  }  
+  }
   render (){
     var { username, winStreak, lostTo, gamesPlayed, quits, fastest } = this.state;
     return (
@@ -23,10 +23,10 @@ class Profile extends React.Component {
         <ProfileRow title='Highest Win Streak' value={winStreak}/>
         <ProfileRow title='Last Wrecked By' value={lostTo}/>
         <ProfileRow title='Rage Quits' value={quits}/>
-        <ProfileRow title='Fastest Time' value={fastest}/>        
+        <ProfileRow title='Fastest Time' value={fastest}/>
       </div>
-    )  
-  } 
+    )
+  }
 }
 
 module.exports = Profile;
