@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt } from '../actions/actions';
+import { fetchPrompts, submitAttempt, nextPrompt } from '../actions/actions';
 import Race from './race';
 import Prompt from './prompt';
 import UserInput from './userInput';
@@ -13,6 +13,10 @@ class Game extends React.Component {
   }
 
   render (){
+    if(this.props.prompts.statusCode === 500){
+      console.log('calling again');
+      this.props.fetchPrompts();
+    }
     return (
       <div className='game'>
         <div className='race clearfix'>
@@ -21,7 +25,8 @@ class Game extends React.Component {
         <div className='prompt-panel col-sm-4'>
           <Tabs defaultActiveKey={1} id='detailsSelection'>
             <Tab eventKey={1} title="Prompt">
-              { this.props.prompts[0] && <Prompt name={this.props.prompts[0].name} description={this.props.prompts[0].description} />}
+              { this.props.prompts[this.props.index] &&
+                <Prompt name={this.props.prompts[this.props.index].name} description={this.props.prompts[this.props.index].description} />}
             </Tab>
             <Tab eventKey={2} title="Test Results">
               <TestResults output={this.props.attempt.output} reason={this.props.attempt.reason} />
@@ -29,12 +34,15 @@ class Game extends React.Component {
           </Tabs>
         </div>
         <div className='input-panel col-sm-8'>
-          {this.props.prompts[0] &&
+          { this.props.prompts[this.props.index] &&
             <UserInput
             fetchPrompts={this.props.fetchPrompts}
             submitAttempt={this.props.submitAttempt}
-            session={this.props.prompts[0].session}
-            passed={this.props.passed}/>}
+            nextPrompt={this.props.nextPrompt}
+            session={this.props.prompts[this.props.index].session}
+            passed={this.props.passed}
+            index={this.props.index}
+            amount={this.props.amount}/>}
         </div>
       </div>
     )
@@ -42,10 +50,14 @@ class Game extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return { prompts: state.game.prompts,
            attempt: state.game.attempt,
-           passed: state.game.passed
+           passed: state.game.passed,
+           index: state.game.index,
+           amount: state.soloSelection.amount
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt })(Game);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt })(Game);
+
