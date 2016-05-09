@@ -22,18 +22,28 @@ var medium = [
 ];
 
 module.exports.saveUser = function(req, res) {
-    User.filter({auth_id: req.body.user_id}).run()
+    console.log(req.body);
+    var newUser = {
+       user_id: req.body.user_id,
+       username: req.body.nickname,
+       firstname: req.body.given_name,
+       lastname: req.body.family_name,
+       email: req.body.email,
+       picture: req.body.picture
+    }
+
+    User.filter({user_id: req.body.user_id}).run()
       .then(function (users) {
         var user = users[0];
         if(user) {
-          return done(new Error('User already exists'));
+          return new Error('User already exists');
         } else {
-          User.save(req.body)
+          User.save(newUser)
             .then(function (user) {
-              return done(null, user);
+              return user;
             })
             .catch(function (err) {
-              return done(err, null);
+              return null;
             });
         }
       });

@@ -1,4 +1,5 @@
 import Auth0Lock from 'auth0-lock';
+import { saveUser } from './actions';
 //Login Actions
 export const SHOW_LOCK = 'SHOW_LOCK';
 export const LOCK_SUCCESS = 'LOCK_SUCCESS';
@@ -36,6 +37,7 @@ export function login() {
         dispatch(lockError(err));
         return;
       }
+      saveUser(profile);
       // Set token and profile to local storage for further use
       localStorage.setItem('profile', JSON.stringify(profile));
       localStorage.setItem('id_token', token);
