@@ -23,7 +23,6 @@ var medium = [
 ];
 
 module.exports.saveUser = function(req, res) {
-    console.log(req.body);
     var newUser = {
        user_id: req.body.user_id,
        username: req.body.nickname,
@@ -167,4 +166,37 @@ module.exports.submitAttempt = function(req, res) {
       }, 1500);
     }
   });
+};
+
+module.exports.joinGame = function(req, res) {
+
+};
+
+module.exports.createGame = function(req, res) {
+  var newGame = {
+     roomname: req.body.user_id,
+     password: req.body.nickname,
+     users: []
+
+  }
+  Game.filter({roomname: req.body.roomname}).run()
+    .then(function (games) {
+      var game = games[0];
+      if(game) {
+        return new Error('Game already exists');
+      } else {
+        Game.save(newGame)
+          .then(function (game) {
+            return game;
+          })
+          .catch(function (err) {
+            return null;
+          });
+      }
+    });
+
+};
+
+module.exports.getUserInfo = function(req, res) {
+
 };
