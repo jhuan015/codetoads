@@ -31,12 +31,16 @@ class Multigame extends React.Component {
           </div>
         </form>
       </div>
-
       )
-  }
-  _getValues(){
-
   }
 }
 
-module.exports = Multigame;
+function mapStateToProps(state) {
+  console.log(state);
+  return { roomname: state.multiSelection.roomname,
+           password: state.multiSelection.password,
+           difficulty: state.multiSelection.difficulty
+          };
+}
+
+module.exports = connect(mapStateToProps, {createGame, createDifficulty})(Multigame);
