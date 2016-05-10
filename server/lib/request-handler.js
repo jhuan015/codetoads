@@ -173,12 +173,20 @@ module.exports.joinGame = function(req, res) {
 };
 
 module.exports.createGame = function(req, res) {
-  var newGame = {
-     roomname: req.body.user_id,
-     password: req.body.nickname,
-     users: []
-
+  var user = {
+    userid: req.body.userid,
+    progress: 0,
+    prompt: '',
+    code: ''
   }
+  var newGame = {
+     roomname: req.body.roomname,
+     password: req.body.password,
+     users: {},
+     creator: req.body.userid
+  }
+  newGame.users[user.userid] = user;
+
   Game.filter({roomname: req.body.roomname}).run()
     .then(function (games) {
       var game = games[0];
@@ -209,5 +217,5 @@ module.exports.getUserInfo = function(req, res) {
     })
     .catch(function (err) {
       return null;
-    });;
+    });
 };
