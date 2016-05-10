@@ -15,7 +15,7 @@ class Lobby extends React.Component {
           {!this.props.isAuthenticated && <div>Sign in for more fun!</div>}
         </div>
         <div className='col-sm-8 selection-panel'>
-          <GameMode />
+          <GameMode isAuthenticated={this.props.isAuthenticated} />
         </div>
       </div>
     )
