@@ -32,14 +32,9 @@ class UserInput extends React.Component {
       });
     }
   }
-  
-  // onChange(newValue) {
-  //   console.log('change',newValue);
-  // }
 
   _onInputChange(term) {
     this.setState({term});
-    console.log(this.state.term);
   }
 
   _submitHandler(){
