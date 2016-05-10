@@ -1,6 +1,7 @@
 var db = require('./../db/config');
 var request = require('request');
 var User = require('./../db/db').User;
+var Game = require('./../db/db').Game;
 
 //easy, medium, hard, insane
 var easy = [
@@ -68,7 +69,7 @@ var grabPrompt = function(level, index, iterator) {
   request.post(options, function(err, response, body) {
     if(err){
       iterator(err, null, null);
-    } else if (body.indexOf('!DOCTYPE')<0){     
+    } else if (body.indexOf('!DOCTYPE')<0){
       var info = JSON.parse(body);
       //async data
       iterator(null, null, info)
@@ -112,7 +113,7 @@ module.exports.makeGame = function(req, res) {
       }
       else if(status){
         res.send({statusCode: 500});
-      } else {      
+      } else {
         result.push(info);
         //send result array when prompt amount is hit
         if (result.length === req.body.numPrompt) {
