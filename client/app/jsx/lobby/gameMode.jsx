@@ -12,9 +12,9 @@ class GameMode extends React.Component {
           <Tab eventKey={1} title="Solo Toad">
             <Solo/>
           </Tab>
-          <Tab eventKey={2} title="Multi Toad">
+          {this.props.isAuthenticated && <Tab eventKey={2} title="Multi Toad">
             <Multi/>
-          </Tab>
+          </Tab>}
         </Tabs>
       </div>
     )

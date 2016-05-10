@@ -1,6 +1,8 @@
-const Profile = require('./profile')
-const GameMode = require("./gameMode")
-const ChatApp = require("./pond")
+import React from 'react';
+import { connect } from 'react-redux';
+import Profile from './profile';
+import GameMode from "./gameMode";
+import ChatApp from "./pond";
 
 class Lobby extends React.Component {
 
@@ -8,15 +10,22 @@ class Lobby extends React.Component {
     return (
       <div className='lobby row'>
         <div className='col-sm-4 profile-panel'>
-          <Profile />
-          <ChatApp />
+          {this.props.isAuthenticated && <Profile />}
+          {this.props.isAuthenticated && <ChatApp />}
+          {!this.props.isAuthenticated && <div>Sign in for more fun!</div>}
         </div>
         <div className='col-sm-8 selection-panel'>
-          <GameMode />
+          <GameMode isAuthenticated={this.props.isAuthenticated} />
         </div>
       </div>
     )
   }
 }
 
-module.exports = Lobby;
+function mapStateToProps(state) {
+  return { isAuthenticated: state.auth.isAuthenticated,
+           errorMessage: state.auth.errorMessage
+          };
+}
+
+export default connect(mapStateToProps)(Lobby);

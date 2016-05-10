@@ -9,7 +9,7 @@ const {Tabs, Tab} = require('react-bootstrap');
 
 class Game extends React.Component {
   componentWillMount() {
-    this.props.fetchPrompts();
+    this.props.fetchPrompts(this.props.difficulty);
   }
 
   render (){
@@ -56,7 +56,8 @@ function mapStateToProps(state) {
            attempt: state.game.attempt,
            passed: state.game.passed,
            index: state.game.index,
-           amount: state.soloSelection.amount
+           amount: state.soloSelection.amount,
+           difficulty: state.soloSelection.difficulty
           };
 }
 
