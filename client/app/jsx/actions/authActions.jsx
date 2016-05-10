@@ -37,10 +37,10 @@ export function login() {
         dispatch(lockError(err));
         return;
       }
-      saveUser(profile);
       // Set token and profile to local storage for further use
       localStorage.setItem('profile', JSON.stringify(profile));
       localStorage.setItem('id_token', token);
+      saveUser(profile);
       dispatch(lockSuccess(profile, token));
     });
   };

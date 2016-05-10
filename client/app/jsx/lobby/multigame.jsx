@@ -14,7 +14,7 @@ class Multigame extends React.Component {
           <span className='rad-inline'>
             <input className="with-gap" name="action" type="radio" id="join"/>
             <label htmlFor="join">Join</label>
-          </span>          
+          </span>
             <DiffButton/>
           <FormGroup controlId="room">
             <ControlLabel>Room Name</ControlLabel>

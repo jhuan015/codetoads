@@ -5,8 +5,8 @@ const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
   case FETCH_PROMPTS:
-    return { 
-      prompts: action.payload.data, 
+    return {
+      prompts: action.payload.data,
       attempt: state.attempt,
       passed: false,
       index: 0

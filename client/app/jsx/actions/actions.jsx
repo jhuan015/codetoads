@@ -28,6 +28,7 @@ export function createDifficulty(difficulty) {
   };
 }
 export function saveUser(profile) {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
   const request = axios.post('/api/saveUser', profile);
   return {
     type: SAVE_USER,

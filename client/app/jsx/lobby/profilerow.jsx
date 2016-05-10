@@ -3,7 +3,7 @@ class ProfileRow extends React.Component {
   /*constructor(){
     super();
     this.state ={};
-  };*/  
+  };*/
   render (){
     return (
         <div className="row profile-panel__group">
