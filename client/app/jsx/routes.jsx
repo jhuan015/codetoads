@@ -6,6 +6,7 @@ import Lobby from './lobby/lobby';
 import Layout from './layout';
 import Game from './game/game';
 import MultiGame from './game/multiplayer/multiGame';
+import Typing from './game/typing/typing'
 
 
 function checkAuth(nextState, replace) {
@@ -22,11 +23,12 @@ function checkAuth(nextState, replace) {
 }
 
 export default (
-    <Route path='/' component={Layout}>
-      <IndexRoute component={HomeContent} />
-      <Route path='/lobby' component={Lobby} />
-      <Route path='/play' component={Game} />
-      <Route path='/multiplay/:name' component={MultiGame} />
-      <Route path="*" component={HomeContent}/>
-    </Route>
+  <Route path='/' component={Layout}>
+    <IndexRoute component={HomeContent} />
+    <Route path='/lobby' component={Lobby} />
+    <Route path='/play' component={Game} />
+    <Route path='/multiplay/:name' component={MultiGame} />
+    <Route path='/typing' component={Typing} />
+    <Route path="*" component={HomeContent} />
+  </Route>
 )
