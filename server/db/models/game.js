@@ -4,7 +4,8 @@ var type = thinky.type;
 var Game = thinky.createModel('Game', {
   id: type.string(),
   users: type.string(),
-  title: type.string(),
+  roomname: type.string(),
+  password: type.string(),
   winner: type.string()
 });
 
