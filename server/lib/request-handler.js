@@ -198,5 +198,16 @@ module.exports.createGame = function(req, res) {
 };
 
 module.exports.getUserInfo = function(req, res) {
-
+  User.filter({user_id: req.body.user_id}).run()
+    .then(function (users) {
+      var user = users[0];
+      if(user) {
+        return user
+      } else {
+        return null;
+      }
+    })
+    .catch(function (err) {
+      return null;
+    });;
 };
