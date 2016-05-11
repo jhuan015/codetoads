@@ -135,11 +135,6 @@ class ChatApp extends React.Component {
     };
   }
 
-  componentWillMount() {
-  	//joins socket according to multiplay/:NAME
-    window.socket = io.connect({query: "chatroom="+this.props.name });
-  }
-
 	componentDidMount() {
 		socket.on('init', this._initialize.bind(this));
 		socket.on('send:message', this._messageRecieve.bind(this));
