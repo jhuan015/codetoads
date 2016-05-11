@@ -13,4 +13,10 @@ module.exports = function(app) {
 
   app.post('/api/makeGame', handler.makeGame);
 
+  app.post('/api/joinGame', authenticate, handler.joinGame);
+
+  app.post('/api/createGame', authenticate, handler.createGame);
+
+  app.post('/api/getUserInfo', authenticate, handler.getUserInfo);
+
 }

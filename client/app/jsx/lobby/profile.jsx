@@ -18,12 +18,12 @@ class Profile extends React.Component {
     var { username, winStreak, lostTo, gamesPlayed, quits, fastest } = this.state;
     return (
       <div>
-        <h2>{username}</h2>
-        <ProfileRow title='Total Games Played' value={gamesPlayed}/>
-        <ProfileRow title='Highest Win Streak' value={winStreak}/>
-        <ProfileRow title='Last Wrecked By' value={lostTo}/>
-        <ProfileRow title='Rage Quits' value={quits}/>
-        <ProfileRow title='Fastest Time' value={fastest}/>
+        <h2>{this.props.firstname} {this.props.lastname}</h2>
+        <ProfileRow title='Total Games Played' value={this.props.gamesPlayed}/>
+        <ProfileRow title='Highest Win Streak' value={this.props.winStreak}/>
+        <ProfileRow title='Last Wrecked By' value={this.props.lostTo}/>
+        <ProfileRow title='Rage Quits' value={this.props.quits}/>
+        <ProfileRow title='Fastest Time' value={this.props.fastest}/>
       </div>
     )
   }

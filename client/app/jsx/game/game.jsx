@@ -56,10 +56,9 @@ function mapStateToProps(state) {
            attempt: state.game.attempt,
            passed: state.game.passed,
            index: state.game.index,
-           amount: state.soloSelection.amount,
-           difficulty: state.soloSelection.difficulty
+           amount: state.selection.amount,
+           difficulty: state.selection.difficulty
           };
 }
 
 export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe })(Game);
-

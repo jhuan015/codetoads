@@ -1,6 +1,7 @@
 var db = require('./../db/config');
 var request = require('request');
 var User = require('./../db/db').User;
+var Game = require('./../db/db').Game;
 
 //easy, medium, hard, insane
 var easy = [
@@ -22,7 +23,6 @@ var medium = [
 ];
 
 module.exports.saveUser = function(req, res) {
-    console.log(req.body);
     var newUser = {
        user_id: req.body.user_id,
        username: req.body.nickname,
@@ -68,7 +68,7 @@ var grabPrompt = function(level, index, iterator) {
   request.post(options, function(err, response, body) {
     if(err){
       iterator(err, null, null);
-    } else if (body.indexOf('!DOCTYPE')<0){     
+    } else if (body.indexOf('!DOCTYPE')<0){
       var info = JSON.parse(body);
       //async data
       iterator(null, null, info)
@@ -112,7 +112,7 @@ module.exports.makeGame = function(req, res) {
       }
       else if(status){
         res.send({statusCode: 500});
-      } else {      
+      } else {
         result.push(info);
         //send result array when prompt amount is hit
         if (result.length === req.body.numPrompt) {
@@ -166,4 +166,58 @@ module.exports.submitAttempt = function(req, res) {
       }, 1500);
     }
   });
+};
+
+module.exports.joinGame = function(req, res) {
+
+};
+
+module.exports.createGame = function(req, res) {
+  console.log(req.body);
+  var user = {
+    userid: req.body.userid,
+    progress: 0,
+    prompt: '',
+    code: ''
+  }
+  var newGame = {
+     roomname: req.body.roomname,
+     password: req.body.password,
+     users: {},
+     creator: req.body.userid
+  }
+  newGame.users[user.userid] = user;
+
+  Game.filter({roomname: req.body.roomname}).run()
+    .then(function (games) {
+      var game = games[0];
+      if(game) {
+        return new Error('Game already exists');
+      } else {
+        Game.save(newGame)
+          .then(function (game) {
+            return game;
+          })
+          .catch(function (err) {
+            return null;
+          });
+      }
+    });
+
+};
+
+module.exports.getUserInfo = function(req, res) {
+  User.filter({user_id: req.body.user_id}).run()
+    .then(function (users) {
+      console.log(typeof users[0], users[0]);
+      var user = users[0];
+      if(user) {
+        return user
+      } else {
+        return null;
+      }
+    })
+    .catch(function (err) {
+      return null;
+    });
 };
