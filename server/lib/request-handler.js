@@ -196,7 +196,7 @@ module.exports.createGame = function(req, res) {
       } else {
         Game.save(newGame)
           .then(function (game) {
-            return game;
+            res.send(game);
           })
           .catch(function (err) {
             return null;
@@ -209,12 +209,11 @@ module.exports.createGame = function(req, res) {
 module.exports.getUserInfo = function(req, res) {
   User.filter({user_id: req.body.user_id}).run()
     .then(function (users) {
-      console.log(typeof users[0], users[0]);
       var user = users[0];
       if(user) {
-        return user
+        res.send(user);
       } else {
-        return null;
+        res.send(null);
       }
     })
     .catch(function (err) {
