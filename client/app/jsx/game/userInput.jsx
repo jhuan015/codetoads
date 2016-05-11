@@ -1,6 +1,12 @@
-const React = require('react');
-const { Button } = require('react-bootstrap')
-const { Link } = require('react-router')
+import React from 'react';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router';
+import brace from 'brace';
+import AceEditor from 'react-ace';
+
+import 'brace/ext/language_tools'
+import 'brace/mode/javascript';
+import 'brace/theme/tomorrow';
 
 class UserInput extends React.Component {
   constructor (){
@@ -67,10 +73,17 @@ class UserInput extends React.Component {
     return (
       <div>
       <h2>Your Solution Below</h2>
-        <textArea rows={25} className='input-panel__textarea'
+         <AceEditor
+          className='input-panel__textarea'
+          mode="javascript"
+          theme="tomorrow"
+          tabSize={2}
+          width="800px"
+          showGutter={false}
+          onChange={this._onInputChange.bind(this)}
           value={this.state.term}
-          onChange={event => this._onInputChange(event.target.value)}
-         />
+          editorProps={{$blockScrolling: true}}
+        />
         <Button bsStyle='primary' className='pull-right' bsSize='large' onClick={this.props.cheatMe}>Cheat!</Button>
         <Button bsStyle='primary' className='pull-right' bsSize='large' onClick={this._submitHandler.bind(this)}>Submit</Button>
       </div>

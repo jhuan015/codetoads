@@ -51,12 +51,13 @@ class Game extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return { prompts: state.game.prompts,
            attempt: state.game.attempt,
            passed: state.game.passed,
            index: state.game.index,
-           amount: state.soloSelection.amount,
-           difficulty: state.soloSelection.difficulty
+           amount: state.selection.amount,
+           difficulty: state.selection.difficulty
           };
 }
 

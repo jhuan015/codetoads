@@ -6,7 +6,10 @@ export const CREATE_DIFFICULTY = 'CREATE_DIFFICULTY';
 export const SAVE_USER = 'SAVE_USER';
 export const NEXT_PROMPT = 'NEXT_PROMPT';
 export const CHEAT = 'CHEAT';
+export const SET_ROOM = 'SET_ROOM';
+export const SET_JOIN = 'SET_JOIN';
 export const JOIN_GAME = 'JOIN_GAME';
+export const SET_CREATE = 'SET_CREATE'
 export const CREATE_GAME = 'CREATE_GAME';
 export const GET_USER_INFO = 'GET_USER_INFO';
 
@@ -44,13 +47,24 @@ export function nextPrompt(index) {
     index: index
   };
 }
-export function cheatMe(){
-  console.log('cheat');
+export function cheatMe() {
   return {
     type: CHEAT
   }
 }
-export function joinGame(roomname, password){
+export function setRoom(name, password) {
+  return {
+    type: SET_ROOM,
+    name: name,
+    password: password
+  }
+}
+export function setJoin() {
+  return {
+    type: SET_JOIN
+  }
+}
+export function joinGame(roomname, password) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
   const request = axios.post('/api/joinGame', {'roomname': roomname, 'password': password});
   return {
@@ -58,17 +72,25 @@ export function joinGame(roomname, password){
     payload: request
   }
 }
-export function createGame(roomname, password, difficulty){
+export function setCreate() {
+  return {
+    type: SET_CREATE
+  }
+}
+export function createGame(roomname, password, difficulty) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
   const request = axios.post('/api/createGame', {'roomname': roomname, 'password': password, 'difficulty': difficulty, 'user_id':JSON.parse(localStorage.profile).user_id });
   return {
     type: CREATE_GAME,
-    payload: 'hi',
+    payload: request
   }
 }
-export function getUserInfo(username){
+export function getUserInfo() {
+  var user = {
+    user_id: JSON.parse(localStorage.profile).user_id
+  }
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
-  const request = axios.post('/api/getUserInfo', username);
+  const request = axios.post('/api/getUserInfo', user);
   return {
     type: GET_USER_INFO,
     payload: request

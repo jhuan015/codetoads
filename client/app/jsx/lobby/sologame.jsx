@@ -20,8 +20,8 @@ class Sologame extends React.Component {
 }
 function mapGame(state) {
   return {
-    amount: state.soloSelection.amount,
-    difficulty: state.soloSelection.difficulty
+    amount: state.selection.amount,
+    difficulty: state.selection.difficulty
   };
 }
 module.exports = connect(mapGame, {createDifficulty})(Sologame);

@@ -9,6 +9,7 @@ var User = thinky.createModel('User', {
   lastname: type.string(),
   winStreak: type.number(),
   lostTo: type.string(),
+  gamesPlayed: type.number(),
   quits: type.number(),
   fastest: type.number(),
   email: type.string(),
