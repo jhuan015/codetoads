@@ -4,8 +4,9 @@ import { Link } from 'react-router';
 import brace from 'brace';
 import AceEditor from 'react-ace';
 
+import 'brace/ext/language_tools'
 import 'brace/mode/javascript';
-import 'brace/theme/ambiance';
+import 'brace/theme/tomorrow';
 
 class UserInput extends React.Component {
   constructor (){
@@ -75,7 +76,10 @@ class UserInput extends React.Component {
          <AceEditor
           className='input-panel__textarea'
           mode="javascript"
-          theme="ambiance"
+          theme="tomorrow"
+          tabSize={2}
+          width="800px"
+          showGutter={false}
           onChange={this._onInputChange.bind(this)}
           value={this.state.term}
           editorProps={{$blockScrolling: true}}
