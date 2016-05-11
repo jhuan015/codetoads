@@ -8,7 +8,6 @@ import { getUserInfo } from "../actions/actions"
 class Lobby extends React.Component {
   
   componentWillMount(){
-    console.log('mounting?')
     this.props.getUserInfo();
   }
 

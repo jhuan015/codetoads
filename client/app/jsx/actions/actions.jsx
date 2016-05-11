@@ -53,7 +53,6 @@ export function cheatMe() {
   }
 }
 export function setRoom(name, password) {
-  console.log('setting states, yo.')
   return {
     type: SET_ROOM,
     name: name,
@@ -81,15 +80,17 @@ export function setCreate() {
 export function createGame(roomname, password, difficulty) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
   const request = axios.post('/api/createGame', {'roomname': roomname, 'password': password, 'difficulty': difficulty, 'user_id':JSON.parse(localStorage.profile).user_id });
-  console.log(roomname, password, difficulty, "--------", request)
   return {
     type: CREATE_GAME,
     payload: request
   }
 }
-export function getUserInfo(username) {
+export function getUserInfo() {
+  var user = {
+    user_id: JSON.parse(localStorage.profile).user_id
+  }
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
-  const request = axios.post('/api/getUserInfo', username);
+  const request = axios.post('/api/getUserInfo', user);
   return {
     type: GET_USER_INFO,
     payload: request

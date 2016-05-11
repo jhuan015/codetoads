@@ -173,6 +173,7 @@ module.exports.joinGame = function(req, res) {
 };
 
 module.exports.createGame = function(req, res) {
+  console.log(req.body);
   var user = {
     userid: req.body.userid,
     progress: 0,
@@ -208,6 +209,7 @@ module.exports.createGame = function(req, res) {
 module.exports.getUserInfo = function(req, res) {
   User.filter({user_id: req.body.user_id}).run()
     .then(function (users) {
+      console.log(typeof users[0], users[0]);
       var user = users[0];
       if(user) {
         return user
