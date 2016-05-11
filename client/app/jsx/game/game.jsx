@@ -51,7 +51,6 @@ class Game extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return { prompts: state.game.prompts,
            attempt: state.game.attempt,
            passed: state.game.passed,
@@ -62,4 +61,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe })(Game);
-

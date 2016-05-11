@@ -1,12 +1,14 @@
 const React = require('react');
+import { connect } from 'react-redux';
 const {Button, SplitButton, MenuItem, FormGroup, ControlLabel, FormControl} = require('react-bootstrap');
 const DiffButton = require('./difficultybutton')
+const {createGame, createDifficulty} = require('../actions/actions')
 
 class Multigame extends React.Component {
   render(){
     return (
       <div>
-        <form>
+        <form onSubmit={this.props.createGame(this.props.roomname, this.props.password, this.props.difficulty)}>
           <span className='rad-inline'>
             <input className="with-gap" name="action" type="radio" id="create"/>
             <label htmlFor="create">Create</label>
@@ -15,7 +17,7 @@ class Multigame extends React.Component {
             <input className="with-gap" name="action" type="radio" id="join"/>
             <label htmlFor="join">Join</label>
           </span>
-            <DiffButton/>
+            <DiffButton difficulty={this.props.difficulty} createDifficulty={this.props.createDifficulty}/>
           <FormGroup controlId="room">
             <ControlLabel>Room Name</ControlLabel>
             <FormControl type="text" placeholder="Enter Room Name" />
@@ -29,12 +31,16 @@ class Multigame extends React.Component {
           </div>
         </form>
       </div>
-
       )
-  }
-  _getValues(){
-
   }
 }
 
-module.exports = Multigame;
+function mapStateToProps(state) {
+  console.log(state);
+  return { roomname: state.multiSelection.roomname,
+           password: state.multiSelection.password,
+           difficulty: state.multiSelection.difficulty
+          };
+}
+
+module.exports = connect(mapStateToProps, {createGame, createDifficulty})(Multigame);
