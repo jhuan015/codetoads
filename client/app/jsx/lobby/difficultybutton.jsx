@@ -1,9 +1,10 @@
 const React = require('react');
 const {SplitButton, MenuItem} = require('react-bootstrap');
+
 class DiffButton extends React.Component {
   constructor(){
     super();
-    this.state={title:'easy'};
+    this.state={title:'Tadpole'};
   }
   componentWillReceiveProps (nextProps){
     const diff = {
@@ -16,7 +17,7 @@ class DiffButton extends React.Component {
   }
   render (){
     return (
-      <div className='clearfix multi-btn-select text-center'>
+      <div className='clearfix multi-btn-select text-center' refs='difficulty'>
         <h5>Select Difficulty</h5>
         <SplitButton title={this.state.title} pullRight id="split-button-pull-right" onSelect={this._changeSelection.bind(this)} >
         <MenuItem eventKey="easy">Tadpole</MenuItem>
