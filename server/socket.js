@@ -120,7 +120,9 @@ module.exports = function (socket) {
     for (var i = 0; i < gameStatus[room].player.length; i++) {
       if (data.name === gameStatus[room].player[i].name) {
         gameStatus[room].player[i].current++;
+        //emit to everyone and socket that sent it
         this.to(room).emit('update:game', gameStatus[room]);
+        socket.emit('update:game', gameStatus[room]);
         return;
       }
     }
