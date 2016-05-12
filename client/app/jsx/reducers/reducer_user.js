@@ -16,7 +16,6 @@ const INIT_STATE = {
 };
 
 export default function (state = INIT_STATE, action){
-  console.log(action.payload)
   switch (action.type){
     case GET_USER_INFO:
       return {

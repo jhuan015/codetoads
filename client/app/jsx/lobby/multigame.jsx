@@ -70,7 +70,6 @@ class Multigame extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return { roomname: state.selection.roomname,
            password: state.selection.password,
            difficulty: state.selection.difficulty,

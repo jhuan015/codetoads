@@ -6,10 +6,6 @@ import ChatApp from "./pond";
 import { getUserInfo } from "../actions/actions"
 
 class Lobby extends React.Component {
-  
-  componentWillMount(){
-    this.props.getUserInfo();
-  }
 
   render () {
     return (
@@ -22,7 +18,8 @@ class Lobby extends React.Component {
               lostTo={this.props.lostTo}
               gamesPlayed={this.props.gamesPlayed}
               quits={this.props.quits}
-              fastest={this.props.fastest} />}
+              fastest={this.props.fastest}
+              getUserInfo={this.props.getUserInfo} />}
           {this.props.isAuthenticated && <ChatApp />}
           {!this.props.isAuthenticated && <div>Sign in for more fun!</div>}
         </div>
@@ -35,7 +32,6 @@ class Lobby extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return { isAuthenticated: state.auth.isAuthenticated,
            errorMessage: state.auth.errorMessage,
            username: state.user.username,
