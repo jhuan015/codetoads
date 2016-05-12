@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
-import brace from 'brace';
+// import brace from 'brace';
 import AceEditor from 'react-ace';
 
-import 'brace/ext/language_tools'
-import 'brace/mode/javascript';
-import 'brace/theme/tomorrow';
+// import 'brace/ext/language_tools'
+// import 'brace/mode/javascript';
+// import 'brace/theme/tomorrow';
 
 class UserInput extends React.Component {
   constructor (){

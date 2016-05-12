@@ -6,7 +6,6 @@ import ChatApp from "./pond";
 import { getUserInfo } from "../actions/actions"
 
 class Lobby extends React.Component {
-
   render () {
     return (
       <div className='lobby row'>
