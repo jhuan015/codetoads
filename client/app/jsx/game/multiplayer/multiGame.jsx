@@ -18,19 +18,25 @@ class MultiGame extends React.Component {
   }
 
 
-  componentDidMount() {
-    socket.on('update:game', this._updateGame.bind(this));
-    //enter game here for now
-    // socket.emit("game:start", {
+  // componentDidMount() {
+  //   socket.on('update:game', this._updateGame.bind(this));
+  // }
 
-    // });
-  }
+  // _updateGame(data) {
 
-  _updateGame(data) {
-    console.log('game was updated');
-    console.log(data.name + ' completed a prompt');
-    console.log('completed ' + data.goal);
-  }
+  //   {
+  //   player:
+  //    {
+  //    test: { name: 'test', current: 0 },
+  //    jonathanshenhuang: { name: 'jonathanshenhuang', current: 0}
+  //    },
+  //   goal: 0,
+  //   started: false }
+
+  //   console.log('game was updated');
+  //   console.log(data.name + ' completed a prompt');
+  //   console.log('completed ' + data.goal);
+  // }
 
   render (){
     if(this.props.prompts.statusCode === 500){
@@ -77,8 +83,8 @@ function mapStateToProps(state) {
            attempt: state.game.attempt,
            passed: state.game.passed,
            index: state.game.index,
-           amount: state.soloSelection.amount,
-           difficulty: state.soloSelection.difficulty
+           amount: state.selection.amount,
+           difficulty: state.selection.difficulty
           };
 }
 
