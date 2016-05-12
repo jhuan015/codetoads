@@ -39,16 +39,43 @@ var userNames = (function () {
 var users = [];
 var people = {};
 var gameStatus = {};
+var socketsofClients = {};
 
 module.exports = function (socket) {
   socket.name = socket.handshake.query.user;
   var room = socket.handshake.query.chatroom;
   socket.join(room);
-  people[socket.name] = socket.name;
-  gameStatus[socket.name] = {
-    name: socket.name,
-    goal: 0
-  };
+  // people[socket.name] = socket.id;
+  // socketsofClients[socket.id] = socket.name;
+  //userJoined(socket.id)
+  if (!gameStatus[room]){
+    gameStatus[room] = {player:[], goal:0,started:false};
+  }
+  var found = false;
+  for (var i = 0; i < gameStatus[room].player.length; i++) {
+    if (gameStatus[room].player[i].name === socket.name){
+      found = true;
+    }
+  }
+  if (!found){
+    gameStatus[room].player.push({
+        name:socket.name,
+        current:3
+      });
+  } else {
+    //send game data for reconnect
+  }
+  this.to(room).emit('update:game', gameStatus[room])
+  console.log(gameStatus[room]);
+  // gameStatus[room] = {
+  //   players: {
+  //     name: socket.name,
+  //     current: 0
+  //   },
+  //   goal:0,
+  //   started:false
+
+  // };
   users.push(socket.name);
 
 
@@ -79,15 +106,15 @@ module.exports = function (socket) {
     console.log(data.test + ' has won!');
   });
 
-  socket.on('person:passed', function (data, fn) {
-    console.log('pass ' + data.name);
-    console.log(room);
-    gameStatus[data.name].goal++;
-    this.to(room).emit('update:game', {
-      name: data.name,
-      goal: gameStatus[data.name].goal
-    });
-  });
+  // socket.on('person:passed', function (data, fn) {
+  //   console.log('pass ' + data.name);
+  //   console.log(room);
+  //   gameStatus[data.name].goal++;
+  //   this.to(room).emit('update:game', {
+  //     name: data.name,
+  //     goal: gameStatus[data.name].goal
+  //   });
+  // });
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
