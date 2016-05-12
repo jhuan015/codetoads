@@ -18,29 +18,6 @@ class Race extends React.Component {
 
   _updateGame(data) {
     this.setState({game:data});
-    console.log('got data son');
-    console.log(data);
-    console.log(this.state.game);
-    /*
-    {
-    player:
-     [
-     test: { name: 'test', current: 0 },
-     jonathanshenhuang: { name: 'jonathanshenhuang', current: 0}
-     ],
-    goal: 0,
-    started: false
-    }
-    */
-    /*
-    for (var user in data.player) {
-      user.name;
-      user.current;
-    }
-    */
-    // console.log('game was updated');
-    // console.log(data.name + ' completed a prompt');
-    // console.log('completed ' + data.goal);
   }
 
 
