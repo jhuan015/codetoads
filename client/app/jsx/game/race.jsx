@@ -27,13 +27,14 @@ class Race extends React.Component {
       {this.state.game.player &&
             this.state.game.player.map((user, i) => {
               return (
-                <div key={i} className="clearfix">
+                <div key={i} className="clearfix player">
                   <div className="col-sm-2">
                   {user.name}
                   </div>
-                  <div className="col-sm-10">
-                      <Bar amount={user.current} />
-                    <div className={'player'+i}></div>
+                  <div className="col-sm-10">                      
+                    <div className={'player'+i}>
+                     <Bar amount={user.current} />
+                    </div>
                   </div>
                 </div>
               );

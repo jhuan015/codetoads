@@ -68,6 +68,33 @@ div.console-passed {
     border-top: 3px solid #e7e7e7;
     float: left;
 }
+.distBlock {
+  width: 20%;
+  float: left;
+  height: 20px;
+  background-color: black;
+
+}
+.distBlockFinal {
+  width:0%;
+  height:20px;
+  float:left;
+  background-color:black;
+  animation-name:moveForward;
+  animation-duration:2s;
+  animation-fill-mode: forwards;
+  -webkit-animation-name:moveForward;
+  -webkit-animation-duration:2s;
+  -webkit-animation-fill-mode:forwards;
+}
+@keyframes moveForward {
+  0% {
+    width:0%;
+  }
+  100% {
+    width:20%;
+  }
+}
 footer{
   height: 150px;
   background-color:#F8F8F8;
@@ -148,6 +175,9 @@ footer{
 .navbar-default .navbar-nav> li> a.active, .navbar-default .navbar-nav> li> a.active:focus, .navbar-default .navbar-nav> li> a.active:hover {
     color: #555;
     background-color: #e7e7e7;
+}
+.player {
+  margin:10px 0;
 }
 .profile-panel {
     border-right: 1px solid #828282;

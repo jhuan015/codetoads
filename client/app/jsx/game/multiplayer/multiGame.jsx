@@ -44,10 +44,7 @@ class MultiGame extends React.Component {
       this.props.fetchPrompts();
     }
     return (
-      <div className='game'>
-        <div className='race clearfix'>
-          <Race />
-        </div>
+      <div className='game'>        
         <div className='prompt-panel col-sm-4'>
           <Tabs defaultActiveKey={1} id='detailsSelection'>
             <Tab eventKey={1} title="Prompt">
@@ -61,6 +58,9 @@ class MultiGame extends React.Component {
           <GameChat />
         </div>
         <div className='input-panel col-sm-8'>
+          <div className='race clearfix'>
+            <Race />
+          </div>
           { this.props.prompts[this.props.index] &&
             <UserInput
             fetchPrompts={this.props.fetchPrompts}

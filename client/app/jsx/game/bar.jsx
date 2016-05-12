@@ -24,11 +24,11 @@ class Bar extends React.Component {
       {this.state.bars && this.state.bars.map((user, i) => {
         if (i !== (this.props.amount - 1) ){
           return (
-            <div key={i} class='distBlock'>Nothing</div>
+            <div key={i} className='distBlock'></div>
             );
         } else {
           return (
-            <div key={i} class='distBlockFinal'>last</div>
+            <div key={i} className='distBlockFinal'></div>
             );
         }
       })
