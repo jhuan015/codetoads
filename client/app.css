@@ -153,7 +153,71 @@ footer{
     border-right: 1px solid #828282;
     background-color: #4B4454;
     color: white;
+    position:relative;
 }
+.profile-panel__chat {
+  padding:0 15px;
+  position: absolute;
+  top: 0;
+  background: #1C1923;
+  width: 100%;
+  left: 101%;
+  height: 100%;
+  color: #FFFFFF;
+  transition: left 1.5s ease-in-out;
+}
+.profile-panel__chat-show {
+  left:0;
+}
+.profile-panel__chat__innerwrap{
+    background: #696075;
+    border: 1px solid white;
+    padding: 0 10px 10px;
+    margin-top: 10px;
+    height: calc(100% - 20px);
+}
+.profile-panel__chat__arrowwrap {
+  cursor:pointer;
+}
+.profile-panel__chat__arrow {
+  position:absolute;
+  top:70%;
+  border-top:60px solid transparent;
+  border-bottom:60px solid transparent;
+  border-right:60px solid #fff;
+  left:-60px;
+}
+.profile-panel__chat__arrow--alt {
+  top:5%;
+  position:absolute;
+  border-top:70px solid transparent;
+  border-bottom:70px solid transparent;
+  border-right:70px solid #fff;
+  right:0;
+}
+.profile-panel__chat__arrow--back{
+  top:calc(70% - 10px);
+  left:-70px;
+  border-top:70px solid transparent;
+  border-bottom:70px solid transparent;
+  border-right:70px solid #1C1923;  
+}
+.profile-panel__chat__arrow--alt.profile-panel__chat__arrow--back {
+  top:calc(5% - 10px);
+  right:0;
+  border-top:80px solid transparent;
+  border-bottom:80px solid transparent;
+  border-right:80px solid #4B4454; 
+}
+.profile-panel__chat__arrow__text {
+    position: absolute;
+    left: 15px;
+    top: -11px;
+    font-size: 1.2em;
+    color: #1C1923;
+    font-weight: bold;
+}
+
 .profile-panel__group {
   margin:0;
   border-bottom:1px solid #ede5e5;
