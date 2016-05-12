@@ -60,7 +60,7 @@ module.exports = function (socket) {
   if (!found){
     gameStatus[room].player.push({
         name:socket.name,
-        current:3
+        current:0
       });
   } else {
     //send game data for reconnect
@@ -115,6 +115,16 @@ module.exports = function (socket) {
   //     goal: gameStatus[data.name].goal
   //   });
   // });
+
+  socket.on('person:passed', function(data) {
+    for (var i = 0; i < gameStatus[room].player.length; i++) {
+      if (data.name === gameStatus[room].player[i].name) {
+        gameStatus[room].player[i].current++;
+        this.to(room).emit('update:game', gameStatus[room]);
+        return;
+      }
+    }
+  });
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {

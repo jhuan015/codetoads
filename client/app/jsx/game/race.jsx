@@ -15,6 +15,7 @@ class Race extends React.Component {
     this.setState({game:data});
     console.log('got data son');
     console.log(data);
+    console.log(this.state.game);
     /*
     {
     player:

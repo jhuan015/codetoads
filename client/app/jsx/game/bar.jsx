@@ -9,6 +9,15 @@ class Bar extends React.Component {
     }
     this.setState({bars:temp});
   }
+
+  componentWillReceiveProps(nextProps) {
+    var temp = [];
+    for (var a = 0; a < nextProps.amount; a++){
+      temp.push(a);
+    }
+    this.setState({bars:temp});
+  }
+
   render () {
     return (
       <div>
