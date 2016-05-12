@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt } from '../../actions/actions';
+import { fetchPrompts, submitAttempt, nextPrompt, cheatMe } from '../../actions/actions';
 import Race from '../race';
 import Prompt from '../prompt';
 import UserInput from '../userInput';
@@ -8,12 +8,41 @@ import TestResults from '../testResults';
 const {Tabs, Tab} = require('react-bootstrap');
 import GameChat from './gameChat';
 
-class Game extends React.Component {
+
+class MultiGame extends React.Component {
   componentWillMount() {
-    this.props.fetchPrompts();
+    this.props.fetchPrompts(this.props.difficulty);
+    //join socket with roomname and clients username
+    window.socket = io.connect({query: "chatroom="+this.props.params.name +
+      '&user='+JSON.parse(window.localStorage.profile).nickname});
   }
 
+
+  // componentDidMount() {
+  //   socket.on('update:game', this._updateGame.bind(this));
+  // }
+
+  // _updateGame(data) {
+
+  //   {
+  //   player:
+  //    {
+  //    test: { name: 'test', current: 0 },
+  //    jonathanshenhuang: { name: 'jonathanshenhuang', current: 0}
+  //    },
+  //   goal: 0,
+  //   started: false }
+
+  //   console.log('game was updated');
+  //   console.log(data.name + ' completed a prompt');
+  //   console.log('completed ' + data.goal);
+  // }
+
   render (){
+    if(this.props.prompts.statusCode === 500){
+      console.log('calling again');
+      this.props.fetchPrompts();
+    }
     return (
       <div className='game'>
         <div className='race clearfix'>
@@ -22,21 +51,26 @@ class Game extends React.Component {
         <div className='prompt-panel col-sm-4'>
           <Tabs defaultActiveKey={1} id='detailsSelection'>
             <Tab eventKey={1} title="Prompt">
-              { this.props.prompts[0] && <Prompt name={this.props.prompts[0].name} description={this.props.prompts[0].description} />}
+              { this.props.prompts[this.props.index] &&
+                <Prompt name={this.props.prompts[this.props.index].name} description={this.props.prompts[this.props.index].description} />}
             </Tab>
             <Tab eventKey={2} title="Test Results">
-              <TestResults output={this.props.attempt.output} reason={this.props.attempt.reason}/>
+              <TestResults output={this.props.attempt.output} reason={this.props.attempt.reason} />
             </Tab>
           </Tabs>
-          <GameChat name={this.props.params.name} />
+          <GameChat />
         </div>
         <div className='input-panel col-sm-8'>
-          {this.props.prompts[0] &&
+          { this.props.prompts[this.props.index] &&
             <UserInput
             fetchPrompts={this.props.fetchPrompts}
             submitAttempt={this.props.submitAttempt}
-            session={this.props.prompts[0].session}
-            passed={this.props.passed}/>}
+            nextPrompt={this.props.nextPrompt}
+            cheatMe={this.props.cheatMe}
+            session={this.props.prompts[this.props.index].session}
+            passed={this.props.passed}
+            index={this.props.index}
+            amount={this.props.amount}/>}
         </div>
       </div>
     )
@@ -44,10 +78,15 @@ class Game extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return { prompts: state.game.prompts,
            attempt: state.game.attempt,
-           passed: state.game.passed
+           passed: state.game.passed,
+           index: state.game.index,
+           amount: state.selection.amount,
+           difficulty: state.selection.difficulty
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt })(Game);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe })(MultiGame);
+
