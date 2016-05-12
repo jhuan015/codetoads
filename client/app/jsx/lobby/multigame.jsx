@@ -1,5 +1,6 @@
-const React = require('react');
+import React from 'react';
 import { connect } from 'react-redux';
+import { hashHistory } from 'react-router';
 const {Button, SplitButton, MenuItem, FormGroup, ControlLabel, FormControl} = require('react-bootstrap');
 const DiffButton = require('./difficultybutton')
 const {createGame, joinGame, createDifficulty, setJoin, setCreate, setRoom } = require('../actions/actions')
@@ -7,13 +8,13 @@ const {createGame, joinGame, createDifficulty, setJoin, setCreate, setRoom } = r
 class Multigame extends React.Component {
   constructor (){
     super()
-
+    
     this.state = {
       roomname: '',
       password: ''
     };
   }
-  
+    
   _onRoomChange (event) {
     this.setState({
       roomname: event.target.value
@@ -27,11 +28,12 @@ class Multigame extends React.Component {
   }
   
   _handleSubmit () {
-    console.log('hiiiiii', this.state.roomname, this.state.password)
     if (this.props.join){
-      console.log('joining');
+      hashHistory.push('/multiplay/' + this.state.roomname)
     } else if (this.props.create){
-      this.props.createGame(this.state.roomname, this.state.password, this.props.difficulty)
+      this.props.setRoom(this.state.roomname, this.state.password);
+      // this.props.createGame(this.state.roomname, this.state.password, this.props.difficulty);
+      hashHistory.push('/multiplay/' + this.state.roomname);
     }
   }
   
