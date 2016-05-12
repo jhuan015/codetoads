@@ -29,6 +29,7 @@ class Multigame extends React.Component {
   
   _handleSubmit () {
     if (this.props.join){
+      this.props.setRoom(this.state.roomname, this.state.password);
       hashHistory.push('/multiplay/' + this.state.roomname)
     } else if (this.props.create){
       this.props.setRoom(this.state.roomname, this.state.password);
