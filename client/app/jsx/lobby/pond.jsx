@@ -147,6 +147,10 @@ class ChatApp extends React.Component {
 		socket.on('user:left', this._userLeft.bind(this));
 		socket.on('change:name', this._userChangedName.bind(this));
 	}
+	
+	componentWillUnmount() {
+		socket.close();
+	}
 
 	_initialize(data) {
 		var {users, name} = data;
