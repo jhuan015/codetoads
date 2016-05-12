@@ -55,7 +55,7 @@ export function cheatMe() {
 export function setRoom(name, password) {
   return {
     type: SET_ROOM,
-    name: name,
+    roomname: name,
     password: password
   }
 }
