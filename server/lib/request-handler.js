@@ -239,9 +239,9 @@ module.exports.getUserInfo = function(req, res) {
     .then(function (users) {
       var user = users[0];
       if(user) {
-        return user
+        res.send(user);
       } else {
-        return null;
+        res.send(null);
       }
     })
     .catch(function (err) {
