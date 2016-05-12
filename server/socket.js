@@ -49,7 +49,7 @@ module.exports = function (socket) {
   // socketsofClients[socket.id] = socket.name;
   //userJoined(socket.id)
   if (!gameStatus[room]){
-    gameStatus[room] = {player:[], goal:0,started:false};
+    gameStatus[room] = {player:[], goal:5,started:false};
   }
   var found = false;
   for (var i = 0; i < gameStatus[room].player.length; i++) {
@@ -123,6 +123,14 @@ module.exports = function (socket) {
         //emit to everyone and socket that sent it
         this.to(room).emit('update:game', gameStatus[room]);
         socket.emit('update:game', gameStatus[room]);
+        if (gameStatus[room].player[i].current === gameStatus[room].goal) {
+          this.to(room).emit('winner', {
+            winner: data.name
+          });
+          socket.emit('winner', {
+            winner: data.name
+          })
+        }
         return;
       }
     }
