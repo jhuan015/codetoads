@@ -78,7 +78,6 @@ class MultiGame extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return { prompts: state.game.prompts,
            attempt: state.game.attempt,
            passed: state.game.passed,

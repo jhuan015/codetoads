@@ -32,7 +32,6 @@ class Lobby extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return { isAuthenticated: state.auth.isAuthenticated,
            errorMessage: state.auth.errorMessage,
            username: state.user.username,
