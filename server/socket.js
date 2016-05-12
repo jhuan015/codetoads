@@ -11,18 +11,6 @@ var userNames = (function () {
     }
   };
 
-  // find the lowest unused "guest" name and claim it
-  var getGuestName = function () {
-    var name,
-      nextUserId = 1;
-
-    do {
-      name = 'Guest ' + nextUserId;
-      nextUserId += 1;
-    } while (!claim(name));
-
-    return name;
-  };
 
   // serialize claimed names as an array
   var get = function () {
@@ -43,61 +31,116 @@ var userNames = (function () {
   return {
     claim: claim,
     free: free,
-    get: get,
-    getGuestName: getGuestName
+    get: get
   };
 }());
 
 // export function for listening to the socket
+var users = [];
+var people = {};
+var gameStatus = {};
+var socketsofClients = {};
+
 module.exports = function (socket) {
-  var name = userNames.getGuestName();
+  socket.name = socket.handshake.query.user;
   var room = socket.handshake.query.chatroom;
   socket.join(room);
+  // people[socket.name] = socket.id;
+  // socketsofClients[socket.id] = socket.name;
+  //userJoined(socket.id)
+  if (!gameStatus[room]){
+    gameStatus[room] = {player:[], goal:5,started:false};
+  }
+  var found = false;
+  for (var i = 0; i < gameStatus[room].player.length; i++) {
+    if (gameStatus[room].player[i].name === socket.name){
+      found = true;
+    }
+  }
+  if (!found){
+    gameStatus[room].player.push({
+        name:socket.name,
+        current:0
+      });
+  } else {
+    //send game data for reconnect
+  }
+  this.to(room).emit('update:game', gameStatus[room])
+  console.log(gameStatus[room]);
+  // gameStatus[room] = {
+  //   players: {
+  //     name: socket.name,
+  //     current: 0
+  //   },
+  //   goal:0,
+  //   started:false
+
+  // };
+  users.push(socket.name);
+
+
   console.log("joined room: " + room);
   // send the new user their name and a list of users
-  socket.to(room).emit('init', {
-    name: name,
-    users: userNames.get()
+  this.to(room).emit('init', {
+    name: socket.name,
+    users: users
+ //   users: people
   });
 
   // notify other clients that a new user has joined
-  socket.to(room).emit('user:join', {
-    name: name
+  this.to(room).emit('user:join', {
+    name: socket.name
   });
 
   // broadcast a user's message to other users
   socket.on('send:message', function (data) {
     console.log('send message in room: ' + room);
-    socket.to(room).emit('send:message', {
-      user: name,
+    this.to(room).emit('send:message', {
+      user: socket.name,
       text: data.text
     });
   });
 
-  // validate a user's name change, and broadcast it on success
-  socket.on('change:name', function (data, fn) {
-    if (userNames.claim(data.name)) {
-      var oldName = name;
-      userNames.free(oldName);
 
-      name = data.name;
+  socket.on('person:won', function (data, fn) {
+    console.log(data.test + ' has won!');
+  });
 
-      socket.to(room).emit('change:name', {
-        oldName: oldName,
-        newName: name
-      });
+  // socket.on('person:passed', function (data, fn) {
+  //   console.log('pass ' + data.name);
+  //   console.log(room);
+  //   gameStatus[data.name].goal++;
+  //   this.to(room).emit('update:game', {
+  //     name: data.name,
+  //     goal: gameStatus[data.name].goal
+  //   });
+  // });
 
-      fn(true);
-    } else {
-      fn(false);
+  socket.on('person:passed', function(data) {
+    for (var i = 0; i < gameStatus[room].player.length; i++) {
+      if (data.name === gameStatus[room].player[i].name) {
+        gameStatus[room].player[i].current++;
+        //emit to everyone and socket that sent it
+        this.to(room).emit('update:game', gameStatus[room]);
+        socket.emit('update:game', gameStatus[room]);
+        if (gameStatus[room].player[i].current === gameStatus[room].goal) {
+          this.to(room).emit('winner', {
+            winner: data.name
+          });
+          socket.emit('winner', {
+            winner: data.name
+          })
+        }
+        return;
+      }
     }
   });
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
-    socket.to(room).emit('user:left', {
-      name: name
+    this.to(room).emit('user:left', {
+      name: socket.name
     });
-    userNames.free(name);
+    userNames.free(socket.name);
   });
 };
