@@ -173,9 +173,8 @@ module.exports.joinGame = function(req, res) {
 };
 
 module.exports.createGame = function(req, res) {
-  console.log(req.body);
-  var user = {
-    userid: req.body.userid,
+  var player = {
+    user_id: req.body.user_id,
     progress: 0,
     prompt: '',
     code: ''
@@ -183,26 +182,55 @@ module.exports.createGame = function(req, res) {
   var newGame = {
      roomname: req.body.roomname,
      password: req.body.password,
-     users: {},
-     creator: req.body.userid
+     players: [player],
+     creator: req.body.user_id,
+     difficulty: req.body.difficulty,
+     prompts:[]
   }
-  newGame.users[user.userid] = user;
 
-  Game.filter({roomname: req.body.roomname}).run()
-    .then(function (games) {
-      var game = games[0];
-      if(game) {
-        return new Error('Game already exists');
+  var result = [];
+  var randomArray = [];
+  //generate random indexes for prompts
+  //currently use 4 because only 4 prompts each difficulty
+  for (var i = 0; i < 5; i++) {
+    randomArray.push(i);
+  }
+  //randomize the prompts
+  randomArray = shuffle(randomArray);
+  for (var i = 0; i < req.body.numPrompts; i++) {
+    index = randomArray[i];
+    //make the calls to generate prompts
+    grabPrompt(req.body.difficulty, index, function(err, status, info) {
+      if(err){
+        res.send({error: err})
+      }
+      else if(status){
+        res.send({statusCode: 500});
       } else {
-        Game.save(newGame)
-          .then(function (game) {
-            res.send(game);
-          })
-          .catch(function (err) {
-            return null;
+        result.push(info);
+        //send result array when prompt amount is hit
+        if (result.length === req.body.numPrompts) {
+          newGame.prompts = result;
+          Game.filter({roomname: req.body.roomname}).run()
+          .then(function (games) {
+            var game = games[0];
+            if(game) {
+              return new Error('Game already exists');
+            } else {
+              Game.save(newGame)
+              .then(function (game) {
+                res.send(game);
+              })
+              .catch(function (err) {
+                res.send({statusCode: 500});
+              });
+            }
           });
+        }
       }
     });
+  }
+
 
 };
 
