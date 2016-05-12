@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactRouter = require('react-router')
+import classNames from 'classnames';
 
 class UsersList extends React.Component {
 	render() {
@@ -131,7 +132,8 @@ class ChatApp extends React.Component {
       users: [],
       messages:[],
       text: '',
-      user: ''
+      user: '',
+      show:false
     };
   }
 
@@ -213,24 +215,42 @@ class ChatApp extends React.Component {
 			this.setState({users, user: newName});
 		});
 	}
-
-	render() {
-		return (
-			<div>
-				<UsersList
-					users={this.state.users}
-				/>
-				<MessageList
-					messages={this.state.messages}
-				/>
-				<MessageForm
-					onMessageSubmit={this.handleMessageSubmit.bind(this)}
-					user={this.state.user}
-				/>
-				<ChangeNameForm
-					onChangeName={this.handleChangeName.bind(this)}
-				/>
-			</div>
+	_toggleChat (){
+    this.setState({show:!this.state.show});
+  }
+  render() {
+    let classes = classNames('profile-panel__chat', {'profile-panel__chat-show': this.state.show} );
+    return (
+      <div className={classes}>
+        <div className='profile-panel__chat__innerwrap'>
+          <a className="profile-panel__chat__arrowwrap" onClick={this._toggleChat.bind(this)}>
+            <span className='profile-panel__chat__arrow profile-panel__chat__arrow--back'></span>
+            <span className='profile-panel__chat__arrow'>
+              <span className='profile-panel__chat__arrow__text'>Chat</span>
+            </span>
+          </a>
+          <a className="profile-panel__chat__arrowwrap" onClick={this._toggleChat.bind(this)}>
+            <span className='profile-panel__chat__arrow--alt profile-panel__chat__arrow--back'></span>
+            <span className='profile-panel__chat__arrow--alt'>
+              <span className='profile-panel__chat__arrow__text'>Profile</span>
+            </span>
+          </a>
+          <h2>Chat</h2>
+          <UsersList
+            users={this.state.users}
+          />
+          <MessageList
+            messages={this.state.messages}
+          />
+          <MessageForm
+            onMessageSubmit={this.handleMessageSubmit.bind(this)}
+            user={this.state.user}
+          />
+          <ChangeNameForm
+            onChangeName={this.handleChangeName.bind(this)}
+          />
+        </div>        
+      </div>
 		);
 	}
 };
