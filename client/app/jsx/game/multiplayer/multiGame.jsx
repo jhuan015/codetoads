@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, nextPrompt, cheatMe } from '../../actions/actions';
+import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe } from '../../actions/actions';
 import Race from '../race';
 import Prompt from '../prompt';
 import UserInput from '../userInput';
 import TestResults from '../testResults';
 const {Tabs, Tab} = require('react-bootstrap');
 import GameChat from './gameChat';
+import SweetAlert from 'sweetalert-react';
 
 
 class MultiGame extends React.Component {
@@ -16,27 +17,10 @@ class MultiGame extends React.Component {
     window.socket = io.connect({query: "chatroom="+this.props.params.name +
       '&user='+JSON.parse(window.localStorage.profile).nickname});
   }
-
-
-  // componentDidMount() {
-  //   socket.on('update:game', this._updateGame.bind(this));
-  // }
-
-  // _updateGame(data) {
-
-  //   {
-  //   player:
-  //    {
-  //    test: { name: 'test', current: 0 },
-  //    jonathanshenhuang: { name: 'jonathanshenhuang', current: 0}
-  //    },
-  //   goal: 0,
-  //   started: false }
-
-  //   console.log('game was updated');
-  //   console.log(data.name + ' completed a prompt');
-  //   console.log('completed ' + data.goal);
-  // }
+  
+  componentWillUnmount() {
+    socket.close();
+  }
 
   render (){
     if(this.props.prompts.statusCode === 500){
@@ -44,7 +28,23 @@ class MultiGame extends React.Component {
       this.props.fetchPrompts();
     }
     return (
-      <div className='game'>        
+      <div className='game'>
+        <SweetAlert
+          show={this.props.alert && this.props.index+1 !== this.props.amount}
+          imageUrl= "app/img/ironfrog.gif"
+          imageSize= '250x250'
+          title="Success!"
+          text="You got that answer right, toad."
+          onConfirm={() => this.props.closeAlert()}
+        />
+        <SweetAlert
+          show={this.props.alert && this.props.index+1 === this.props.amount}
+          imageUrl= "app/img/jumping_frog.gif"
+          imageSize= '250x250'
+          title="Great job!"
+          text="You've finished all the prompts."
+          onConfirm={() => this.props.closeAlert()}
+        />       
         <div className='prompt-panel col-sm-4'>
           <Tabs defaultActiveKey={1} id='detailsSelection'>
             <Tab eventKey={1} title="Prompt">
@@ -70,7 +70,8 @@ class MultiGame extends React.Component {
             session={this.props.prompts[this.props.index].session}
             passed={this.props.passed}
             index={this.props.index}
-            amount={this.props.amount}/>}
+            amount={this.props.amount}
+            complete={this.props.index+1 === this.props.amount}/>}
         </div>
       </div>
     )
@@ -83,9 +84,10 @@ function mapStateToProps(state) {
            passed: state.game.passed,
            index: state.game.index,
            amount: state.selection.amount,
-           difficulty: state.selection.difficulty
+           difficulty: state.selection.difficulty,
+           alert: state.game.alert
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe })(MultiGame);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe })(MultiGame);
 
