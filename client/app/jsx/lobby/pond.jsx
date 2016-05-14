@@ -133,9 +133,7 @@ class ChatApp extends React.Component {
 
   _userJoined(data) {
     var {users, messages} = this.state;
-    console.log('join data');
-    console.log(data);
-    messages.push({
+     messages.push({
       user: 'TOADBOT',
       text : data.name +' has joined the pond!'
     });
