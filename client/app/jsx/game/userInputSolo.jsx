@@ -27,6 +27,7 @@ class UserInputSolo extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log(nextProps)
     if (nextProps.session.projectId !== this.state.projID) {
       this.setState({
         term: nextProps.session.setup,
@@ -51,15 +52,16 @@ class UserInputSolo extends React.Component {
     this.props.nextPrompt(this.props.index+1);
   }
 
-  render (){
+  render () {
     if(this.props.session.type === 'typing'){
       return (
-        <typingTestSolo expression={this.props.session.expression}
+        <div>
+        <TypingTestSolo expression={this.props.session.expression}
           index={this.props.index}
           complete={this.props.complete}
-          cheatMe={this.props.cheatMe}
           nextPrompt={this.props.nextPrompt}
         />
+        </div>
       )
     }
     return (
