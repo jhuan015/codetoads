@@ -53,6 +53,7 @@
     "rethinkdb": "^2.3.1",
     "socket.io": "^1.4.6",
     "supertest": "^1.2.0",
+    "sweetalert-react": "^0.4.4",
     "thinky": "^2.3.2",
     "transform-loader": "^0.2.3",
     "webpack": "^1.13.0"
