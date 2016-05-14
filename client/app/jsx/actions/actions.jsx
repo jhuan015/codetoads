@@ -12,9 +12,10 @@ export const JOIN_GAME = 'JOIN_GAME';
 export const SET_CREATE = 'SET_CREATE'
 export const CREATE_GAME = 'CREATE_GAME';
 export const GET_USER_INFO = 'GET_USER_INFO';
+export const CLOSE_ALERT = 'CLOSE_ALERT'
 
 export function fetchPrompts(difficulty, numPrompt) {
-  const request = axios.post('/api/makeGame', { "difficulty": 'easy', "numPrompt": 2});
+  const request = axios.post('/api/makeGame', { "difficulty": difficulty, "numPrompt": 5});
   return {
     type: FETCH_PROMPTS,
     payload: request
@@ -26,6 +27,11 @@ export function submitAttempt(ans) {
     type: SUBMIT_ATTEMPT,
     payload: request
   };
+}
+export function closeAlert(){
+  return {
+    type: CLOSE_ALERT
+  }
 }
 export function createDifficulty(difficulty) {
   return {

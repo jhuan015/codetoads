@@ -1,6 +1,6 @@
 import { CREATE_DIFFICULTY, CREATE_GAME, SET_CREATE, SET_JOIN, SET_ROOM } from '../actions/actions';
 
-const INIT_STATE = {amount: 2, difficulty: 'easy', roomname: '', password: '', create: false, join: false};
+const INIT_STATE = {amount: 5, difficulty: 'easy', roomname: '', password: '', create: false, join: false};
 
 export default function (state = INIT_STATE, action){
   switch (action.type){
