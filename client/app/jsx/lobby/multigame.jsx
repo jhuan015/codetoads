@@ -11,10 +11,14 @@ class Multigame extends React.Component {
     
     this.state = {
       roomname: '',
-      password: ''
+      password: '',
+      loader:false,
+      error:''
     };
   }
-    
+  componentDidMount() {
+    socket.on('gamecheck:complete', this._routeGame.bind(this));
+  }
   _onRoomChange (event) {
     this.setState({
       roomname: event.target.value
@@ -37,11 +41,55 @@ class Multigame extends React.Component {
       hashHistory.push('/multiplay/' + this.state.roomname);
     }
   }
+  _checkSubmit(){
+    var type;
+    if (this.props.create){
+      type = 'create'
+    } else if (this.props.join){
+      type = 'join';
+    }
+    var check = {
+      type:type,
+      room:this.state.roomname,
+      password:this.state.password,
+      user:this.props.id
+    };
+    socket.emit('gamecheck:status', check);
+    this.setState({loader:true});
+  }
+  _routeGame(data){
+    this.setState({loader:false});
+    if (data.type === 'create'){
+      if(data.value === false){
+        this.setState({error:'Room Already Exists'});        
+      } else {
+        this.props.setRoom(this.state.roomname, this.state.password);
+        hashHistory.push('/multiplay/' + this.state.roomname + '&'+this.state.password);
+      }
+    } else if (data.type === 'join'){
+      if (data.full){
+        this.setState({error:'Room is full'});
+      } else if (!data.value) {
+        this.setState({error:'Room does not exist'})
+      } else if (!data.passCheck){
+        this.setState({error:'Password Incorrect'})
+      } else {
+        this.props.setRoom(this.state.roomname, this.state.password);
+        hashHistory.push('/multiplay/' + this.state.roomname + '&'+this.state.password);
+      }
+
+    }
+  }
   
   render(){
     return (
       <div>
-        <form onSubmit={this._handleSubmit.bind(this)}>
+        {this.state.loader && <div className="spinner">
+          <div className="bounce1"></div>
+          <div className="bounce2"></div>
+          <div className="bounce3"></div>
+        </div>}
+        <form>
           <span className='rad-inline'>
             <input className="with-gap" name="action" type="radio" id="create" onClick={this.props.setCreate}/>
             <label htmlFor="create">Create</label>
@@ -64,8 +112,9 @@ class Multigame extends React.Component {
                onChange={this._onPasswordChange.bind(this)} />
           </FormGroup>
           <div className='text-center multi-btn-submit'>
-            <Button type='submit' bsSize='large' bsStyle='primary'>Enter</Button>
+            <Button type='button' bsSize='large' bsStyle='primary' onClick={this._checkSubmit.bind(this)}>Enter</Button>
           </div>
+          {this.state.error.length > 0 && <div>{this.state.error}</div>}
         </form>
       </div>
       )

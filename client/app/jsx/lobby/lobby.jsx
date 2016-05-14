@@ -23,7 +23,7 @@ class Lobby extends React.Component {
           {!this.props.isAuthenticated && <div>Sign in for more fun!</div>}
         </div>
         <div className='col-sm-8 selection-panel'>
-          <GameMode isAuthenticated={this.props.isAuthenticated} />
+          <GameMode isAuthenticated={this.props.isAuthenticated} user_id={this.props.user_id}/>
         </div>
       </div>
     )
@@ -40,7 +40,8 @@ function mapStateToProps(state) {
            lostTo: state.user.lostTo,
            gamesPlayed: state.user.gamesPlayed,
            quits: state.user.quits,
-           fastest: state.user.fastest
+           fastest: state.user.fastest,
+           user_id:state.user.user_id
           };
 }
 
