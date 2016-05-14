@@ -109,6 +109,10 @@ class ChatApp extends React.Component {
 		socket.on('user:left', this._userLeft.bind(this));
 	}
 
+	componentWillUnmount() {
+		socket.close();
+	}
+
 	_initialize(data) {
 		var {users, name} = data;
 		this.setState({users, user: JSON.parse(window.localStorage.profile).nickname});
@@ -122,10 +126,9 @@ class ChatApp extends React.Component {
 
 	_userJoined(data) {
 		var {users, messages} = this.state;
-		console.log(data);
   	messages.push({
 			user: 'TOADBOT',
-			text : data.name +' has joined!'
+			text : data.name +' has joined the game!'
 		});
 		this.setState({users, messages});
 	}
@@ -134,7 +137,7 @@ class ChatApp extends React.Component {
 		var {users, messages} = this.state;
 		messages.push({
 			user: 'TOADBOT',
-			text : data.name +' has left.'
+			text : data.name +' has left the game.'
 		});
 		this.setState({users, messages});
 	}
