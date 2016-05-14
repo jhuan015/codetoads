@@ -23,7 +23,6 @@ class Frag extends React.Component {
     return (
       <div id='expression' class='container'>
         {this._renderExpression()}
-        {this.props.match && <h4>Great job!</h4>}
       </div>
     )
   }
