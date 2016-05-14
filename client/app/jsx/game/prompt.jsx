@@ -1,4 +1,5 @@
 const React = require('react');
+var ReactMarkdown = require('react-markdown');
 
 class Prompt extends React.Component {
   constructor () {
@@ -8,7 +9,7 @@ class Prompt extends React.Component {
     return (
       <div className='prompt'>
         <h5 className='prompt__title'>{this.props.name}</h5>
-        <div className='prompt__body'>{this.props.description}</div>
+        <ReactMarkdown className='prompt__body' source={this.props.description} />
       </div>
     )
   }
