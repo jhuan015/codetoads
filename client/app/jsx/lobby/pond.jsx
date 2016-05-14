@@ -3,24 +3,24 @@ const ReactRouter = require('react-router')
 import classNames from 'classnames';
 
 class UsersList extends React.Component {
-	render() {
-		return (
-			<div className='users'>
-				<h3> Online Users </h3>
-				<ul>
-					{
-						this.props.users.map((user, i) => {
-							return (
-								<li key={i}>
-									{user}
-								</li>
-							);
-						})
-					}
-				</ul>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div className='users'>
+        <h3> Online Users </h3>
+        <ul>
+          {
+            this.props.users.map((user, i) => {
+              return (
+                <li key={i}>
+                  {user.name}
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    );
+  }
 };
 
 class Message extends React.Component {
@@ -91,39 +91,6 @@ class MessageForm extends React.Component {
 	}
 };
 
-class ChangeNameForm extends React.Component {
-  constructor (){
-    super();
-    this.state = {
-      newName: ''
-    };
-  }
-	onKey(e) {
-		this.setState({ newName : e.target.value });
-	}
-
-	handleSubmit(e) {
-		e.preventDefault();
-		var newName = this.state.newName;
-		this.props.onChangeName(newName);
-		this.setState({ newName: '' });
-	}
-
-	render() {
-		return(
-			<div className='change_name_form'>
-				<h3> Change Name </h3>
-				<form onSubmit={this.handleSubmit.bind(this)}>
-					<input
-						onChange={this.onKey.bind(this)}
-						value={this.state.newName}
-					/>
-				</form>
-			</div>
-		);
-	}
-};
-
 class ChatApp extends React.Component {
 
   constructor (){
@@ -139,25 +106,24 @@ class ChatApp extends React.Component {
 
   componentWillMount() {
   	//force socket room to the pond
-  	window.socket = io.connect({query: "chatroom=pond" });
+  	window.socket = io.connect({query: "chatroom=pond" + '&user=' + JSON.parse(window.localStorage.profile).nickname});
   }
 
 	componentDidMount() {
-		socket.on('init', this._initialize.bind(this));
-		socket.on('send:message', this._messageRecieve.bind(this));
-		socket.on('user:join', this._userJoined.bind(this));
-		socket.on('user:left', this._userLeft.bind(this));
-		socket.on('change:name', this._userChangedName.bind(this));
+    socket.on('init', this._initialize.bind(this));
+    socket.on('send:message', this._messageRecieve.bind(this));
+    socket.on('user:join', this._userJoined.bind(this));
+    socket.on('user:left', this._userLeft.bind(this));
 	}
-	
+
 	componentWillUnmount() {
 		socket.close();
 	}
 
-	_initialize(data) {
-		var {users, name} = data;
-		this.setState({users, user: name});
-	}
+  _initialize(data) {
+    var {users, name} = data;
+    this.setState({users, user: JSON.parse(window.localStorage.profile).nickname});
+  }
 
 	_messageRecieve(message) {
 		var {messages} = this.state;
@@ -165,60 +131,34 @@ class ChatApp extends React.Component {
 		this.setState({messages});
 	}
 
-	_userJoined(data) {
-		var {users, messages} = this.state;
-		var {name} = data;
-		users.push(name);
-		messages.push({
-			user: 'APPLICATION BOT',
-			text : name +' Joined'
-		});
-		this.setState({users, messages});
-	}
+  _userJoined(data) {
+    var {users, messages} = this.state;
+     messages.push({
+      user: 'TOADBOT',
+      text : data.name +' has joined the pond!'
+    });
+    this.setState({users, messages});
+  }
 
-	_userLeft(data) {
-		var {users, messages} = this.state;
-		var {name} = data;
-		var index = users.indexOf(name);
-		users.splice(index, 1);
-		messages.push({
-			user: 'APPLICATION BOT',
-			text : name +' Left'
-		});
-		this.setState({users, messages});
-	}
+  _userLeft(data) {
+    var {users, messages} = this.state;
+    messages.push({
+      user: 'TOADBOT',
+      text : data.name +' has left the pond.'
+    });
+    this.setState({users, messages});
+  }
 
-	_userChangedName(data) {
-		var {oldName, newName} = data;
-		var {users, messages} = this.state;
-		var index = users.indexOf(oldName);
-		users.splice(index, 1, newName);
-		messages.push({
-			user: 'APPLICATION BOT',
-			text : 'Change Name : ' + oldName + ' ==> '+ newName
-		});
-		this.setState({users, messages});
-	}
+  handleMessageSubmit(message) {
+    var {messages} = this.state;
+    messages.push(message);
+    this.setState({messages});
+    socket.emit('send:message',
+    {
+      message: message
+    });
+  }
 
-	handleMessageSubmit(message) {
-		var {messages} = this.state;
-		messages.push(message);
-		this.setState({messages});
-		socket.emit('send:message', message);
-	}
-
-	handleChangeName(newName) {
-		var oldName = this.state.user;
-		socket.emit('change:name', { name : newName}, (result) => {
-			if(!result) {
-				return alert('There was an error changing your name');
-			}
-			var {users} = this.state;
-			var index = users.indexOf(oldName);
-			users.splice(index, 1, newName);
-			this.setState({users, user: newName});
-		});
-	}
 	_toggleChat (){
     this.setState({show:!this.state.show});
   }
@@ -250,10 +190,7 @@ class ChatApp extends React.Component {
             onMessageSubmit={this.handleMessageSubmit.bind(this)}
             user={this.state.user}
           />
-          <ChangeNameForm
-            onChangeName={this.handleChangeName.bind(this)}
-          />
-        </div>        
+        </div>
       </div>
 		);
 	}
