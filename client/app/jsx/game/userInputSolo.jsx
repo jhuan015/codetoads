@@ -3,13 +3,13 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
 import brace from 'brace';
 import AceEditor from 'react-ace';
-import TypingTest from './typing/typing.jsx'
+import TypingTestSolo from './typing/typingSolo.jsx'
 
 import 'brace/ext/language_tools'
 import 'brace/mode/javascript';
 import 'brace/theme/tomorrow';
 
-class UserInput extends React.Component {
+class UserInputSolo extends React.Component {
   constructor (){
     super()
 
@@ -27,6 +27,7 @@ class UserInput extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log(nextProps)
     if (nextProps.session.projectId !== this.state.projID) {
       this.setState({
         term: nextProps.session.setup,
@@ -40,38 +41,27 @@ class UserInput extends React.Component {
   }
 
   _submitHandler(){
-
     var ans = {}
-
     ans.code = this.state.term;
     ans.project_id = this.props.session.projectId;
     ans.solution_id = this.props.session.solutionId;
-
     this.props.submitAttempt(ans);
   }
 
   _getNextPrompt () {
-    if(this.props.index+1 === this.props.amount){
-      socket.emit('person:won', {
-        test: 'you have won.'
-      });
-    } else {
-      socket.emit('person:passed', {
-        name: JSON.parse(window.localStorage.profile).nickname
-      });
-    }
     this.props.nextPrompt(this.props.index+1);
   }
 
-  render (){
-     if(this.props.session.type === 'typing'){
+  render () {
+    if(this.props.session.type === 'typing'){
       return (
-        <TypingTest expression={this.props.session.expression}
+        <div>
+        <TypingTestSolo expression={this.props.session.expression}
           index={this.props.index}
           complete={this.props.complete}
-          cheatMe={this.props.cheatMe}
           nextPrompt={this.props.nextPrompt}
         />
+        </div>
       )
     }
     return (
@@ -97,4 +87,4 @@ class UserInput extends React.Component {
   }
 }
 
-module.exports = UserInput
+module.exports = UserInputSolo

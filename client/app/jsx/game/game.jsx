@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, nextPrompt, cheatMe } from '../actions/actions';
+import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe } from '../actions/actions';
 import Race from './race';
 import Prompt from './prompt';
-import UserInput from './userInput';
+import UserInputSolo from './userInputSolo';
 import TestResults from './testResults';
-const {Tabs, Tab} = require('react-bootstrap');
+import  { Tabs, Tab } from 'react-bootstrap';
+import SweetAlert from 'sweetalert-react';
 
 class Game extends React.Component {
   componentWillMount() {
@@ -15,13 +16,26 @@ class Game extends React.Component {
   render (){
     if(this.props.prompts.statusCode === 500){
       console.log('calling again');
-      this.props.fetchPrompts();
+      this.props.fetchPrompts(this.props.difficulty);
     }
     return (
       <div className='game'>
-        <div className='race clearfix'>
-          <Race />
-        </div>
+        <SweetAlert
+          show={this.props.alert && this.props.index+1 !== this.props.amount}
+          imageUrl= "app/img/ironfrog.gif"
+          imageSize= '250x250'
+          title="Success!"
+          text="You got that answer right, toad."
+          onConfirm={() => this.props.closeAlert()}
+        />
+        <SweetAlert
+          show={this.props.alert && this.props.index+1 === this.props.amount}
+          imageUrl= "app/img/jumping_frog.gif"
+          imageSize= '250x250'
+          title="Great job!"
+          text="You've finished all the prompts."
+          onConfirm={() => this.props.closeAlert()}
+        />
         <div className='prompt-panel col-sm-4'>
           <Tabs defaultActiveKey={1} id='detailsSelection'>
             <Tab eventKey={1} title="Prompt">
@@ -35,7 +49,7 @@ class Game extends React.Component {
         </div>
         <div className='input-panel col-sm-8'>
           { this.props.prompts[this.props.index] &&
-            <UserInput
+            <UserInputSolo
             fetchPrompts={this.props.fetchPrompts}
             submitAttempt={this.props.submitAttempt}
             nextPrompt={this.props.nextPrompt}
@@ -43,7 +57,9 @@ class Game extends React.Component {
             session={this.props.prompts[this.props.index].session}
             passed={this.props.passed}
             index={this.props.index}
-            amount={this.props.amount}/>}
+            amount={this.props.amount}
+            complete={this.props.index+1 === this.props.amount}/>
+          }
         </div>
       </div>
     )
@@ -56,8 +72,9 @@ function mapStateToProps(state) {
            passed: state.game.passed,
            index: state.game.index,
            amount: state.selection.amount,
-           difficulty: state.selection.difficulty
+           difficulty: state.selection.difficulty,
+           alert: state.game.alert
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe })(Game);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe, closeAlert })(Game);

@@ -22,6 +22,16 @@ var medium = [
   'exes-and-ohs'
 ];
 
+var typing = [
+  'for (var i = 0; i<array.length; i++)',
+  '`Hello, ${name}. Welcome to ${city}, ${country}!`',
+  'var args = Array.prototype.slice.call(arguments);',
+  "var exclaim = function(statement) { return statement.toUpperCase() + '!';}",
+  'BlinkyDancer.prototype = Object.create(Dancer.prototype);',
+  "var str = Object.keys(array).join('')",
+  'const pipe = (...args) => args.reduce((final, arg) => (item) => arg(final(item)));'
+]
+
 module.exports.saveUser = function(req, res) {
     var newUser = {
        user_id: req.body.user_id,
@@ -115,8 +125,18 @@ module.exports.makeGame = function(req, res) {
       } else {
         result.push(info);
         //send result array when prompt amount is hit
-        if (result.length === req.body.numPrompt) {
-          res.send(result);
+        if (result.length === req.body.numPrompt-1) {
+          var typeTest = {
+            name: 'Typing Challenge!',
+            description: 'Complete the following phrase as quickly as you can.',
+            session: {
+              type: 'typing',
+              expression: typing[Math.floor(Math.random() * typing.length)]
+            }
+          }
+          result.push(typeTest);
+          var shuffled = shuffle(result);
+          res.send(shuffled);
         }
       }
     });
