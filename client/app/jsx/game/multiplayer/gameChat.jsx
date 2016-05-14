@@ -107,12 +107,11 @@ class ChatApp extends React.Component {
 		socket.on('send:message', this._messageRecieve.bind(this));
 		socket.on('user:join', this._userJoined.bind(this));
 		socket.on('user:left', this._userLeft.bind(this));
-		socket.on('change:name', this._userChangedName.bind(this));
 	}
 
 	_initialize(data) {
 		var {users, name} = data;
-		this.setState({users, user: name});
+		this.setState({users, user: JSON.parse(window.localStorage.profile).nickname});
 	}
 
 	_messageRecieve(message) {
