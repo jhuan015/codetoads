@@ -90,39 +90,6 @@ class MessageForm extends React.Component {
 	}
 };
 
-class ChangeNameForm extends React.Component {
-  constructor (){
-    super();
-    this.state = {
-      newName: ''
-    };
-  }
-	onKey(e) {
-		this.setState({ newName : e.target.value });
-	}
-
-	handleSubmit(e) {
-		e.preventDefault();
-		var newName = this.state.newName;
-		this.props.onChangeName(newName);
-		this.setState({ newName: '' });
-	}
-
-	render() {
-		return(
-			<div className='change_name_form'>
-				<h3> Change Name </h3>
-				<form onSubmit={this.handleSubmit.bind(this)}>
-					<input
-						onChange={this.onKey.bind(this)}
-						value={this.state.newName}
-					/>
-				</form>
-			</div>
-		);
-	}
-};
-
 class ChatApp extends React.Component {
 
   constructor (){
@@ -156,35 +123,19 @@ class ChatApp extends React.Component {
 
 	_userJoined(data) {
 		var {users, messages} = this.state;
-		var {name} = data;
-		users.push(name);
-		messages.push({
-			user: 'APPLICATION BOT',
-			text : name +' Joined'
+		console.log(data);
+  	messages.push({
+			user: 'TOADBOT',
+			text : data.name +' has joined!'
 		});
 		this.setState({users, messages});
 	}
 
 	_userLeft(data) {
 		var {users, messages} = this.state;
-		var {name} = data;
-		var index = users.indexOf(name);
-		users.splice(index, 1);
 		messages.push({
-			user: 'APPLICATION BOT',
-			text : name +' Left'
-		});
-		this.setState({users, messages});
-	}
-
-	_userChangedName(data) {
-		var {oldName, newName} = data;
-		var {users, messages} = this.state;
-		var index = users.indexOf(oldName);
-		users.splice(index, 1, newName);
-		messages.push({
-			user: 'APPLICATION BOT',
-			text : 'Change Name : ' + oldName + ' ==> '+ newName
+			user: 'TOADBOT',
+			text : data.name +' has left.'
 		});
 		this.setState({users, messages});
 	}
@@ -193,19 +144,9 @@ class ChatApp extends React.Component {
 		var {messages} = this.state;
 		messages.push(message);
 		this.setState({messages});
-		socket.emit('send:message', message);
-	}
-
-	handleChangeName(newName) {
-		var oldName = this.state.user;
-		socket.emit('change:name', { name : newName}, (result) => {
-			if(!result) {
-				return alert('There was an error changing your name');
-			}
-			var {users} = this.state;
-			var index = users.indexOf(oldName);
-			users.splice(index, 1, newName);
-			this.setState({users, user: newName});
+		socket.emit('send:message',
+		{
+			message: message
 		});
 	}
 
@@ -221,9 +162,6 @@ class ChatApp extends React.Component {
 				<MessageForm
 					onMessageSubmit={this.handleMessageSubmit.bind(this)}
 					user={this.state.user}
-				/>
-				<ChangeNameForm
-					onChangeName={this.handleChangeName.bind(this)}
 				/>
 			</div>
 		);
