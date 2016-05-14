@@ -13,7 +13,7 @@ class GameMode extends React.Component {
             <Solo/>
           </Tab>
           {this.props.isAuthenticated && <Tab eventKey={2} title="Multi Toad">
-            <Multi/>
+            <Multi id={this.props.user_id}/>
           </Tab>}
         </Tabs>
       </div>

@@ -1,10 +1,15 @@
 // export function for listening to the socket
 var gameStatus = {};
+var socketRooms = {};
 
 module.exports = function (socket) {
   socket.name = socket.handshake.query.user;
   var room = socket.handshake.query.chatroom;
+  var type = socket.handshake.query.joinType;
+  var password = socket.handshake.query.passWord;
+  
   socket.join(room);
+  
   if (!gameStatus[room]){
     gameStatus[room] = {
       player:[],
@@ -26,6 +31,39 @@ module.exports = function (socket) {
   } else {
     //send game data for reconnect
   }
+
+
+  //check game from lobby before redirect
+  socket.on('gamecheck:status', function (data) {
+    if (data.check){
+      socket.emit('gamecheckGame:complete', {check:true,rooms:socketRooms});
+    }
+    var status = {type:data.type, value:true, passCheck:true,full:false};
+    if (data.type === 'create'){
+      if (!socketRooms[data.room]){
+        socketRooms[data.room] = {players:[], creator:data.user, password:data.password};
+        socketRooms[data.room].players.push(data.user);
+      } else {
+        status.value =false;
+      }      
+    } else if (data.type === 'join'){
+      if (socketRooms[data.room]){
+        if (socketRooms[data.room].password !== data.password){
+          status.passCheck = false;          
+        } else {
+          if (socketRooms[data.room].players.indexOf(data.user) < 0){
+            if (socketRooms[data.room].players.length === 4){
+              status.full = true;
+            }
+          }
+        }
+      } else {
+        status.value = false;
+      }       
+    } 
+    socket.emit('gamecheck:complete',status);
+  }); 
+
   this.to(room).emit('update:game', gameStatus[room])
   console.log(gameStatus[room]);
 
