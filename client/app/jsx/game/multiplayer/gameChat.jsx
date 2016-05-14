@@ -11,7 +11,7 @@ class UsersList extends React.Component {
 						this.props.users.map((user, i) => {
 							return (
 								<li key={i}>
-									{user}
+									{user.name}
 								</li>
 							);
 						})
@@ -26,7 +26,7 @@ class Message extends React.Component {
 	render() {
 		return (
 			<div className="message">
-				<strong>{this.props.user} :</strong>
+				<strong>{this.props.user}: </strong>
 				<span>{this.props.text}</span>
 			</div>
 		);
