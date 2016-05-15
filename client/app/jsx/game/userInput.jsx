@@ -77,7 +77,10 @@ class UserInput extends React.Component {
     } else if (this.props.session.type === 'multichoice'){
       return (
         <MultipleChoice
+          index={this.props.index}
           session={this.props.session}
+          complete={this.props.complete}
+          nextPrompt={this.props.nextPrompt}
         />
       )
     }
