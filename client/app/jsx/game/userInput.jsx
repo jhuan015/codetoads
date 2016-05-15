@@ -3,7 +3,8 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
 import brace from 'brace';
 import AceEditor from 'react-ace';
-import TypingTest from './typing/typing.jsx'
+import TypingTest from './typing/typing.jsx';
+import MultipleChoice from './multichoice/multichoice.jsx';
 
 import 'brace/ext/language_tools'
 import 'brace/mode/javascript';
@@ -71,6 +72,12 @@ class UserInput extends React.Component {
           complete={this.props.complete}
           cheatMe={this.props.cheatMe}
           nextPrompt={this.props.nextPrompt}
+        />
+      )
+    } else if (this.props.session.type === 'multichoice'){
+      return (
+        <MultipleChoice
+          session={this.props.session}
         />
       )
     }
