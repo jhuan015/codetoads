@@ -38,6 +38,7 @@ class MultiChoice extends React.Component {
   }
 
   _getNextPrompt () {
+
     if(this.props.index+1 === this.props.amount){
       socket.emit('person:won', {
         test: 'you have won.'
@@ -47,6 +48,10 @@ class MultiChoice extends React.Component {
         name: JSON.parse(window.localStorage.profile).nickname
       });
     }
+    this.setState({
+      selected: '',
+      passed: false
+    });
     this.props.nextPrompt(this.props.index+1);
   }
 
