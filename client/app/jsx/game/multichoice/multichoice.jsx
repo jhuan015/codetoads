@@ -75,7 +75,7 @@ class MultiChoice extends React.Component {
           onConfirm={() => this.setState({show: false})}
         />
         <SweetAlert
-          show={this.state.show && this.props.complete}
+          show={this.state.show && this.props.complete && this.state.passed}
           imageUrl= "app/img/jumping_frog.gif"
           imageSize= '250x250'
           title="Great job!"
