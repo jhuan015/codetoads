@@ -30,7 +30,7 @@ class Typing extends React.Component {
       this.setState({show: true})
     }
   }
-  
+
   _getNextPrompt () {
     if(this.props.index+1 === this.props.amount){
       socket.emit('person:won', {
@@ -43,7 +43,7 @@ class Typing extends React.Component {
     }
     this.props.nextPrompt(this.props.index+1);
   }
-  
+
   _cheatTyping () {
     this.setState({passed: true});
     this.setState({show: true})

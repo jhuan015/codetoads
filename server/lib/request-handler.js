@@ -30,7 +30,39 @@ var typing = [
   'BlinkyDancer.prototype = Object.create(Dancer.prototype);',
   "var str = Object.keys(array).join('')",
   'const pipe = (...args) => args.reduce((final, arg) => (item) => arg(final(item)));'
-]
+];
+
+var questions = [
+  {
+    question: 'What kind of scoping does JavaScript use?',
+    choices: ['Literal', 'Lexical', 'Segmental', 'Sequential'],
+    answer: 'b',
+    explanation: 'Like most modern programming languages, JavaScript uses lexical scoping. This means that functions are executed using the variable scope that was in effect when they were defined, not the variable scope that is in effect when they are invoked.',
+    type: 'multichoice'
+  },
+  {
+    question: 'What must be done in order to implement Lexical Scoping?',
+    choices: ['Get the object', 'Dereference the current scope chain', 'Reference the current scope chain', 'one of the mentioned'],
+    answer: 'c',
+    explanation: 'In order to implement lexical scoping, the internal state of a JavaScript function object must include not only the code of the function but also a reference to the current scope chain.',
+    type: 'multichoice'
+  },
+  {
+    question: 'What is a closure?',
+    choices: ['Function objects', 'Scope where function’s variables are resolved', 'Both a and b', 'None of the mentioned'],
+    answer: 'c',
+    explanation: 'A combination of a function object and a scope (a set of variable bindings) in which the function’s variables are resolved is called a closure.',
+    type: 'multichoice'
+  },
+  {
+    question: 'Which of the following are examples of closures?',
+    choices: ['Objects', 'Variables', 'Functions', 'All of the mentioned'],
+    answer: 'd',
+    explanation: 'Technically, all JavaScript functions are closures: they are objects, and they have a scope chain associated with them.',
+    type: 'multichoice'
+  },
+
+];
 
 module.exports.saveUser = function(req, res) {
     var newUser = {
@@ -125,7 +157,7 @@ module.exports.makeGame = function(req, res) {
       } else {
         result.push(info);
         //send result array when prompt amount is hit
-        if (result.length === req.body.numPrompt-1) {
+        if (result.length === req.body.numPrompt-3) {
           var typeTest = {
             name: 'Typing Challenge!',
             description: 'Complete the following phrase as quickly as you can.',
@@ -135,6 +167,18 @@ module.exports.makeGame = function(req, res) {
             }
           }
           result.push(typeTest);
+          var multiChoice = {
+            name: 'Multiple Choice Challenge!',
+            description: 'Answer the question by submitting the correct answer.',
+            session: questions[Math.floor(Math.random() * questions.length)]
+          }
+          result.push(multiChoice);
+          var multiChoice2 = {
+            name: 'Multiple Choice Challenge!',
+            description: 'Answer the question by submitting the correct answer.',
+            session: questions[Math.floor(Math.random() * questions.length)]
+          }
+          result.push(multiChoice2);
           var shuffled = shuffle(result);
           res.send(shuffled);
         }

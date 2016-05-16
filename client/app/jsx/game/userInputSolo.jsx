@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 import brace from 'brace';
 import AceEditor from 'react-ace';
 import TypingTestSolo from './typing/typingSolo.jsx'
+import MultiChoiceSolo from './multichoice/multichoicesolo.jsx'
+
 
 import 'brace/ext/language_tools'
 import 'brace/mode/javascript';
@@ -62,6 +64,15 @@ class UserInputSolo extends React.Component {
           nextPrompt={this.props.nextPrompt}
         />
         </div>
+      )
+    } else if (this.props.session.type === 'multichoice'){
+      return (
+        <MultiChoiceSolo
+          index={this.props.index}
+          session={this.props.session}
+          complete={this.props.complete}
+          nextPrompt={this.props.nextPrompt}
+        />
       )
     }
     return (
