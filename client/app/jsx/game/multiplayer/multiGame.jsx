@@ -17,7 +17,7 @@ class MultiGame extends React.Component {
     window.socket = io.connect({query: "chatroom="+this.props.params.name +
       '&user='+JSON.parse(window.localStorage.profile).nickname});
   }
-  
+
   componentWillUnmount() {
     socket.close();
   }
@@ -44,7 +44,7 @@ class MultiGame extends React.Component {
           title="Great job!"
           text="You've finished all the prompts."
           onConfirm={() => this.props.closeAlert()}
-        />       
+        />
         <div className='prompt-panel col-sm-4'>
           <Tabs defaultActiveKey={1} id='detailsSelection'>
             <Tab eventKey={1} title="Prompt">
