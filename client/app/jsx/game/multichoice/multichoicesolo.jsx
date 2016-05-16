@@ -54,7 +54,14 @@ class MultiChoiceSolo extends React.Component {
       this.setState({
         show: true
       })
+      setTimeout(this._toggleAlert.bind(this), 5000)
     }
+  }
+
+  _toggleAlert(){
+    this.setState({
+      show: !this.state.show
+    });
   }
 
   _selected (answer) {
@@ -101,8 +108,8 @@ class MultiChoiceSolo extends React.Component {
           imageUrl= "app/img/wrongtoad.jpg"
           imageSize= '250x250'
           title="Wrong Answer!"
-          text="Sorry! Try again."
-          onConfirm={() => this.setState({show: false})}
+          text="Sorry! Try again. This message will self-destruct in 5 seconds."
+          showConfirmButton={false}
         />
         <SweetAlert
           show={this.state.show && this.props.complete}
