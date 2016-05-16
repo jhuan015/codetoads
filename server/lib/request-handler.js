@@ -145,7 +145,7 @@ module.exports.makeGame = function(req, res) {
   }
   //randomize the prompts
   randomArray = shuffle(randomArray);
-  for (var i = 0; i < req.body.numPrompt; i++) {
+  for (var i = 0; i < req.body.numPrompt - 3; i++) {
     index = randomArray[i];
     //make the calls to generate prompts
     grabPrompt(req.body.difficulty, index, function(err, status, info) {
@@ -180,7 +180,7 @@ module.exports.makeGame = function(req, res) {
           }
           result.push(multiChoice2);
           var shuffled = shuffle(result);
-          res.send(shuffled);
+          res.send(result);
         }
       }
     });

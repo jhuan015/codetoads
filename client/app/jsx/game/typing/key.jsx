@@ -6,16 +6,20 @@ class Key extends React.Component {
       super(props);
       this.state = {active: false};
   }
-  
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.current === nextProps.code) {
       this.setState({
         active: true
       });
     }
-    setTimeout( this._changeClass.bind(this), 1000);
+    this.timeout = setTimeout( this._changeClass.bind(this), 1000);
   }
-  
+
   _changeClass () {
     this.setState({
       active: false
