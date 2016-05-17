@@ -85,7 +85,7 @@ export function setCreate() {
 }
 export function createGame(roomname, password, difficulty, numPrompts) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
-  const request = axios.post('/api/createGame', {'roomname': roomname, 'password': password, 'difficulty': difficulty, 'user_id':JSON.parse(localStorage.profile).user_id, 'numPrompts': 2});
+  const request = axios.post('/api/createGame', {'roomname': roomname, 'password': password, 'difficulty': difficulty, 'user_id':JSON.parse(localStorage.profile).user_id, 'numPrompts': 5});
   return {
     type: CREATE_GAME,
     payload: request

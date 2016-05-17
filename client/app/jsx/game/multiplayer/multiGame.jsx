@@ -14,8 +14,12 @@ class MultiGame extends React.Component {
   componentWillMount() {
     this.props.fetchPrompts(this.props.difficulty);
     //join socket with roomname and clients username
-    window.socket = io.connect({query: "chatroom="+this.props.params.name +
-      '&user='+JSON.parse(window.localStorage.profile).nickname});
+    var socketParams = this.props.params.name.split('&');
+    const name = socketParams[0];
+    const pass = socketParams[1];
+    const difficulty = socketParams[2];
+    window.socket = io.connect({query: "chatroom="+name +
+      '&user='+JSON.parse(window.localStorage.profile).nickname + '&password=' + pass + '&difficulty=' + difficulty});
   }
 
   componentWillUnmount() {
@@ -98,4 +102,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe })(MultiGame);
-

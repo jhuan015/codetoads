@@ -13,6 +13,7 @@ class Lobby extends React.Component {
           {this.props.isAuthenticated &&
             <Profile firstname={this.props.firstname}
               lastname={this.props.lastname}
+              username={this.props.username}
               winStreak={this.props.winStreak}
               lostTo={this.props.lostTo}
               gamesPlayed={this.props.gamesPlayed}
