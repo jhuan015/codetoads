@@ -126,8 +126,17 @@ module.exports = function (socket) {
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
-    this.to(room).emit('user:left', {
-      name: socket.name
-    });
+      var nameIndex;
+      roomStatus[room].player.forEach(function(value, index){
+        if(value.name === socket.name){
+          nameIndex = index;
+        }
+      });
+      roomStatus[room].player.splice(nameIndex, 1);
+      this.to(room).emit('user:left', {
+        name: socket.name,
+        users: roomStatus[room].player
+      });
+
   });
 };
