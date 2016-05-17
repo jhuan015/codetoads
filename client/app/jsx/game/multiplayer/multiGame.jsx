@@ -5,10 +5,10 @@ import Race from '../race';
 import Prompt from '../prompt';
 import UserInput from '../userInput';
 import TestResults from '../testResults';
-const {Tabs, Tab} = require('react-bootstrap');
+import { Tabs, Tab } from 'react-bootstrap';
 import GameChat from './gameChat';
 import SweetAlert from 'sweetalert-react';
-
+import Timer from '../timer'
 
 class MultiGame extends React.Component {
   componentWillMount() {
