@@ -4,6 +4,7 @@ class Timer extends React.Component {
   constructor () {
     super()
     this.state = {
+      start: Date.now(),
       elapsed: 0
     };
   }
@@ -15,7 +16,7 @@ class Timer extends React.Component {
     clearInterval(this.timer);
   }
   tick () {
-    this.setState({elapsed: new Date() - this.props.start});
+    this.setState({elapsed: new Date() - this.state.start});
   }
   pad (d) {
     return (d < 10) ? '0' + d.toString() : d.toString();
