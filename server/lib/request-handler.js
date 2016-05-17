@@ -266,6 +266,6 @@ module.exports.getUserInfo = function(req, res) {
       }
     })
     .catch(function (err) {
-      return null;
+      res.send(err);
     });
 };

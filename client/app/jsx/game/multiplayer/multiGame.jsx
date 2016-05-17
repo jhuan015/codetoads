@@ -5,10 +5,10 @@ import Race from '../race';
 import Prompt from '../prompt';
 import UserInput from '../userInput';
 import TestResults from '../testResults';
-const {Tabs, Tab} = require('react-bootstrap');
+import { Tabs, Tab } from 'react-bootstrap';
 import GameChat from './gameChat';
 import SweetAlert from 'sweetalert-react';
-
+import Timer from '../timer'
 
 class MultiGame extends React.Component {
   componentWillMount() {
@@ -33,6 +33,7 @@ class MultiGame extends React.Component {
     }
     return (
       <div className='game'>
+        <Timer />
         <SweetAlert
           show={this.props.alert && this.props.index+1 !== this.props.amount && this.props.passed}
           imageUrl= "app/img/ironfrog.gif"

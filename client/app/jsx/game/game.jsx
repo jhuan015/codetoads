@@ -7,6 +7,7 @@ import UserInputSolo from './userInputSolo';
 import TestResults from './testResults';
 import  { Tabs, Tab } from 'react-bootstrap';
 import SweetAlert from 'sweetalert-react';
+import Timer from './timer'
 
 class Game extends React.Component {
   componentWillMount() {
@@ -20,6 +21,7 @@ class Game extends React.Component {
     }
     return (
       <div className='game'>
+        <Timer />
         <SweetAlert
           show={this.props.alert && this.props.index+1 !== this.props.amount && this.props.passed}
           imageUrl= "app/img/ironfrog.gif"
@@ -55,6 +57,7 @@ class Game extends React.Component {
             </Tab>
           </Tabs>
         </div>
+        {/*<Timer start={new Date()} />*/}
         <div className='input-panel col-sm-8'>
           { this.props.prompts[this.props.index] &&
             <UserInputSolo
