@@ -40,6 +40,7 @@
     "json-loader": "^0.5.4",
     "mocha": "^2.4.5",
     "morgan": "~1.7.0",
+    "password-hash": "^1.2.2",
     "react": "^15.0.2",
     "react-ace": "^3.4.1",
     "react-bootstrap": "^0.29.3",

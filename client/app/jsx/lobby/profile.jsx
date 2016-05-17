@@ -3,13 +3,14 @@ const ProfileRow = require('./profilerow');
 
 class Profile extends React.Component {
   componentWillMount(){
-    this.props.getUserInfo();    
+    this.props.getUserInfo();
   }
-  
+
   render (){
     return (
       <div>
-        <h2>{this.props.firstname} {this.props.lastname}</h2>
+        {this.props.firstname && this.props.lastname && <h2>{this.props.firstname} {this.props.lastname}</h2>}
+        {!this.props.firstname && !this.props.lastname && <h2>{this.props.username}</h2>}
         <ProfileRow title='Total Games Played' value={this.props.gamesPlayed}/>
         <ProfileRow title='Highest Win Streak' value={this.props.winStreak}/>
         <ProfileRow title='Last Wrecked By' value={this.props.lostTo}/>
