@@ -2,67 +2,13 @@ var db = require('./../db/config');
 var request = require('request');
 var User = require('./../db/db').User;
 var Game = require('./../db/db').Game;
-
-//easy, medium, hard, insane
-var easy = [
-  'sum-of-multiples',
-  'name-on-billboard',
-  'fix-your-code-before-the-garden-dies',
-  'printing-array-elements-with-comma-delimiters',
-  'function-1-hello-world'
-];
-
-var medium = [
-  // 'wheel-of-fortune',
-  // 'special-multiples',
-  'multiply',
-  'jennys-secret-message',
-  'dna-sequence-tester',
-  'i-love-big-nums-and-i-cannot-lie',
-  'exes-and-ohs'
-];
-
-var typing = [
-  'for (var i = 0; i<array.length; i++)',
-  '`Hello, ${name}. Welcome to ${city}, ${country}!`',
-  'var args = Array.prototype.slice.call(arguments);',
-  "var exclaim = function(statement) { return statement.toUpperCase() + '!';}",
-  'BlinkyDancer.prototype = Object.create(Dancer.prototype);',
-  "var str = Object.keys(array).join('')",
-  'const pipe = (...args) => args.reduce((final, arg) => (item) => arg(final(item)));'
-];
-
-var questions = [
-  {
-    question: 'What kind of scoping does JavaScript use?',
-    choices: ['Literal', 'Lexical', 'Segmental', 'Sequential'],
-    answer: 'b',
-    explanation: 'Like most modern programming languages, JavaScript uses lexical scoping. This means that functions are executed using the variable scope that was in effect when they were defined, not the variable scope that is in effect when they are invoked.',
-    type: 'multichoice'
-  },
-  {
-    question: 'What must be done in order to implement Lexical Scoping?',
-    choices: ['Get the object', 'Dereference the current scope chain', 'Reference the current scope chain', 'one of the mentioned'],
-    answer: 'c',
-    explanation: 'In order to implement lexical scoping, the internal state of a JavaScript function object must include not only the code of the function but also a reference to the current scope chain.',
-    type: 'multichoice'
-  },
-  {
-    question: 'What is a closure?',
-    choices: ['Function objects', 'Scope where function’s variables are resolved', 'Both a and b', 'None of the mentioned'],
-    answer: 'c',
-    explanation: 'A combination of a function object and a scope (a set of variable bindings) in which the function’s variables are resolved is called a closure.',
-    type: 'multichoice'
-  },
-  {
-    question: 'Which of the following are examples of closures?',
-    choices: ['Objects', 'Variables', 'Functions', 'All of the mentioned'],
-    answer: 'd',
-    explanation: 'Technically, all JavaScript functions are closures: they are objects, and they have a scope chain associated with them.',
-    type: 'multichoice'
-  },
-
-];
+var Easy = require('./prompts').Easy;
+var Medium = require('./prompts').Medium;
+var Hard = require('./prompts').Hard;
+var Insane = require('./prompts').Insane;
+var Debug = require('./prompts').Debug;
+var Typing = require('./prompts').Typing;
+var MultiQuestions = require('./prompts').MultiQuestions;
 
 module.exports.saveUser = function(req, res) {
     var newUser = {
@@ -91,12 +37,19 @@ module.exports.saveUser = function(req, res) {
       });
 }
 
-var grabPrompt = function(level, index, iterator) {
+var grabPrompt = function(level, iterator) {
   //randomly pick challenge based on choice posted
+  var prompt;
   if (level === 'easy') {
-    var prompt = easy[index];
-  } else {
-    var prompt = medium[index];
+    prompt = Easy[Math.floor(Math.random() * Easy.length)];
+  } else if (level === 'medium') {
+    prompt = Medium[Math.floor(Math.random() * Medium.length)];
+  } else if (level === 'hard') {
+    prompt = Hard[Math.floor(Math.random() * Hard.length)];
+  } else if (level === 'debug') {
+    prompt = Debug[Math.floor(Math.random() * Debug.length)]
+  } else if (level === 'insane') {
+    prompt = Insane[Math.floor(Math.random() * Insane.length)];
   }
   //generate query
   var options = {
@@ -137,29 +90,26 @@ var shuffle = function(array) {
 
 module.exports.makeGame = function(req, res) {
   var result = [];
-  var randomArray = [];
   var questArray = [];
-  //generate random indexes for prompts
-  //currently use 4 because only 4 prompts each difficulty
-  for (var i = 0; i < 5; i++) {
-    randomArray.push(i);
-  }
-  //randomize the prompts
-  randomArray = shuffle(randomArray);
 
-  for (var i = 0; i < 4; i++ ) {
+  for (var i = 0; i < MultiQuestions.length; i++ ) {
     questArray.push(i);
   }
   questArray = shuffle(questArray);
 
   for (var i = 0; i < req.body.numPrompt - 3; i++) {
-    index = randomArray[i];
+    var level;
+    if(i === 0){
+      level = req.body.difficulty;
+    } else {
+      level = 'debug'
+    }
     //make the calls to generate prompts
-    grabPrompt(req.body.difficulty, index, function(err, status, info) {
-      if(err){
+    grabPrompt(level, function(err, status, info) {
+      if (err) {
         res.send({error: err})
       }
-      else if(status){
+      else if (status) {
         res.send({statusCode: 500});
       } else {
         result.push(info);
@@ -170,20 +120,20 @@ module.exports.makeGame = function(req, res) {
             description: 'Complete the following phrase as quickly as you can.',
             session: {
               type: 'typing',
-              expression: typing[Math.floor(Math.random() * typing.length)]
+              expression: Typing[Math.floor(Math.random() * Typing.length)]
             }
           }
           result.push(typeTest);
           var multiChoice = {
             name: 'Multiple Choice Challenge!',
             description: 'Answer the question by submitting the correct answer.',
-            session: questions[questArray[0]]
+            session: MultiQuestions[questArray[0]]
           }
           result.push(multiChoice);
           var multiChoice2 = {
             name: 'Multiple Choice Challenge!',
             description: 'Answer the question by submitting the correct answer.',
-            session: questions[questArray[1]]
+            session: MultiQuestions[questArray[1]]
           }
           result.push(multiChoice2);
           var shuffled = shuffle(result);
