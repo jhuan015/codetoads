@@ -18,7 +18,7 @@ export default function(state = INITIAL_STATE, action) {
       attempt: JSON.parse(action.payload.data.response),
       passed: (JSON.parse(action.payload.data.response)).passed,
       index: state.index,
-      alert: (JSON.parse(action.payload.data.response)).passed,
+      alert: true
     };
   case CLOSE_ALERT:
     return {
