@@ -6,7 +6,7 @@ class UsersList extends React.Component {
   render() {
     return (
       <div className='users'>
-        <h3> Online Users </h3>
+        <h3> Pond Users </h3>
         <ul>
           {
             this.props.users.map((user, i) => {
@@ -38,7 +38,7 @@ class MessageList extends React.Component {
 	render() {
 		return (
 			<div className='messages'>
-				<h2> Conversation: </h2>
+				<h2> Chat: </h2>
 				{
 					this.props.messages.map((message, i) => {
 						return (
@@ -132,8 +132,9 @@ class ChatApp extends React.Component {
 	}
 
   _userJoined(data) {
-    var {users, messages} = this.state;
-     messages.push({
+    var {messages} = this.state;
+    var {users} = data;
+    messages.push({
       user: 'TOADBOT',
       text : data.name +' has joined the pond!'
     });
@@ -141,7 +142,8 @@ class ChatApp extends React.Component {
   }
 
   _userLeft(data) {
-    var {users, messages} = this.state;
+    var {messages} = this.state;
+    var {users} = data;
     messages.push({
       user: 'TOADBOT',
       text : data.name +' has left the pond.'

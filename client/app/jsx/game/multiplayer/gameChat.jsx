@@ -125,7 +125,8 @@ class ChatApp extends React.Component {
 	}
 
 	_userJoined(data) {
-		var {users, messages} = this.state;
+		var {messages} = this.state;
+    var {users} = data;
   	messages.push({
 			user: 'TOADBOT',
 			text : data.name +' has joined the game!'
@@ -134,7 +135,8 @@ class ChatApp extends React.Component {
 	}
 
 	_userLeft(data) {
-		var {users, messages} = this.state;
+		var {messages} = this.state;
+		var {users} = data;
 		messages.push({
 			user: 'TOADBOT',
 			text : data.name +' has left the game.'
