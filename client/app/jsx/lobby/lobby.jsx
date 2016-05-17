@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import Profile from './profile';
 import GameMode from "./gameMode";
 import ChatApp from "./pond";
-import { getUserInfo } from "../actions/actions"
+import { getUserInfo } from "../actions/actions";
+import { logoutUser } from '../actions/authActions'
 
 class Lobby extends React.Component {
   render () {
+    if(this.props.error){
+      this.props.logoutUser();
+    }
     return (
       <div className='lobby row'>
         <div className='col-sm-4 profile-panel'>
@@ -42,8 +46,9 @@ function mapStateToProps(state) {
            gamesPlayed: state.user.gamesPlayed,
            quits: state.user.quits,
            fastest: state.user.fastest,
-           user_id:state.user.user_id
+           user_id:state.user.user_id,
+           error: state.user.error
           };
 }
 
-export default connect(mapStateToProps, { getUserInfo })(Lobby);
+export default connect(mapStateToProps, { getUserInfo, logoutUser })(Lobby);

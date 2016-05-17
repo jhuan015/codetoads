@@ -12,7 +12,8 @@ const INIT_STATE = {
   quits: 0,
   fastest: 0,
   email: '',
-  picture: ''
+  picture: '',
+  error: false
 };
 
 export default function (state = INIT_STATE, action){
@@ -30,7 +31,8 @@ export default function (state = INIT_STATE, action){
         quits: action.payload.data.quits || 0,
         fastest: action.payload.data.fastest || 0,
         email: action.payload.data.email || '',
-        picture: action.payload.data.picture || ''
+        picture: action.payload.data.picture || '',
+        error: action.error || false
       };
     default:
     return state;
