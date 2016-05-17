@@ -33,6 +33,7 @@ class MultiGame extends React.Component {
     }
     return (
       <div className='game'>
+        <Timer start={Date.now()} />
         <SweetAlert
           show={this.props.alert && this.props.index+1 !== this.props.amount && this.props.passed}
           imageUrl= "app/img/ironfrog.gif"
