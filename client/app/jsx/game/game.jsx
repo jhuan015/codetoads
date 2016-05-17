@@ -21,7 +21,7 @@ class Game extends React.Component {
     return (
       <div className='game'>
         <SweetAlert
-          show={this.props.alert && this.props.index+1 !== this.props.amount}
+          show={this.props.alert && this.props.index+1 !== this.props.amount && this.props.passed}
           imageUrl= "app/img/ironfrog.gif"
           imageSize= '250x250'
           title="Success!"
@@ -29,11 +29,19 @@ class Game extends React.Component {
           onConfirm={() => this.props.closeAlert()}
         />
         <SweetAlert
-          show={this.props.alert && this.props.index+1 === this.props.amount}
+          show={this.props.alert && this.props.index+1 === this.props.amount && this.props.passed}
           imageUrl= "app/img/jumping_frog.gif"
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
+          onConfirm={() => this.props.closeAlert()}
+        />
+        <SweetAlert
+          show={this.props.alert && !this.props.passed}
+          imageUrl= "app/img/wrongtoad.jpg"
+          imageSize= '250x250'
+          title="Wrong Answer!"
+          text="Sorry! Try again."
           onConfirm={() => this.props.closeAlert()}
         />
         <div className='prompt-panel col-sm-4'>

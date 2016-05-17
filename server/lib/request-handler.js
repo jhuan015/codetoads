@@ -138,6 +138,7 @@ var shuffle = function(array) {
 module.exports.makeGame = function(req, res) {
   var result = [];
   var randomArray = [];
+  var questArray = [];
   //generate random indexes for prompts
   //currently use 4 because only 4 prompts each difficulty
   for (var i = 0; i < 5; i++) {
@@ -145,7 +146,13 @@ module.exports.makeGame = function(req, res) {
   }
   //randomize the prompts
   randomArray = shuffle(randomArray);
-  for (var i = 0; i < req.body.numPrompt; i++) {
+
+  for (var i = 0; i < 4; i++ ) {
+    questArray.push(i);
+  }
+  questArray = shuffle(questArray);
+
+  for (var i = 0; i < req.body.numPrompt - 3; i++) {
     index = randomArray[i];
     //make the calls to generate prompts
     grabPrompt(req.body.difficulty, index, function(err, status, info) {
@@ -170,13 +177,13 @@ module.exports.makeGame = function(req, res) {
           var multiChoice = {
             name: 'Multiple Choice Challenge!',
             description: 'Answer the question by submitting the correct answer.',
-            session: questions[Math.floor(Math.random() * questions.length)]
+            session: questions[questArray[0]]
           }
           result.push(multiChoice);
           var multiChoice2 = {
             name: 'Multiple Choice Challenge!',
             description: 'Answer the question by submitting the correct answer.',
-            session: questions[Math.floor(Math.random() * questions.length)]
+            session: questions[questArray[1]]
           }
           result.push(multiChoice2);
           var shuffled = shuffle(result);

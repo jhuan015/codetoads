@@ -17,7 +17,7 @@ class MultiGame extends React.Component {
     window.socket = io.connect({query: "chatroom="+this.props.params.name +
       '&user='+JSON.parse(window.localStorage.profile).nickname});
   }
-  
+
   componentWillUnmount() {
     socket.close();
   }
@@ -30,7 +30,7 @@ class MultiGame extends React.Component {
     return (
       <div className='game'>
         <SweetAlert
-          show={this.props.alert && this.props.index+1 !== this.props.amount}
+          show={this.props.alert && this.props.index+1 !== this.props.amount && this.props.passed}
           imageUrl= "app/img/ironfrog.gif"
           imageSize= '250x250'
           title="Success!"
@@ -38,13 +38,21 @@ class MultiGame extends React.Component {
           onConfirm={() => this.props.closeAlert()}
         />
         <SweetAlert
-          show={this.props.alert && this.props.index+1 === this.props.amount}
+          show={this.props.alert && this.props.index+1 === this.props.amount && this.props.passed}
           imageUrl= "app/img/jumping_frog.gif"
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
           onConfirm={() => this.props.closeAlert()}
-        />       
+        />
+        <SweetAlert
+          show={this.props.alert && !this.props.passed}
+          imageUrl= "app/img/wrongtoad.jpg"
+          imageSize= '250x250'
+          title="Wrong Answer!"
+          text="Sorry! Try again."
+          onConfirm={() => this.props.closeAlert()}
+        />
         <div className='prompt-panel col-sm-4'>
           <Tabs defaultActiveKey={1} id='detailsSelection'>
             <Tab eventKey={1} title="Prompt">

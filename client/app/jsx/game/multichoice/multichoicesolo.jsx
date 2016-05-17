@@ -3,35 +3,68 @@ import { Button } from 'react-bootstrap';
 import SweetAlert from 'sweetalert-react';
 import { Link } from 'react-router';
 
-class MultiChoice extends React.Component {
+class MultiChoiceSolo extends React.Component {
   constructor() {
     super()
 
     this.state = {
       selected: '',
       show: false,
-      passed: false
+      passed: false,
+      choices: [],
+      shuffled: []
     };
   }
+  
+  componentDidMount () {
+    if(this.props.session.choices !== this.state.choices){
+      var _choices = [['a'], ['b'], ['c'], ['d']];
+      for (var i = 0; i < _choices.length; i++) {
+        _choices[i].push(this.props.session.choices[i])
+      }
+      var shuffled = this._shuffle(_choices);
+      this.setState({
+        choices: this.props.session.choices,
+        shuffled: shuffled
+      });
+    }
+  }
 
+  componentWillReceiveProps (nextProps) {
+    if(nextProps.session.choices !== this.state.choices){
+      var _choices = [['a'], ['b'], ['c'], ['d']];
+      for (var i = 0; i < _choices.length; i++) {
+        _choices[i].push(nextProps.session.choices[i])
+      }
+      var shuffled = this._shuffle(_choices);
+      this.setState({
+        choices: nextProps.session.choices,
+        shuffled: shuffled
+      });
+    }
+  }
+  
   _submit () {
     if (this.state.selected === this.props.session.answer) {
-      console.log('true');
       this.setState({
         show: true,
         passed: true
       })
     } else {
-      console.log('false');
       this.setState({
         show: true
       })
+      setTimeout(this._toggleAlert.bind(this), 5000)
     }
   }
 
+  _toggleAlert(){
+    this.setState({
+      show: !this.state.show
+    });
+  }
+
   _selected (answer) {
-    console.log('inside answer');
-    console.log(answer);
     this.setState({
       selected: answer
     });
@@ -45,6 +78,20 @@ class MultiChoice extends React.Component {
     this.props.nextPrompt(this.props.index+1);
   }
 
+  _shuffle(array) {
+    var arr = Array.prototype.slice(array);
+
+    array.forEach(function(value, index){
+      //generates random whole number with range 0 to array length
+      var random = Math.max(0,(Math.floor(Math.random() * arr.length)));
+      //swaps current index/value with random index/value
+      arr[index] = arr[random];
+      arr[random] = value;
+    });
+
+    return arr;
+  };
+  
   render () {
     return (
       <div>
@@ -61,8 +108,8 @@ class MultiChoice extends React.Component {
           imageUrl= "app/img/wrongtoad.jpg"
           imageSize= '250x250'
           title="Wrong Answer!"
-          text="Sorry! Try again."
-          onConfirm={() => this.setState({show: false})}
+          text="Sorry! Try again. This message will self-destruct in 5 seconds."
+          showConfirmButton={false}
         />
         <SweetAlert
           show={this.state.show && this.props.complete}
@@ -73,16 +120,17 @@ class MultiChoice extends React.Component {
           onConfirm={() => this.setState({show: false})}
         />
         <p>{this.props.session.question}</p>
-        <ul className="answers">
-        <input className='with-gap' type="radio" name="q1" value="a" id="a1" onClick={this._selected.bind(this, 'a')} />
-          <label htmlFor="a1">{this.props.session.choices[0]}</label><br />
-        <input className='with-gap' type="radio" name="q1" value="b" id="a2" onClick={this._selected.bind(this, 'b')} />
-          <label htmlFor="a2">{this.props.session.choices[1]}</label><br />
-        <input className='with-gap' type="radio" name="q1" value="c" id="a3" onClick={this._selected.bind(this, 'c')} />
-          <label htmlFor="a3">{this.props.session.choices[2]}</label><br />
-        <input className='with-gap' type="radio" name="q1" value="d" id="a4" onClick={this._selected.bind(this, 'd')} />
-          <label htmlFor="a4">{this.props.session.choices[3]}</label><br />
-        </ul>
+        { this.state.shuffled.length !== 0 &&
+          <div>
+            <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[0][0]} id="a1" onClick={this._selected.bind(this, this.state.shuffled[0][0])} />
+              <label htmlFor="a1">{this.state.shuffled[0][1]}</label><br />
+            <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[1][0]} id="a2" onClick={this._selected.bind(this, this.state.shuffled[1][0])} />
+              <label htmlFor="a2">{this.state.shuffled[1][1]}</label><br />
+            <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[2][0]} id="a3" onClick={this._selected.bind(this, this.state.shuffled[2][0])} />
+              <label htmlFor="a3">{this.state.shuffled[2][1]}</label><br />
+            <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[3][0]} id="a4" onClick={this._selected.bind(this, this.state.shuffled[3][0])} />
+              <label htmlFor="a4">{this.state.shuffled[3][1]}</label><br />
+          </div>}
         {!this.state.passed && <Button bsStyle='primary' bsSize='large' onClick={this._submit.bind(this)}>Submit</Button>}
         {this.state.passed && !this.props.complete && <Button bsStyle='primary' className='pull-left' bsSize='large' onClick={this._getNextPrompt.bind(this)}>Next Prompt</Button>}
         {this.state.passed && this.props.complete && <Link to="/lobby" className='btn btn-primary pull-left'>Lobby</Link>}
@@ -91,4 +139,4 @@ class MultiChoice extends React.Component {
   }
 }
 
-export default MultiChoice;
+export default MultiChoiceSolo;
