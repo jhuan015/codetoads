@@ -9,7 +9,6 @@ class Sologame extends React.Component {
   render(){    
     return (
       <div className='text-center'>
-      <div>{this.props.difficulty}, {this.props.amount}</div>
         <div className='clearfix solo-dropdown'>
           <DiffButton difficulty={this.props.difficulty} createDifficulty={this.props.createDifficulty}/>
         </div>
