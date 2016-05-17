@@ -8,7 +8,7 @@ const {createGame, joinGame, createDifficulty, setJoin, setCreate, setRoom } = r
 class Multigame extends React.Component {
   constructor (){
     super()
-    
+
     this.state = {
       roomname: '',
       password: '',
@@ -24,13 +24,13 @@ class Multigame extends React.Component {
       roomname: event.target.value
     })
   }
-  
+
   _onPasswordChange (event) {
     this.setState({
       password: event.target.value
     })
   }
-  
+
   _handleSubmit () {
     if (this.props.join){
       this.props.setRoom(this.state.roomname, this.state.password);
@@ -61,10 +61,10 @@ class Multigame extends React.Component {
     this.setState({loader:false});
     if (data.type === 'create'){
       if(data.value === false){
-        this.setState({error:'Room Already Exists'});        
+        this.setState({error:'Room Already Exists'});
       } else {
         this.props.setRoom(this.state.roomname, this.state.password);
-        hashHistory.push('/multiplay/' + this.state.roomname + '&'+this.state.password);
+        hashHistory.push('/multiplay/' + this.state.roomname + '&'+ data.password + '&' + this.props.difficulty);
       }
     } else if (data.type === 'join'){
       if (data.full){
@@ -75,12 +75,12 @@ class Multigame extends React.Component {
         this.setState({error:'Password Incorrect'})
       } else {
         this.props.setRoom(this.state.roomname, this.state.password);
-        hashHistory.push('/multiplay/' + this.state.roomname + '&'+this.state.password);
+        hashHistory.push('/multiplay/' + this.state.roomname + '&'+ data.password + '&' + this.props.difficulty);
       }
 
     }
   }
-  
+
   render(){
     return (
       <div>
