@@ -20,46 +20,32 @@ describe('Main Page Calls', function () {
 describe('makeGame calls', function() {
   var data = {
     difficulty: 'easy',
-    numPrompt: 2
+    numPrompt: 5
   };
 
-  it('make a game with 2 prompts', function (done) {
+  it('make a game with 5 prompts', function (done) {
     request
       .post('/api/makeGame')
         .send(data)
         .expect(200)
         .end(function (err, res) {
-          assert.equal(res.body.length, 2);
+          assert.equal(res.body.length, 5);
           done();
         });
   });
 
-  it('make a game with 3 prompts', function (done) {
-    var data = {
-      difficulty: 'easy',
-      numPrompt: 3
-    };
-    request
-      .post('/api/makeGame')
-        .send(data)
-        .expect(200)
-        .end(function (err, res) {
-          assert.equal(res.body.length, 3);
-          done();
-        });
-  });
 
-  it('grab a prompt with code', function (done) {
-    request
-      .post('/api/makeGame')
-        .send(data)
-        .expect(200)
-        .end(function (err, res) {
-          assert.property(res.body[0].session, 'code', "has code property");
-          assert.property(res.body[0].session, 'setup', "has setup property");
-          done();
-        });
-  });
+  // it('grab a prompt with code', function (done) {
+  //   request
+  //     .post('/api/makeGame')
+  //       .send(data)
+  //       .expect(200)
+  //       .end(function (err, res) {
+  //         assert.property(res.body[0].session, 'code', "has code property");
+  //         assert.property(res.body[0].session, 'setup', "has setup property");
+  //         done();
+  //       });
+  // });
 
 });
 
