@@ -18,7 +18,9 @@ module.exports = function (socket) {
       player:[],
       amount:0,
       started:false,
-      password:password
+      password:password,
+      creator:socket.name,
+      prompts:[]
     };
   }
   if (socket.name){
