@@ -20,7 +20,9 @@ module.exports = function (socket) {
       started:false,
       password:password,
       creator:socket.name,
-      prompts:[]
+      prompts:[],
+      winner:'none',
+      startTime:''
     };
   }
   if (socket.name){
@@ -31,14 +33,12 @@ module.exports = function (socket) {
       }
     });
     if (!nameCheck){
-      roomStatus[room].player.push({name:socket.name});
+      roomStatus[room].player.push({name:socket.name, progress: 0, completed:false, time:''});
     }
   }
 
   //check game from lobby before redirect
   socket.on('gamecheck:status', function (data) {
-    console.log('password:');
-    console.log( data.password);
     var status = {type:data.type, value:true, passCheck:true,full:false};
     if (data.type === 'create'){
       if (roomStatus[data.room]){
@@ -50,8 +50,6 @@ module.exports = function (socket) {
     } else if (data.type === 'join'){
       if (roomStatus[data.room]){
         if (!passwordHash.verify(data.password, roomStatus[data.room].password)){
-          console.log('hashedPass:');
-          console.log(roomStatus[data.room].password);
           status.passCheck = false;
         } else {
           var found = false;
