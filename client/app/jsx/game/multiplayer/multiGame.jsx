@@ -21,7 +21,8 @@ class MultiGame extends React.Component {
   componentDidMount() {
     socket.on('creator:creator', this._initial.bind(this));
     socket.on('sharegame:users', this._shareGame.bind(this));
-    socket.on('gameStart', this.props.startGame.bind(this));
+    socket.on('gameStart', this.props.startGame);
+    socket.on('called:share', this._calledShared.bind(this));
   }
   componentWillMount() {
     //join socket with roomname and clients username
@@ -40,32 +41,47 @@ class MultiGame extends React.Component {
     if (data){
       if (JSON.parse(window.localStorage.profile).nickname === data.creator){
         this.setState({creator:true});
-        this.props.fetchPrompts(this.props.difficulty);
+        if(data.prompts.length === 0){
+          this.props.fetchPrompts(this.props.difficulty);
+        } else {
+          this.props.updatePrompts(data);
+        }
+        this.props.updateUsers(data.player);
       }
     }
   }
   _startGame () {
     socket.emit('gameStart', {});
+    console.log('PROPS');
+    console.log(this.props);
+
+    this.props.saveGame(this.props.params.name.split('&')[0], this.props.users, this.props.prompts);
     this.props.startGame();
   }
   _shareGame (data){
     console.log(data);
     this.props.updatePrompts(data);
+    this.props.updateUsers(data.users)
+  }
+  _calledShared (data){
+    this.setState({called:true});
   }
   render (){
+    console.log('STATE AT REDNER');
+    console.log(this.state);
     if (this.state.creator){
+      console.log('prompts');
+      console.log(this.props.prompts);
       if(this.props.prompts.statusCode === 500){
         this.props.fetchPrompts();
       } else {
-        if(!this.state.called){
-          socket.emit('sharegame:users', {prompts:this.props.prompts});
-          // this.setState({called: true});
+        if(!this.state.called && this.props.prompts.length){
+          socket.emit('sharegame:users', { prompts:this.props.prompts, called:true });
         }
       }
     }
     return (
       <div className='game'>
-        <Timer />
         <SweetAlert
           show={this.props.alert && this.props.index+1 !== this.props.amount && this.props.passed}
           imageUrl= "app/img/ironfrog.gif"
