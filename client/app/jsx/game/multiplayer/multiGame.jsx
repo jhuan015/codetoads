@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame } from '../../actions/actions';
+import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers } from '../../actions/actions';
 import Race from '../race';
 import Prompt from '../prompt';
 import UserInput from '../userInput';
