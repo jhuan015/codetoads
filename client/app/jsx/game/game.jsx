@@ -21,7 +21,6 @@ class Game extends React.Component {
     }
     return (
       <div className='game'>
-        <Timer />
         <SweetAlert
           show={this.props.alert && this.props.index+1 !== this.props.amount && this.props.passed}
           imageUrl= "app/img/ironfrog.gif"
@@ -59,6 +58,7 @@ class Game extends React.Component {
         </div>
         {/*<Timer start={new Date()} />*/}
         <div className='input-panel col-sm-8'>
+          <Timer />
           { this.props.prompts[this.props.index] &&
             <UserInputSolo
             fetchPrompts={this.props.fetchPrompts}
