@@ -1,6 +1,6 @@
- import { FETCH_PROMPTS, SUBMIT_ATTEMPT, CLOSE_ALERT, NEXT_PROMPT, CHEAT } from '../actions/actions';
+ import { FETCH_PROMPTS, SUBMIT_ATTEMPT, CLOSE_ALERT, NEXT_PROMPT, CHEAT, UPDATE_PROMPTS, START_GAME } from '../actions/actions';
 
-const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: false, index: 0, alert: false};
+const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: false, index: 0, alert: false, started:false};
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
@@ -10,7 +10,8 @@ export default function(state = INITIAL_STATE, action) {
       attempt: state.attempt,
       passed: false,
       index: 0,
-      alert: state.alert
+      alert: state.alert,
+      started:false
     };
   case SUBMIT_ATTEMPT:
     return {
@@ -18,7 +19,8 @@ export default function(state = INITIAL_STATE, action) {
       attempt: JSON.parse(action.payload.data.response),
       passed: (JSON.parse(action.payload.data.response)).passed,
       index: state.index,
-      alert: true
+      alert: true,
+      started:state.started
     };
   case CLOSE_ALERT:
     return {
@@ -26,7 +28,8 @@ export default function(state = INITIAL_STATE, action) {
       attempt: state.attempt,
       passed: state.passed,
       index: state.index,
-      alert: false
+      alert: false,
+      started:state.started
     }
   case NEXT_PROMPT:
     return {
@@ -34,7 +37,8 @@ export default function(state = INITIAL_STATE, action) {
       attempt: { ouput: [], reason: ''},
       passed: false,
       index: action.index,
-      alert: state.alert
+      alert: state.alert,
+      started:state.started
     }
   case CHEAT:
     return {
@@ -42,7 +46,26 @@ export default function(state = INITIAL_STATE, action) {
       attempt: state.attempt,
       passed: true,
       index: state.index,
-      alert: true
+      alert: true,
+      started:state.started
+    }
+  case UPDATE_PROMPTS:
+    return {
+      prompts: action.payload.prompts,
+      attempt: state.attempt,
+      passed: state.passed,
+      index: state.index,
+      alert: state.alert,
+      started:action.payload.started
+    }
+  case START_GAME:
+    return {
+      prompts: state.prompts,
+      attempt: state.attempt,
+      passed: state.passed,
+      index: state.index,
+      alert: state.alert,
+      started:true
     }
   default:
     return state;

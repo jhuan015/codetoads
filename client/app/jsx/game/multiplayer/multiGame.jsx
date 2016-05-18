@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe } from '../../actions/actions';
+import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame } from '../../actions/actions';
 import Race from '../race';
 import Prompt from '../prompt';
 import UserInput from '../userInput';
@@ -11,8 +11,19 @@ import SweetAlert from 'sweetalert-react';
 import Timer from '../timer'
 
 class MultiGame extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      creator:false,
+      called:false
+    }
+  }
+  componentDidMount() {
+    socket.on('creator:creator', this._initial.bind(this));
+    socket.on('sharegame:users', this._shareGame.bind(this));
+    socket.on('gameStart', this.props.startGame.bind(this));
+  }
   componentWillMount() {
-    this.props.fetchPrompts(this.props.difficulty);
     //join socket with roomname and clients username
     var socketParams = this.props.params.name.split('&');
     const name = socketParams[0];
@@ -25,11 +36,32 @@ class MultiGame extends React.Component {
   componentWillUnmount() {
     socket.close();
   }
-
+  _initial (data){
+    if (data){
+      if (JSON.parse(window.localStorage.profile).nickname === data.creator){
+        this.setState({creator:true});
+        this.props.fetchPrompts(this.props.difficulty);
+      }
+    }
+  }
+  _startGame () {
+    socket.emit('gameStart', {});
+    this.props.startGame();
+  }
+  _shareGame (data){
+    console.log(data);
+    this.props.updatePrompts(data);
+  }
   render (){
-    if(this.props.prompts.statusCode === 500){
-      console.log('calling again');
-      this.props.fetchPrompts();
+    if (this.state.creator){
+      if(this.props.prompts.statusCode === 500){
+        this.props.fetchPrompts();
+      } else {
+        if(!this.state.called){
+          socket.emit('sharegame:users', {prompts:this.props.prompts});
+          // this.setState({called: true});
+        }
+      }
     }
     return (
       <div className='game'>
@@ -59,7 +91,8 @@ class MultiGame extends React.Component {
           onConfirm={() => this.props.closeAlert()}
         />
         <div className='prompt-panel col-sm-4'>
-          <Tabs defaultActiveKey={1} id='detailsSelection'>
+          {!this.props.started && <div>CLICK DA START BUTTON</div>}
+          {this.props.started && <Tabs defaultActiveKey={1} id='detailsSelection'>
             <Tab eventKey={1} title="Prompt">
               { this.props.prompts[this.props.index] &&
                 <Prompt name={this.props.prompts[this.props.index].name} description={this.props.prompts[this.props.index].description} />}
@@ -67,14 +100,15 @@ class MultiGame extends React.Component {
             <Tab eventKey={2} title="Test Results">
               <TestResults output={this.props.attempt.output} reason={this.props.attempt.reason} />
             </Tab>
-          </Tabs>
+          </Tabs> }
           <GameChat />
         </div>
         <div className='input-panel col-sm-8'>
           <div className='race clearfix'>
             <Race />
           </div>
-          { this.props.prompts[this.props.index] &&
+          {!this.props.started && this.state.creator && <button onClick={this._startGame.bind(this)}>Start Game</button>}
+          { this.props.started && this.props.prompts[this.props.index] &&
             <UserInput
             fetchPrompts={this.props.fetchPrompts}
             submitAttempt={this.props.submitAttempt}
@@ -98,8 +132,9 @@ function mapStateToProps(state) {
            index: state.game.index,
            amount: state.selection.amount,
            difficulty: state.selection.difficulty,
-           alert: state.game.alert
+           alert: state.game.alert,
+           started:state.game.started
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe })(MultiGame);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame })(MultiGame);
