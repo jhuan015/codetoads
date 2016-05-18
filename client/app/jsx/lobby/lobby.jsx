@@ -10,7 +10,7 @@ class Lobby extends React.Component {
   render () {
     if(this.props.error){
       this.props.logoutUser();
-      window.location.reload;
+      window.location.reload();
     }
     return (
       <div className='lobby row'>
