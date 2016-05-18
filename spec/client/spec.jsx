@@ -10,6 +10,11 @@ import Typing from '../../client/app/jsx/game/typing/typing';
 describe('<Keyboard />', () => {
   const wrapper = render(<Keyboard />);
 
+  it('has current as a prop', () => {
+    const wrapper = shallow(<Keyboard />);
+    expect(wrapper.props().current).to.be.defined;
+  });
+
   it('renders 54 keys', () => {
     expect(wrapper.find('#keyboard').children()).to.have.length(54);
   });
@@ -47,6 +52,14 @@ describe('<Keyboard />', () => {
 describe('<Key />', () => {
   var wrapper = render(<Key />);
   var sWrapper = shallow(<Key />);
+
+  it('has current, char1, char2, code, and type as props', () => {
+    expect(wrapper.props().current).to.be.defined;
+    expect(wrapper.props().char1).to.be.defined;
+    expect(wrapper.props().char2).to.be.defined;
+    expect(wrapper.props().code).to.be.defined;
+    expect(wrapper.props().type).to.be.defined;
+  });
 
   it('renders 1 list item', () => {
     expect(wrapper.find('li').length).to.equal(1);
@@ -87,7 +100,13 @@ describe('<Key />', () => {
 });
 
 describe('<Frag />', () => {
-  const wrapper = render(<Frag expression={"Hello world!".split("")} term={"Hey dude".split('')} />);
+  var wrapper = render(<Frag expression={"Hello world!".split("")} term={"Hey dude".split('')} />);
+
+  it('has expression and term as props', () => {
+    var wrapper = shallow(<Frag expression={"Hello world!".split("")} term={"Hey dude".split('')} />);
+    expect(wrapper.props().expression).to.be.defined;
+    expect(wrapper.props().term).to.be.defined;
+  });
 
   it('renders all letters in an expression', () => {
     expect(wrapper.text()).to.contain('Hello world!');
@@ -106,7 +125,12 @@ describe('<Frag />', () => {
 });
 
 describe('<Typing />', () => {
-  const wrapper = render(<Typing expression='Hello world!' />);
+  var wrapper = render(<Typing expression='Hello world!' />);
+
+  it('has nextPrompt as a prop', () => {
+    const wrapper = shallow(<Typing expression="Hey you guys."/>);
+    expect(wrapper.props().nextPrompt).to.be.defined;
+  });
 
   it('renders a fragment', () => {
     expect(wrapper.text()).to.contain('Hello world!');
@@ -119,11 +143,6 @@ describe('<Typing />', () => {
 
   it('has a place for user input', () => {
     expect(wrapper.find('#write')).to.have.length(1);
-  });
-
-  it('has nextPrompt as a prop', () => {
-    const wrapper = shallow(<Typing expression="Hey you guys."/>);
-    expect(wrapper.props().nextPrompt).to.be.defined;
   });
 
   it('updates state to current keycode on keypress', () => {
