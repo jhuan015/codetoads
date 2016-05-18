@@ -121,4 +121,32 @@ describe('<Typing />', () => {
     expect(wrapper.find('#write')).to.have.length(1);
   });
 
+  it('has nextPrompt as a prop', () => {
+    const wrapper = shallow(<Typing expression="Hey you guys."/>);
+    expect(wrapper.props().nextPrompt).to.be.defined;
+  });
+
+  it('updates state to current keycode on keypress', () => {
+    const wrapper = mount(<Typing expression='Hello world!' />);
+    wrapper.setState({ current: 0 });
+    wrapper.find('#write').simulate('keyDown', {keyCode:65});
+    expect(wrapper.state('current')).to.equal(65);
+    wrapper.find('#write').simulate('keyDown', {keyCode:80});
+    expect(wrapper.state('current')).to.equal(80);
+  });
+
+  it('sets term state on input change', () => {
+    const wrapper = mount(<Typing expression='Hello world!' />);
+    wrapper.setState({ term: 'Change me' });
+    wrapper.find('#write').simulate('change',  {target: {value: 'I have been changed'}});
+    expect(wrapper.state('term')).to.equal('I have been changed');
+  });
+
+  it('sets passed state to true if input matches expression', () => {
+    const wrapper = mount(<Typing expression='Hello world!' />);
+    wrapper.find('#write').simulate('change',  {target: {value: 'I have been changed'}});
+    expect(wrapper.state('passed')).to.equal(false);
+    wrapper.find('#write').simulate('change',  {target: {value: 'Hello world!'}});
+    expect(wrapper.state('passed')).to.equal(true);
+  });
 });
