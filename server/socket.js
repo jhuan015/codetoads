@@ -20,7 +20,9 @@ module.exports = function (socket) {
       started:false,
       password:password,
       creator:socket.name,
-      prompts:[]
+      prompts:[],
+      winner:'none',
+      startTime:''
     };
   }
   if (socket.name){
@@ -31,14 +33,12 @@ module.exports = function (socket) {
       }
     });
     if (!nameCheck){
-      roomStatus[room].player.push({name:socket.name});
+      roomStatus[room].player.push({name:socket.name, progress: 0, completed:false, time:''});
     }
   }
 
   //check game from lobby before redirect
   socket.on('gamecheck:status', function (data) {
-    console.log('password:');
-    console.log( data.password);
     var status = {type:data.type, value:true, passCheck:true,full:false};
     if (data.type === 'create'){
       if (roomStatus[data.room]){
@@ -50,8 +50,6 @@ module.exports = function (socket) {
     } else if (data.type === 'join'){
       if (roomStatus[data.room]){
         if (!passwordHash.verify(data.password, roomStatus[data.room].password)){
-          console.log('hashedPass:');
-          console.log(roomStatus[data.room].password);
           status.passCheck = false;
         } else {
           var found = false;
@@ -109,18 +107,26 @@ module.exports = function (socket) {
   socket.on('person:passed', function(data) {
     for (var i = 0; i < roomStatus[room].player.length; i++) {
       if (data.name === roomStatus[room].player[i].name) {
-        roomStatus[room].player[i].current++;
+        roomStatus[room].player[i].progress++;
         //emit to everyone and socket that sent it
-        this.to(room).emit('update:game', roomStatus[room]);
-        socket.emit('update:game', roomStatus[room]);
-        if (roomStatus[room].player[i].current === roomStatus[room].goal) {
+        if (roomStatus[room].player[i].progress === 5 && roomStatus[room].winner === 'none') {
+          roomStatus[room].winner = roomStatus[room].player[i].name;
+          roomStatus[room].player[i].completed = true;
+          roomStatus[room].player[i].time = Date.now();
           this.to(room).emit('winner', {
             winner: data.name
           });
           socket.emit('winner', {
             winner: data.name
           })
+        } else if (roomStatus[room].player[i].progress === 5 && roomStatus[room].winner !== 'none'){
+          roomStatus[room].player[i].completed = true;
+          roomStatus[room].player[i].time = Date.now();
+          socket.emit('completed', {completed:data.name});
+          this.to(room).emit('completed', {completed:data.name});
         }
+        this.to(room).emit('update:game', roomStatus[room]);
+        socket.emit('update:game', roomStatus[room]);
         return;
       }
     }
@@ -128,21 +134,31 @@ module.exports = function (socket) {
   //send initial data to creator
   if (socket.name === roomStatus[room].creator && (!roomStatus[room].started)){
     socket.emit('creator:creator', roomStatus[room]);
+  } else if (socket.name === roomStatus[room].creator && (roomStatus[room].started)){
+    socket.emit('sharegame:users', roomStatus[room]);
   }
   if (socket.name !== roomStatus[room].creator){
-    console.log('sending initial prompts');
-    console.log(roomStatus[room]);
-    socket.emit('sharegame:users', {prompts:roomStatus[room].prompts.prompts, started:roomStatus[room].started});
-  }
+    // console.log('sending initial prompts');
+    // console.log(roomStatus[room]);
+    socket.emit('sharegame:users', {prompts:roomStatus[room].prompts, started:roomStatus[room].started, users:roomStatus[room].player});
+    this.to(room).emit('sharegame:users', {prompts:roomStatus[room].prompts, started:roomStatus[room].started, users:roomStatus[room].player});
+    }
   //share game with joined users
   socket.on('sharegame:users', function(data) {
-    roomStatus[room].prompts = data;
-    console.log('saving prompts for joiners');
-    console.log(roomStatus[room]);
+    // console.log('data to be saved');
+    // console.log(data);
+    // console.log('SOCKET GOT THE EMITINO FROM REACT BLABLABLA')
+    roomStatus[room].prompts = data.prompts;
+    // console.log('saving prompts for joiners');
+    // console.log(roomStatus[room]);
+    if (data.called){
+      socket.emit('called:share', {});
+    }
     this.to(room).emit('sharegame:users', {prompts:data.prompts, started:roomStatus[room].started});
   });
   socket.on('gameStart', function(data){
     roomStatus[room].started = true;
+    roomStatus[room].startTime = Date.now();
     this.to(room).emit('gameStart',{});
   });
   // clean up when a user leaves, and broadcast it to other users
@@ -154,10 +170,13 @@ module.exports = function (socket) {
         }
       });
       roomStatus[room].player.splice(nameIndex, 1);
-      this.to(room).emit('user:left', {
-        name: socket.name,
-        users: roomStatus[room].player
-      });
-
+      if (roomStatus[room].player.length === 0){
+        delete roomStatus[room];
+      } else {
+        this.to(room).emit('user:left', {
+          name: socket.name,
+          users: roomStatus[room].player
+        });
+      }
   });
 };

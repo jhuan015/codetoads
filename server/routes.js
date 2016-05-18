@@ -15,7 +15,7 @@ module.exports = function(app) {
 
   app.post('/api/joinGame', authenticate, handler.joinGame);
 
-  app.post('/api/createGame', authenticate, handler.createGame);
+  app.post('/api/saveGame', authenticate, handler.saveGame);
 
   app.post('/api/getUserInfo', authenticate, handler.getUserInfo);
 

@@ -10,17 +10,24 @@ export const SET_ROOM = 'SET_ROOM';
 export const SET_JOIN = 'SET_JOIN';
 export const JOIN_GAME = 'JOIN_GAME';
 export const SET_CREATE = 'SET_CREATE'
-export const CREATE_GAME = 'CREATE_GAME';
+export const SAVE_GAME = 'SAVE_GAME';
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const CLOSE_ALERT = 'CLOSE_ALERT';
 export const UPDATE_PROMPTS = 'UPDATE_PROMPTS';
 export const START_GAME = 'START_GAME';
+export const UPDATE_USERS = 'UPDATE_USERS';
 
-export function fetchPrompts(difficulty, numPrompt) {
+export function fetchPrompts(difficulty) {
   const request = axios.post('/api/makeGame', { "difficulty": difficulty, "numPrompt": 5});
   return {
     type: FETCH_PROMPTS,
     payload: request
+  };
+}
+export function updateUsers(users) {
+  return {
+    type: UPDATE_USERS,
+    users: users
   };
 }
 export function submitAttempt(ans) {
@@ -85,11 +92,11 @@ export function setCreate() {
     type: SET_CREATE
   }
 }
-export function createGame(roomname, password, difficulty, numPrompts) {
+export function saveGame(roomname, users, prompts) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
-  const request = axios.post('/api/createGame', {'roomname': roomname, 'password': password, 'difficulty': difficulty, 'user_id':JSON.parse(localStorage.profile).user_id, 'numPrompts': 5});
-  return {
-    type: CREATE_GAME,
+  const request = axios.post('/api/saveGame', {'roomname': roomname, users:users, prompts:prompts});
+return {
+    type: SAVE_GAME,
     payload: request
   }
 }
