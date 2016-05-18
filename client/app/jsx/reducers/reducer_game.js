@@ -5,8 +5,6 @@ const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
   case FETCH_PROMPTS:
-  console.log('inside fetch prompts');
-  console.log(action.payload);
     return {
       prompts: action.payload.data,
       attempt: state.attempt,
@@ -23,6 +21,7 @@ export default function(state = INITIAL_STATE, action) {
       passed: (JSON.parse(action.payload.data.response)).passed,
       index: state.index,
       alert: true,
+      started: state.started,
       users: state.users
     };
   case CLOSE_ALERT:
