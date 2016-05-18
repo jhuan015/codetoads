@@ -19,4 +19,5 @@ module.exports = function(app) {
 
   app.post('/api/getUserInfo', authenticate, handler.getUserInfo);
 
+  app.put('/api/incrementGames/:id', authenticate, handler.incrementGames);
 }

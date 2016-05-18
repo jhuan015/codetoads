@@ -212,3 +212,23 @@ module.exports.getUserInfo = function(req, res) {
       res.send(err);
     });
 };
+
+module.exports.incrementGames = function(req, res) {
+  console.log(req.params.id);
+  User.filter({user_id: req.params.id}).run().then(function(users) {
+    var user = users[0];
+
+    if (!user.gamesPlayed) {
+      user.gamesPlayed = 1;
+    } else {
+      user.gamesPlayed++;
+    }
+    console.log(user);
+
+    user.save().then(function(result) {
+      res.send(result);
+    }).error(function (err) {
+      res.send(err);
+    });
+  });
+};
