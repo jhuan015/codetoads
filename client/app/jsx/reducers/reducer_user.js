@@ -1,13 +1,13 @@
-import { GET_USER_INFO } from '../actions/actions';
+import { GET_USER_INFO, INCREMENT_GAME } from '../actions/actions';
 
 const INIT_STATE = {
   id: '',
   user_id: '',
-  username: 'Batman',
-  firstname: 'Bruce',
-  lastname: 'Wayne',
+  username: '',
+  firstname: '',
+  lastname: '',
   winStreak: 0,
-  lostTo: 'Superman',
+  lostTo: '',
   gamesPlayed: 0,
   quits: 0,
   fastest: 0,
@@ -33,6 +33,22 @@ export default function (state = INIT_STATE, action){
         email: action.payload.data.email || '',
         picture: action.payload.data.picture || '',
         error: action.error || false
+      };
+    case INCREMENT_GAME:
+      return {
+        id: state.id,
+        user_id: state.user_id,
+        username: state.username,
+        firstname: state.firstname,
+        lastname: state.lastname,
+        winStreak: state.winStreak,
+        lostTo: state.lostTo,
+        gamesPlayed: action.payload.data.gamesPlayed,
+        quits: state.quits,
+        fastest: state.fastest,
+        email: state.email,
+        picture: state.picture,
+        error: state.error || false
       };
     default:
     return state;

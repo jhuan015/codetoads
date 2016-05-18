@@ -16,6 +16,7 @@ export const CLOSE_ALERT = 'CLOSE_ALERT';
 export const UPDATE_PROMPTS = 'UPDATE_PROMPTS';
 export const START_GAME = 'START_GAME';
 export const UPDATE_USERS = 'UPDATE_USERS';
+export const INCREMENT_GAME = 'INCREMENT_GAME';
 
 export function fetchPrompts(difficulty) {
   const request = axios.post('/api/makeGame', { "difficulty": difficulty, "numPrompt": 5});
@@ -113,7 +114,6 @@ export function getUserInfo() {
 }
 
 export function updatePrompts(data) {
-
   return {
     type: UPDATE_PROMPTS,
     payload: data
@@ -124,5 +124,14 @@ export function startGame(data) {
   return {
     type: START_GAME,
     payload: data
+  }
+}
+export function incrementGames() {
+  var user = JSON.parse(localStorage.profile).user_id;
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
+  const request = axios.put('/api/incrementGames/' + user);
+  return {
+    type: INCREMENT_GAME,
+    payload: request
   }
 }
