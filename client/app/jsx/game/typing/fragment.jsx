@@ -1,7 +1,7 @@
 import React from 'react';
 
 class Frag extends React.Component {
-  
+
   _renderExpression() {
     return this.props.expression.map((letter, index) => {
       var classes = 'fragment-letter';
@@ -18,10 +18,10 @@ class Frag extends React.Component {
       );
     });
   }
-  
+
   render (){
     return (
-      <div id='expression' class='container'>
+      <div id='expression' className='container'>
         {this._renderExpression()}
       </div>
     )
