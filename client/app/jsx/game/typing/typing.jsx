@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Keyboard from './keyboard';
 import Frag from './fragment';
 import { Button } from 'react-bootstrap';
@@ -15,6 +16,10 @@ class Typing extends React.Component {
       passed: false,
       show: false
     };
+  }
+  
+  componentDidMount(){
+    ReactDOM.findDOMNode(this.refs.nameInput).focus(); 
   }
 
   _handlePress (event) {
@@ -71,7 +76,8 @@ class Typing extends React.Component {
         <Frag expression={this.props.expression.split("")}
           term={this.state.term.split("")}
         />
-        <textarea id="write" rows="6" cols="40"
+        <textarea id="write" rows="6" cols="10"
+          ref='nameInput'
           value={this.state.term}
           onChange={event => this._onInputChange(event.target.value)}
           onKeyDown={this._handlePress.bind(this)}></textarea>
