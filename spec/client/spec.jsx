@@ -1,16 +1,10 @@
-import jsdom from 'jsdom';
-const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
-const win = doc.defaultView;
-global.document = doc;
-global.window = win;
-
 import React from 'react';
 import { mount, shallow, render } from 'enzyme';
 import { expect } from 'chai';
+import sinon from 'sinon';
 import Keyboard from '../../client/app/jsx/game/typing/keyboard';
 import Key from '../../client/app/jsx/game/typing/key';
-import sinon from 'sinon';
-
+import Frag from '../../client/app/jsx/game/typing/fragment';
 
 describe('<Keyboard />', () => {
   const wrapper = render(<Keyboard />);
@@ -89,4 +83,24 @@ describe('<Key />', () => {
     expect(wrapper.find('.active')).to.have.length(1);
     Key.prototype.componentWillReceiveProps.restore();
   });
+});
+
+describe('<Frag />', () => {
+  const wrapper = render(<Frag expression={"Hello world!".split("")} term={"Hey dude".split('')} />);
+
+  it('renders all letters in an expression', () => {
+    expect(wrapper.text()).to.contain('Hello world!');
+    expect(wrapper.find('#expression').children()).to.have.length(12);
+  });
+
+  it('has fragment-letter-green class if correct', () => {
+    expect(wrapper.text()).to.contain('Hello world!');
+    expect(wrapper.find('.fragment-letter-green')).to.have.length(2);
+  });
+
+  it('has fragment-letter class if not correct', () => {
+    expect(wrapper.text()).to.contain('Hello world!');
+    expect(wrapper.find('.fragment-letter')).to.have.length(10);
+  });
+
 });
