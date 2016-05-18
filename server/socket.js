@@ -170,10 +170,13 @@ module.exports = function (socket) {
         }
       });
       roomStatus[room].player.splice(nameIndex, 1);
-      this.to(room).emit('user:left', {
-        name: socket.name,
-        users: roomStatus[room].player
-      });
-
+      if (roomStatus[room].player.length === 0){
+        delete roomStatus[room];
+      } else {
+        this.to(room).emit('user:left', {
+          name: socket.name,
+          users: roomStatus[room].player
+        });
+      }
   });
 };
