@@ -14,7 +14,7 @@
     "watch": "webpack --watch",
     "build": "webpack",
     "test": "mocha -R spec spec/server.js",
-    "front": "mocha --compilers js:babel-register -R spec spec/client/spec.jsx"
+    "front": "mocha --compilers js:babel-register spec/client/browser.js -R spec spec/client/spec.jsx"
   },
   "repository": {
     "type": "git",

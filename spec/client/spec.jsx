@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import Keyboard from '../../client/app/jsx/game/typing/keyboard';
 import Key from '../../client/app/jsx/game/typing/key';
 import Frag from '../../client/app/jsx/game/typing/fragment';
+import Typing from '../../client/app/jsx/game/typing/typing';
 
 describe('<Keyboard />', () => {
   const wrapper = render(<Keyboard />);
@@ -101,6 +102,23 @@ describe('<Frag />', () => {
   it('has fragment-letter class if not correct', () => {
     expect(wrapper.text()).to.contain('Hello world!');
     expect(wrapper.find('.fragment-letter')).to.have.length(10);
+  });
+});
+
+describe('<Typing />', () => {
+  const wrapper = render(<Typing expression='Hello world!' />);
+
+  it('renders a fragment', () => {
+    expect(wrapper.text()).to.contain('Hello world!');
+    expect(wrapper.find('#expression')).to.have.length(1);
+  });
+
+  it('renders a keyboard', () => {
+    expect(wrapper.find('#keyboard')).to.have.length(1);
+  });
+
+  it('has a place for user input', () => {
+    expect(wrapper.find('#write')).to.have.length(1);
   });
 
 });
