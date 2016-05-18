@@ -121,7 +121,9 @@ class MultiGame extends React.Component {
         </div>
         <div className='input-panel col-sm-8'>
           <div className='race clearfix'>
-            <Race />
+            {this.props.started && <Race
+            saveGame={this.props.saveGame}
+            />}
           </div>
           {!this.props.started && this.state.creator && <button onClick={this._startGame.bind(this)}>Start Game</button>}
           { this.props.started && this.props.prompts[this.props.index] &&
@@ -149,8 +151,9 @@ function mapStateToProps(state) {
            amount: state.selection.amount,
            difficulty: state.selection.difficulty,
            alert: state.game.alert,
-           started:state.game.started
+           started:state.game.started,
+           users: state.game.users
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame })(MultiGame);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers })(MultiGame);
