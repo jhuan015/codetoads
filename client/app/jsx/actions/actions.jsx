@@ -12,7 +12,9 @@ export const JOIN_GAME = 'JOIN_GAME';
 export const SET_CREATE = 'SET_CREATE'
 export const CREATE_GAME = 'CREATE_GAME';
 export const GET_USER_INFO = 'GET_USER_INFO';
-export const CLOSE_ALERT = 'CLOSE_ALERT'
+export const CLOSE_ALERT = 'CLOSE_ALERT';
+export const UPDATE_PROMPTS = 'UPDATE_PROMPTS';
+export const START_GAME = 'START_GAME';
 
 export function fetchPrompts(difficulty, numPrompt) {
   const request = axios.post('/api/makeGame', { "difficulty": difficulty, "numPrompt": 5});
@@ -100,5 +102,20 @@ export function getUserInfo() {
   return {
     type: GET_USER_INFO,
     payload: request
+  }
+}
+
+export function updatePrompts(data) {
+
+  return {
+    type: UPDATE_PROMPTS,
+    payload: data
+  }
+}
+export function startGame(data) {
+  data = {};
+  return {
+    type: START_GAME,
+    payload: data
   }
 }
