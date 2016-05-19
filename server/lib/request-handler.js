@@ -194,8 +194,39 @@ module.exports.joinGame = function(req, res) {
 };
 
 module.exports.saveGame = function(req, res) {
+  // ADD FASTEST TIME STAT TO users
+  // ADD LAST LOST TO THE users
   console.log(req.body);
-  res.send(200);
+  if(req.body.winner) {
+    User.filter({username: req.body.winner}).run().then(function(users) {
+      var user = users[0];
+      if (user) {
+        user.winStreak++;
+        user.completed++;
+      }
+      console.log(user);
+      user.save().then(function(result) {
+        res.send(result);
+      }).error(function (err) {
+        res.send(err);
+      });
+    });
+  }
+  // Game.filter({roomname: req.body.roomname}).run()
+  //         .then(function (games) {
+  //           var game = games[0];
+  //           if(game) {
+  //             return new Error('Game already exists');
+  //           } else {
+  //             Game.save(newGame)
+  //             .then(function (game) {
+  //               res.send(game);
+  //             })
+  //             .catch(function (err) {
+  //               res.send({statusCode: 500});
+  //             });
+  //           }
+  //         });
 };
 
 module.exports.getUserInfo = function(req, res) {

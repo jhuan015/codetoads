@@ -17,9 +17,9 @@ class Typing extends React.Component {
       show: false
     };
   }
-  
+
   componentDidMount(){
-    ReactDOM.findDOMNode(this.refs.nameInput).focus(); 
+    ReactDOM.findDOMNode(this.refs.nameInput).focus();
   }
 
   _handlePress (event) {
