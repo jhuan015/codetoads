@@ -134,7 +134,9 @@ class MultiGame extends React.Component {
               <TestResults output={this.props.attempt.output} reason={this.props.attempt.reason} />
             </Tab>
           </Tabs> }
-          <GameChat />
+          <div className='prompt-panel__chat'>
+            <GameChat />
+          </div>
         </div>
         <div className='input-panel col-sm-8'>
           <div className='clearfix'>

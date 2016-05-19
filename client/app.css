@@ -310,21 +310,21 @@ footer{
   color: #FFFFFF;
   transition: left 1.5s ease-in-out;
 }
-.profile-panel__chat__message-wrap {
+.profile-panel__chat__message-wrap, .prompt-panel__chat__message-wrap {
   width:75%;
   height:100%;
   float:left;
   padding-left:10px;
 }
-.profile-panel__chat__messages {
+.profile-panel__chat__messages, .prompt-panel__chat__messages {
     height: calc(100% - 100px);
 }
-.profile-panel__chat__messages h3, .profile-panel__chat__userlist h3 {
+.profile-panel__chat__messages h3, .profile-panel__chat__userlist h3,.prompt-panel__chat__messages h3, .prompt-panel__chat__userlist h3 {
   margin:30px 0 40px;
   padding-bottom:30px;
   border-bottom:1px solid white;
 }
-.profile-panel__chat__messages__message-wrap{
+.profile-panel__chat__messages__message-wrap, .prompt-panel__chat__messages__message-wrap{
     overflow-y: scroll;
     height: calc(100% - 150px);
     border: 1px solid white;
@@ -332,13 +332,13 @@ footer{
     color: #1C1923;
     padding: 10px;
 }
-.profile-panel__chat__messages__message {
+.profile-panel__chat__messages__message, .prompt-panel__chat__messages__message {
   font-weight:bold;
 }
-.profile-panel__chat__wrap {
+.profile-panel__chat__wrap,.prompt-panel__chat__wrap {
   height:100%;
 }
-.profile-panel__chat__userlist {
+.profile-panel__chat__userlist, .prompt-panel__chat__userlist {
     float: left;
     width: 25%;
     height: 100%;
@@ -428,6 +428,18 @@ footer{
     color:white;
     border-color:#6096D2;
     border-bottom:none;
+}
+.prompt-panel__chat {
+  padding:0 15px;  
+  width: 100%;  
+  height: 500px;
+  color: #FFFFFF;
+  margin-top:30px;
+  border:1px solid white;
+}
+.prompt-panel__chat__messages__message-wrap{    
+    background-color: #DDE5EC;
+    color: #141D27;
 }
 .prompt__title {
     margin: 0;
