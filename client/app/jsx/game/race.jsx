@@ -26,6 +26,7 @@ class Race extends React.Component {
   _updateGame(data) {
     console.log('current game');
     console.log(data);
+    //mounting error happens here
     this.setState({game:data});
     this.props.saveGame(this.state.game);
   }
@@ -38,9 +39,8 @@ class Race extends React.Component {
       <div className='grass-wrap'>
         <div className='grass'></div>
       </div>
-      <div className='race-path'></div>
-      <div className='finishLine'></div>
-      {this.state.game.player && <div className='race-path-wrap'>
+      <div className='race-path'></div>      
+      {this.state.game.player && <div className='race-path-wrap'><div className='finishLine-wrap'><div className='finishLine'></div></div>
             {this.state.game.player.map((user, i) => {
               return (
                 <div key={i} className={'frog frog' + (i+1) + ' path' +(user.progress * 20)}>                
