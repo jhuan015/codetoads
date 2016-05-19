@@ -19,6 +19,7 @@ export const UPDATE_USERS = 'UPDATE_USERS';
 export const INCREMENT_GAME = 'INCREMENT_GAME';
 export const UPDATE_SOLO = 'UPDATE_SOLO';
 export const CLOSE_FINISH = 'CLOSE_FINISH';
+export const RESET_GAME = 'RESET_GAME';
 
 export function fetchPrompts(difficulty) {
   const request = axios.post('/api/makeGame', { "difficulty": difficulty, "numPrompt": 5});
@@ -154,5 +155,10 @@ export function updateSoloStats(time) {
 export function closeAndFinish(){
   return {
     type: CLOSE_FINISH
+  }
+}
+export function resetGame () {
+  return {
+    type: RESET_GAME
   }
 }

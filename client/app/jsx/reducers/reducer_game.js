@@ -1,4 +1,4 @@
- import { FETCH_PROMPTS, SUBMIT_ATTEMPT, CLOSE_ALERT, NEXT_PROMPT, CHEAT, UPDATE_PROMPTS, START_GAME, SAVE_GAME, UPDATE_USERS, CLOSE_FINISH } from '../actions/actions';
+import { FETCH_PROMPTS, SUBMIT_ATTEMPT, CLOSE_ALERT, NEXT_PROMPT, CHEAT, UPDATE_PROMPTS, START_GAME, SAVE_GAME, UPDATE_USERS, CLOSE_FINISH, RESET_GAME } from '../actions/actions';
 
 const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: false, index: 0, alert: false, started:false, users: [], done: false};
 
@@ -13,7 +13,7 @@ export default function(state = INITIAL_STATE, action) {
       alert: state.alert,
       started: false,
       users: state.users,
-      done: state.done
+      done: false
     };
   case SUBMIT_ATTEMPT:
     return {
@@ -102,7 +102,7 @@ export default function(state = INITIAL_STATE, action) {
       users: action.users,
       done: state.done
     }
-    case CLOSE_FINISH:
+  case CLOSE_FINISH:
     return {
       prompts: state.prompts.slice(),
       attempt: state.attempt,
@@ -112,6 +112,17 @@ export default function(state = INITIAL_STATE, action) {
       started: state.started,
       users: state.users,
       done: true
+    }
+  case RESET_GAME:
+    return { 
+      prompts: [],
+      attempt: { ouput: [], reason: ''},
+      passed: false,
+      index: 0,
+      alert: false,
+      started:false,
+      users: [],
+      done: false
     }
   default:
     return state;
