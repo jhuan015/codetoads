@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers, reconnect } from '../../actions/actions';
+import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers, reconnect, resetGame } from '../../actions/actions';
 import Race from '../race';
 import Prompt from '../prompt';
 import UserInput from '../userInput';
@@ -37,6 +37,7 @@ class MultiGame extends React.Component {
 
   componentWillUnmount() {
     socket.close();
+    this.props.resetGame()
   }
   _initial (data){
     if (data){
@@ -176,8 +177,9 @@ function mapStateToProps(state) {
            difficulty: state.selection.difficulty,
            alert: state.game.alert,
            started:state.game.started,
-           users: state.game.users
+           users: state.game.users,
+           done: state.game.done
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers, reconnect })(MultiGame);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers, reconnect, resetGame })(MultiGame);
