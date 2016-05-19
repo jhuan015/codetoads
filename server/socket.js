@@ -122,8 +122,8 @@ module.exports = function (socket) {
         } else if (roomStatus[room].player[i].progress === 5 && roomStatus[room].winner !== 'none'){
           roomStatus[room].player[i].completed = true;
           roomStatus[room].player[i].time = Date.now();
-          socket.emit('completed', {completed:data.name});
-          this.to(room).emit('completed', {completed:data.name});
+          // socket.emit('completed', {completed:data.name});
+          // this.to(room).emit('completed', {completed:data.name});
         }
         this.to(room).emit('update:game', roomStatus[room]);
         if (data.name === roomStatus[room].winner) {

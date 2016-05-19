@@ -22,9 +22,9 @@ class Race extends React.Component {
   _winner(data) {
     console.log(data.winner + ' WON!');
   }
-  _completed(){
-    console.log(data.completed + 'Completed the game!!!!!!!!!!!');
-  }
+  // _completed(data){
+  //   console.log(data.name + 'Completed the game!!!!!!!!!!!');
+  // }
   _updateGame(data) {
     //mounting error happens here
     this.setState({game:data});
@@ -43,7 +43,7 @@ class Race extends React.Component {
       {this.state.game.player && <div className='race-path-wrap'><div className='finishLine-wrap'><div className='finishLine'></div></div>
             {this.state.game.player.map((user, i) => {
               return (
-                <div key={i} className={'frog frog' + (i+1) + ' path' +(user.progress * 20)}><Tooltip id={user.name} placement='left' className='in frog-tooltip'>                
+                <div key={i} className={'frog frog' + (i+1) + ' path' +(user.progress * 20)}><Tooltip id={user.name} placement='left' className='in frog-tooltip'>
                 {user.name}</Tooltip></div>
                 );
             })}</div>
