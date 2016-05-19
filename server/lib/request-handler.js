@@ -200,14 +200,18 @@ module.exports.joinGame = function(req, res) {
 module.exports.saveGame = function(req, res) {
 
   //need to fix this... somehow make winner only run once
+  //it is currently running twice because winnerSaved alway defaults to false
+  //this means completed and winStreak add more than intended
   var winnerSaved = false;
   if (req.body.winner !== 'none' && winnerSaved === false) {
     winnerSaved = true;
     for (var i = 0; i < req.body.player.length; i++) {
+      //find winner
       if (req.body.player[i].name === req.body.winner) {
         var winner = req.body.player[i];
       }
     }
+    //update winner data
     User.filter({username: req.body.winner}).run().then(function(users) {
      var user = users[0];
      var fastest = Math.floor((winner.time - req.body.startTime) / 1000);
@@ -225,12 +229,15 @@ module.exports.saveGame = function(req, res) {
     });
   }
 
+  //save loser data
   if (req.body.winner !== 'none') {
     for (var j = 0; j < req.body.player.length; j++) {
+      //skip winner
       if (req.body.player[j].name !== req.body.winner) {
         var loserUser = req.body.player[j];
         User.filter({username: loserUser.name}).run().then(function(users) {
           var otherUser = users[0];
+          //if completed, check time and increment completed
           if (loserUser.completed === true) {
             var fastest = Math.floor((req.body.player[j].time - req.body.startTime) / 1000);
             if (!otherUser.fastest) {
@@ -239,10 +246,12 @@ module.exports.saveGame = function(req, res) {
               otherUser.fastest = fastest;
             }
             otherUser.completed++;
+          //if not completed, reset winstreak and add winner as lostTo
           } else {
             otherUser.winStreak = 0;
             otherUser.lostTo = req.body.winner;
           }
+          //save to database
           otherUser.save().then(function(result) {
             res.send(result);
           }).error(function (err) {
