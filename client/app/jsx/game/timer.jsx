@@ -9,7 +9,7 @@ class Timer extends React.Component {
     };
   }
   componentWillReceiveProps (nextProps) {
-    if(nextProps.done){
+    if(nextProps.solo && nextProps.done){
       console.log('time to update solo stats');
       //calculate time in seconds
       var time = Math.round(this.state.elapsed / 100)/10;
