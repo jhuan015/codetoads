@@ -44,6 +44,14 @@ class MultiChoice extends React.Component {
     }
   }
 
+  _decideWinner () {
+    this.setState({show: false});
+    console.log('CALLING DECIDE WINNER')
+    socket.emit('person:passed', {
+      name: JSON.parse(window.localStorage.profile).nickname
+    });
+  }
+
   _submit () {
     if (this.state.selected === this.props.session.answer) {
       this.setState({
@@ -127,7 +135,7 @@ class MultiChoice extends React.Component {
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
-          onConfirm={() => this.setState({show: false})}
+          onConfirm={this._decideWinner.bind(this)}
         />
         <p>{this.props.session.question}</p>
         { this.state.shuffled.length !== 0 && <div>
