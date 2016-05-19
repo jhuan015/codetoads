@@ -61,10 +61,6 @@ class MultiGame extends React.Component {
 
   _startGame () {
     socket.emit('gameStart', {});
-    console.log('PROPS');
-    console.log(this.props);
-
-    this.props.saveGame(this.props.params.name.split('&')[0], this.props.users, this.props.prompts);
     this.props.startGame();
   }
   _reconnect (data){
@@ -91,11 +87,7 @@ class MultiGame extends React.Component {
     this.setState({called:true});
   }
   render (){
-    console.log('STATE AT REDNER');
-    console.log(this.state);
     if (this.state.creator){
-      console.log('prompts');
-      console.log(this.props.prompts);
       if(this.props.prompts.statusCode === 500){
         this.props.fetchPrompts();
       } else {
