@@ -4,8 +4,8 @@ const ReactRouter = require('react-router')
 class UsersList extends React.Component {
 	render() {
 		return (
-			<div className='users'>
-				<h3> TOAD Users </h3>
+			<div className='prompt-panel__chat__userlist'>
+				<h3> Users </h3>
 				<ul>
 					{
 						this.props.users.map((user, i) => {
@@ -25,8 +25,8 @@ class UsersList extends React.Component {
 class Message extends React.Component {
 	render() {
 		return (
-			<div className="message">
-				<strong>{this.props.user}: </strong>
+			<div>
+				<span className="prompt-panel__chat__messages__message">{this.props.user}: </span>
 				<span>{this.props.text}</span>
 			</div>
 		);
@@ -36,8 +36,9 @@ class Message extends React.Component {
 class MessageList extends React.Component {
 	render() {
 		return (
-			<div className='messages'>
-				<h2> Conversation: </h2>
+			<div className='prompt-panel__chat__messages'>
+				<h3>Croak </h3>
+        <div className='prompt-panel__chat__messages__message-wrap'>
 				{
 					this.props.messages.map((message, i) => {
 						return (
@@ -48,7 +49,7 @@ class MessageList extends React.Component {
 							/>
 						);
 					})
-				}
+				} </div>
 			</div>
 		);
 	}
@@ -77,12 +78,12 @@ class MessageForm extends React.Component {
 
 	render() {
 		return(
-			<div className='message_form'>
-				<h3>Write New Message</h3>
+			<div className='prompt-panel__chat__input'>
 				<form onSubmit={this.handleSubmit.bind(this)}>
 					<input
 						onChange={this.changeHandler.bind(this)}
 						value={this.state.text}
+            placeholder='Input croak and hit enter'
 					/>
 				</form>
 			</div>
@@ -156,18 +157,20 @@ class ChatApp extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<UsersList
-					users={this.state.users}
-				/>
-				<MessageList
-					messages={this.state.messages}
-				/>
-				<MessageForm
-					onMessageSubmit={this.handleMessageSubmit.bind(this)}
-					user={this.state.user}
-				/>
-			</div>
+			<div className='clearfix prompt-panel__chat__wrap'>
+            <UsersList
+              users={this.state.users} 
+            />
+            <div className='prompt-panel__chat__message-wrap'>
+              <MessageList
+                messages={this.state.messages}              
+              />
+              <MessageForm
+                onMessageSubmit={this.handleMessageSubmit.bind(this)}
+                user={this.state.user}
+              />
+            </div>
+          </div> 
 		);
 	}
 };
