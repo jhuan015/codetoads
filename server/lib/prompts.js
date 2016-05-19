@@ -150,35 +150,35 @@ module.exports.MultiQuestions = [
     type: 'multichoice'
   },
   {
-    question: 'Consider the following code snippet :\nvar a = [1,2,3,4,5];\na.slice(0,3);',
-    choices: ['Returns [1,2,3]', 'Returns [4,5]', 'Returns [1,2,3,4]', 'Returns [1,2,3,4,5]'],
+    question: '<div>Consider the following code snippet: </div><br/><div>var a = [1,2,3,4,5];</div><div>var b = a.slice(0,3);</div><br/><div>What is b?</div>',
+    choices: ['[1,2,3]', '[4,5]', '[1,2,3,4]', '[1,2,3,4,5]'],
     answer: 'a',
     explanation: 'The slice() method selects the elements starting at the given start argument, and ends at, but does not include, the given end argument.',
     type: 'multichoice'
   },
   {
-    question: 'Consider the following code snippet :\nvar a = [];\na.unshift(1);\na.unshift(22);\na.shift();\na.unshift(3,[4,5]);\na.shift();\na.shift();\na.shift();\n',
+    question: '<div>Consider the following code snippet: </div><br /><div>var a = []; </div><div>a.unshift(1); </div><div>a.unshift(22); </div><div>a.shift(); </div><div>a.unshift(3,[4,5]); </div><div>a.shift(); </div><div>a.shift(); </div><div>var b = a.shift();</div><br /><div>What is the value of b?</div>',
     choices: ['1', '[4,5]', '[3,4,5]', 'Exception is thrown'],
     answer: 'a',
     explanation: 'The unshift() and shift() methods behave much like push() and pop(), except that they insert and remove elements from the beginning of an array rather than from the end. unshift() adds an element or elements to the beginning of the array, shifts the existing array elements up to higher indexes to make room, and returns the new length of the array. shift() removes and returns the first element of the array, shifting all subsequent elements down one place to occupy the newly vacant space at the start of the array.',
     type: 'multichoice'
   },
   {
-    question: 'The primary purpose of the array map() function is that it',
+    question: 'The primary purpose of the array map() function is that it: ',
     choices: ['Maps the elements of another array into itself', 'Passes each element of the array and returns the necessary mapped elements', 'Passes each element of the array on which it is invoked to the function you specify, and returns an array containing the values returned by that function.', 'None of the mentioned'],
     answer: 'c',
     explanation: 'The map() method passes each element of the array on which it is invoked to the functionyou specify, and returns an array containing the values returned by that function.',
     type: 'multichoice'
   },
   {
-    question: 'The pop() method of the array does which of the following task ?',
+    question: 'The pop() method of the array does which of the following tasks?',
     choices: ['Decrements the total length by 1', 'Increments the total length by 1', 'Prints the first element but no effect on the length', 'None of the above'],
     answer: 'a',
     explanation: 'Arrays have a pop() method (it works with push()) that reduces the length of an array by 1 but also returns the value of the deleted element.',
     type: 'multichoice'
   },
   {
-    question: 'Consider the following snippet code\nvar string1 = ”123”;\nvar intvalue = 123;\nalert( string1 + intvalue );',
+    question: '<div>Consider the following snippet code</div><br /><div>var string1 = ”123”;</div><div>var intvalue = 123;</div><br /><div>alert( string1 + intvalue );</div>',
     choices: ['123246', '246', '123123', 'Exception'],
     answer: 'c',
     explanation: 'None.',
@@ -206,28 +206,28 @@ module.exports.MultiQuestions = [
     type: 'multichoice'
   },
   {
-    question: "For the below mentioned code snippet:\nvar o = new Object();\nThe equivalent statement is:",
+    question: "<div>For the below mentioned code snippet:</div><br /><div>var o = new Object();</div><br /><div>The equivalent statement is:</div>",
     choices: ['var o = Object();', 'var o;', 'var o= new Object;', 'Object o=new Object();'],
     answer: 'c',
     explanation: "You can always omit a pair of empty parentheses in a constructor invocation.",
     type: 'multichoice'
   },
   {
-    question: "For the below mentioned code snippet:\nvar o = new Object();\nThe equivalent statement is:",
+    question: "<div>For the below mentioned code snippet:</div><br /><div>var o = new Object();</div><br /><div>The equivalent statement is:</div>",
     choices: ['var o = Object();', 'var o;', 'var o= new Object;', 'Object o=new Object();'],
     answer: 'c',
     explanation: "You can always omit a pair of empty parentheses in a constructor invocation.",
     type: 'multichoice'
   },
   {
-    question: "Consider the following code snippet:\nvar tensquared = (function(x) {return x*x;}(10));",
-    choices: ['Yes, perfectly', 'Error', 'Exception will be thrown', 'Memory leak'],
+    question: "<div>Consider the following code snippet:</div><br /><div>var tensquared = (function(x) {return x*x;}(10));</div><br /><div>What will happen?</div>",
+    choices: ['It runs perfectly', 'It causes an error', 'An exception will be thrown', 'This is a memory leak'],
     answer: 'a',
     explanation: "Function name is optional for functions defined as expressions. Function expressions are sometimes defined and immediately invoked.",
     type: 'multichoice'
   },
   {
-    question: "Consider the following code snippet:\nvar grand_Total=eval('10*10+5');\nThe output for the above statement would be:",
+    question: "<div>Consider the following code snippet:</div><br /><div>var grand_Total=eval('10*10+5');</div><br /><div>The output for the above statement would be:</div>",
     choices: ['10*10+5', '105 as a string', '105 as an integer value', 'Exception is thrown'],
     answer: 'c',
     explanation: "Even if the string value passed as a parameter to eval does represent a numeric value the use of eval() results in an error being generated.",
