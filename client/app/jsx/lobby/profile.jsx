@@ -18,6 +18,11 @@ class Profile extends React.Component {
     } else {
       var formatted = 'No games played!';
     }
+    if (this.props.quits < 0) {
+      var quits = 0;
+    } else {
+      var quits = this.props.quits;
+    }
     return (
       <div>
         {this.props.firstname && this.props.lastname && <h2>{this.props.firstname} {this.props.lastname}</h2>}
@@ -25,7 +30,7 @@ class Profile extends React.Component {
         <ProfileRow title='Total Games Played' value={this.props.gamesPlayed}/>
         <ProfileRow title='Highest Win Streak' value={this.props.winStreak}/>
         <ProfileRow title='Last Wrecked By' value={this.props.lostTo}/>
-        <ProfileRow title='Rage Quits' value={this.props.quits}/>
+        <ProfileRow title='Rage Quits' value={quits}/>
         <ProfileRow title='Fastest Time' value={formatted}/>
       </div>
     )
