@@ -253,13 +253,14 @@ module.exports.saveGame = function(req, res) {
           }
           //save to database
           otherUser.save().then(function(result) {
-            res.send(result);
+            // res.send(result);
           }).error(function (err) {
-            res.send(err);
+            // res.send(err);
           });
         });
       }
     }
+    res.send(200);
   }
 
      // Game.filter({roomname: req.body.roomname}).run()
