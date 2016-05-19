@@ -91,7 +91,7 @@ module.exports.Debug = [
 
 module.exports.Typing = [
   'for (var i = 0; i<array.length; i++)',
-  '`Hello, ${name}. Welcome to ${city}, ${country}!`',
+  '`Hello, ${name}. Welcome to ${city}!`',
   'var args = Array.prototype.slice.call(arguments);',
   "var exclaim = function(statement) { return statement.toUpperCase() + '!';}",
   'BlinkyDancer.prototype = Object.create(Dancer.prototype);',
