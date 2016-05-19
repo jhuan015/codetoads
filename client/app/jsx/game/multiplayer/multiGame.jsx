@@ -50,6 +50,14 @@ class MultiGame extends React.Component {
       }
     }
   }
+
+  _decideWinner () {
+    this.props.closeAlert();
+    socket.emit('person:passed', {
+      name: JSON.parse(window.localStorage.profile).nickname
+    });
+  }
+
   _startGame () {
     socket.emit('gameStart', {});
     console.log('PROPS');
@@ -96,7 +104,7 @@ class MultiGame extends React.Component {
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
-          onConfirm={() => this.props.closeAlert()}
+          onConfirm={this._decideWinner.bind(this)}
         />
         <SweetAlert
           show={this.props.alert && !this.props.passed}

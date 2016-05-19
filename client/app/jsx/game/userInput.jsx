@@ -52,15 +52,9 @@ class UserInput extends React.Component {
   }
 
   _getNextPrompt () {
-    if(this.props.index+1 === this.props.amount){
-      socket.emit('person:won', {
-        test: 'you have won.'
-      });
-    } else {
-      socket.emit('person:passed', {
-        name: JSON.parse(window.localStorage.profile).nickname
-      });
-    }
+    socket.emit('person:passed', {
+       name: JSON.parse(window.localStorage.profile).nickname
+    });
     this.props.nextPrompt(this.props.index+1);
   }
 
