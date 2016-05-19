@@ -8,7 +8,6 @@ class Timer extends React.Component {
       elapsed: 0
     };
   }
-
   componentWillReceiveProps (nextProps) {
     if(nextProps.done){
       console.log('time to update solo stats');
@@ -18,9 +17,7 @@ class Timer extends React.Component {
       clearInterval(this.timer);
     }
   }
-
   componentDidMount () {
-    console.log(this.props)
     this.timer = setInterval(this.tick.bind(this), 50);
   }
   componentWillUnmount () {
