@@ -40,6 +40,11 @@ class TypingSolo extends React.Component {
     this.props.nextPrompt(this.props.index+1);
   }
   
+   _getNextPromptAndClose () {
+    this.setState({show: false});
+    this.props.nextPrompt(this.props.index+1);
+  }
+  
   _cheatTyping () {
     this.setState({passed: true});
     this.setState({show: true})
@@ -59,7 +64,7 @@ class TypingSolo extends React.Component {
           imageSize= '250x250'
           title="Success!"
           text="You got that answer right, toad."
-          onConfirm={() => this.setState({show: false})}
+          onConfirm={this._getNextPromptAndClose.bind(this)}
         />
         <SweetAlert
           show={this.state.show && this.props.complete}
@@ -79,7 +84,7 @@ class TypingSolo extends React.Component {
           onKeyDown={this._handlePress.bind(this)}></textarea>
         <Keyboard current={this.state.current} />
         {!this.state.passed && <Button bsStyle='primary' bsSize='large' onClick={this._cheatTyping.bind(this)}>Cheat!</Button>}
-        {this.state.passed && !this.props.complete && <Button bsStyle='primary' className='pull-right' bsSize='large' onClick={this._getNextPrompt.bind(this)}>Next Prompt</Button>}
+        {/*this.state.passed && !this.props.complete && <Button bsStyle='primary' className='pull-right' bsSize='large' onClick={this._getNextPrompt.bind(this)}>Next Prompt</Button>*/}
         {this.state.passed && this.props.complete && <Link to="/lobby" className='btn btn-primary pull-right'>Lobby</Link>}
       </div>
     )
