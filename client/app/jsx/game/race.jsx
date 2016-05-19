@@ -6,7 +6,8 @@ class Race extends React.Component {
   constructor (){
     super();
     this.state= {
-      game:{}
+      game:{},
+      done: false
     }
   }
   
@@ -35,7 +36,7 @@ class Race extends React.Component {
   render (){
     return (
       <div className='race'>
-      {/*<Timer/>*/}
+      {/*<Timer solo={false}/>*/}
       <div className='grass-wrap'>
         <div className='grass'></div>
       </div>
