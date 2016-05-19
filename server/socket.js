@@ -135,7 +135,7 @@ module.exports = function (socket) {
   if (socket.name === roomStatus[room].creator && (!roomStatus[room].started)){
     socket.emit('creator:creator', roomStatus[room]);
   } else if (socket.name === roomStatus[room].creator && (roomStatus[room].started)){
-    socket.emit('sharegame:users', roomStatus[room]);
+    socket.emit('reconnect:game', roomStatus[room]);
   }
   if (socket.name !== roomStatus[room].creator && roomStatus[room].started){
     socket.emit('reconnect:game', roomStatus[room]);
