@@ -65,7 +65,7 @@ export default function(state = INITIAL_STATE, action) {
       prompts: action.payload.prompts,
       attempt: state.attempt,
       passed: state.passed,
-      index: state.index,
+      index: action.payload.index,
       alert: state.alert,
       started: action.payload.started,
       users: state.users,
@@ -126,11 +126,13 @@ export default function(state = INITIAL_STATE, action) {
       done: false
     }
   case RECONNECT:
+  console.log('payload for reconnect');
+  console.log(action.payload);
     return {
       prompts: action.payload.prompts,
       attempt: state.attempt,
       passed: state.passed,
-      index: state.index,
+      index: action.payload.index,
       alert: state.alert,
       started: action.payload.started,
       users: action.payload.players,

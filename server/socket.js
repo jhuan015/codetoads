@@ -142,8 +142,8 @@ module.exports = function (socket) {
   } else if (socket.name !== roomStatus[room].creator){
     // console.log('sending initial prompts');
     // console.log(roomStatus[room]);
-    socket.emit('sharegame:users', {prompts:roomStatus[room].prompts, started:roomStatus[room].started, users:roomStatus[room].player});
-    this.to(room).emit('sharegame:users', {prompts:roomStatus[room].prompts, started:roomStatus[room].started, users:roomStatus[room].player});
+    socket.emit('sharegame:users', roomStatus[room]);
+    this.to(room).emit('sharegame:users',roomStatus[room]);
   }
   //share game with joined users
   socket.on('sharegame:users', function(data) {
@@ -171,7 +171,9 @@ module.exports = function (socket) {
           nameIndex = index;
         }
       });
-      roomStatus[room].player.splice(nameIndex, 1);
+      if (!roomStatus[room].started){
+        roomStatus[room].player.splice(nameIndex, 1);        
+      }
       if (roomStatus[room].player.length === 0){
         delete roomStatus[room];
       } else {

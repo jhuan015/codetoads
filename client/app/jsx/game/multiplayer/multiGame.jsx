@@ -68,12 +68,24 @@ class MultiGame extends React.Component {
     this.props.startGame();
   }
   _reconnect (data){
+    data.index=0;
+    data.player.forEach(function(val, index){
+      if (val.name === JSON.parse(window.localStorage.profile).nickname){
+        data.index = val.progress;
+      }
+    });
+    console.log('index =: '+ data.index);
     this.props.reconnect(data);
   }
   _shareGame (data){
-    console.log(data);
+    data.index = 0;
+    data.player.forEach(function(val, index){
+      if (val.name === JSON.parse(window.localStorage.profile).nickname){
+        data.index = val.progress;
+      }
+    });
     this.props.updatePrompts(data);
-    this.props.updateUsers(data.users)
+    this.props.updateUsers(data.player)
   }
   _calledShared (data){
     this.setState({called:true});

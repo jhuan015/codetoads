@@ -24,14 +24,14 @@ class Race extends React.Component {
     console.log(data.completed + 'Completed the game!!!!!!!!!!!');
   }  
   _updateGame(data) {
+    console.log('current game');
+    console.log(data);
     this.setState({game:data});
     this.props.saveGame(this.state.game);
   }
 
 
   render (){
-    console.log('player');
-    console.log(this.state.game.player);
     return (
       <div className='race'>
       {/*<Timer/>*/}
