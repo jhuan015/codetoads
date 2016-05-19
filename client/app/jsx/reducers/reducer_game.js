@@ -1,4 +1,5 @@
-import { FETCH_PROMPTS, SUBMIT_ATTEMPT, CLOSE_ALERT, NEXT_PROMPT, CHEAT, UPDATE_PROMPTS, START_GAME, SAVE_GAME, UPDATE_USERS, CLOSE_FINISH, RESET_GAME } from '../actions/actions';
+import { FETCH_PROMPTS, SUBMIT_ATTEMPT, CLOSE_ALERT, NEXT_PROMPT, CHEAT, UPDATE_PROMPTS, START_GAME, SAVE_GAME, UPDATE_USERS, CLOSE_FINISH, RESET_GAME, RECONNECT } from '../actions/actions';
+
 
 const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: false, index: 0, alert: false, started:false, users: [], done: false};
 
@@ -64,7 +65,7 @@ export default function(state = INITIAL_STATE, action) {
       prompts: action.payload.prompts,
       attempt: state.attempt,
       passed: state.passed,
-      index: state.index,
+      index: action.payload.index,
       alert: state.alert,
       started: action.payload.started,
       users: state.users,
@@ -123,6 +124,19 @@ export default function(state = INITIAL_STATE, action) {
       started:false,
       users: [],
       done: false
+    }
+  case RECONNECT:
+  console.log('payload for reconnect');
+  console.log(action.payload);
+    return {
+      prompts: action.payload.prompts,
+      attempt: state.attempt,
+      passed: state.passed,
+      index: action.payload.index,
+      alert: state.alert,
+      started: action.payload.started,
+      users: action.payload.players,
+      done:state.done
     }
   default:
     return state;

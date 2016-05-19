@@ -9,20 +9,23 @@ class Race extends React.Component {
       game:{}
     }
   }
-
-  componentDidMount() {
+  
+  componentDidMount() {    
     socket.on('update:game', this._updateGame.bind(this));
     socket.on('winner', this._winner.bind(this));
     socket.on('completed', this._completed.bind(this));
+    socket.on('getGame', this._updateGame.bind(this));
+    socket.emit('getGame', {});
   }
-
   _winner(data) {
     console.log(data.winner + ' WON!');
   }
   _completed(){
     console.log(data.completed + 'Completed the game!!!!!!!!!!!');
-  }
+  }  
   _updateGame(data) {
+    console.log('current game');
+    console.log(data);
     this.setState({game:data});
     this.props.saveGame(this.state.game);
   }
@@ -31,22 +34,19 @@ class Race extends React.Component {
   render (){
     return (
       <div className='race'>
-      <Timer/>
-      {this.state.game.player &&
-            this.state.game.player.map((user, i) => {
+      {/*<Timer/>*/}
+      <div className='grass-wrap'>
+        <div className='grass'></div>
+      </div>
+      <div className='race-path'></div>
+      <div className='finishLine'></div>
+      {this.state.game.player && <div className='race-path-wrap'>
+            {this.state.game.player.map((user, i) => {
               return (
-                <div key={i} className="clearfix player">
-                  <div className="col-sm-2">
-                  {user.name}
-                  </div>
-                  <div className="col-sm-10">
-                    <div className={'player'+i}>
-                     <Bar amount={user.progress} />
-                    </div>
-                  </div>
+                <div key={i} className={'frog frog' + (i+1) + ' path' +(user.progress * 20)}>                
                 </div>
               );
-            })
+            })}</div>
           }
       </div>
     )

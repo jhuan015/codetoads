@@ -95,6 +95,21 @@ div.console-passed {
     width:20%;
   }
 }
+#expression {
+ -webkit-user-select: none;
+   -moz-user-select: -moz-none;
+    -ms-user-select: none;
+        user-select: none;
+}
+.finishLine {
+    width: 252px;
+    background-color: black;
+    position: absolute;
+    right: 3%;
+    bottom: 70px;
+    padding: 15px;
+    transform: rotate(74deg);
+}
 footer{
   height: 150px;
   background-color:#F8F8F8;
@@ -103,6 +118,33 @@ footer{
 .footer-menu-divider {
   color:#828282;
 }
+.frog {
+  position: absolute;
+   left: 0; 
+  width: 103px;
+  height: 75px;
+  transition:left 2s ease-in-out;
+}
+.frog1{
+  bottom: 25px;  
+  background: url('app/img/toad1.gif') center /cover;
+  z-index: 4;
+}
+.frog2{ 
+  bottom:70px; 
+  background: url('app/img/toad2.gif') center /cover;
+  z-index: 3;
+}
+.frog3{ 
+  bottom:115px;  
+  background: url('app/img/toad3.gif') center /cover;
+  z-index: 2;
+}
+.frog4{ 
+  bottom:160px;  
+  background: url('app/img/toad4.gif') center /cover;
+  z-index: 1;
+}
 .game {
     display: flex;
     min-height: calc(100vh - 200px);
@@ -110,6 +152,29 @@ footer{
 .game-panel {
 
 }
+.grass-wrap {  
+  height:100px;
+  overflow:hidden;
+  border-bottom:1px solid #271E16;
+  position:relative;
+}
+.grass{
+  background: url("app/img/grass.png") repeat-x;
+  height:100%;
+}
+.grass, .race-path {
+  width: 4068px;
+  animation: slide 60s linear infinite;
+}
+@keyframes slide{
+  0%{
+    transform: translate3d(0, 0, 0);
+  }
+  100%{
+    transform: translate3d(-2034px, 0, 0);
+  }
+}
+
 .input-panel {
     background: #DDE5EC;
     padding-top:40px;
@@ -188,6 +253,21 @@ footer{
 .navbar-default .navbar-nav> li> a.active, .navbar-default .navbar-nav> li> a.active:focus, .navbar-default .navbar-nav> li> a.active:hover {
     color: #555;
     background-color: #e7e7e7;
+}
+.path20 {
+  left:20%;
+}
+.path40 {
+  left:40%;
+}
+.path60 {
+  left:60%;
+}
+.path80 {
+  left:80%;
+}
+.path100 {
+  left:100%;
 }
 .player {
   margin:10px 0;
@@ -309,7 +389,20 @@ footer{
     color: #FFFFFF;
 }
 .race {
-  /*display:none;*/
+  height:300px;
+  background:white;
+  border:5px double #141D27;
+  overflow:hidden;
+}
+.race-path {
+  position:relative;
+  height:200px;
+  background:url('app/img/path.png');
+}
+.race-path-wrap {
+  position:relative;
+  height:200px;
+  bottom:200px;
 }
 .rad-inline {
   margin-right:30px;
@@ -398,7 +491,6 @@ footer{
     transform: scale(1.0);
   }
 }
-
 .testInitial {
     color: #FF8402;
     font-size: 1.5em;
