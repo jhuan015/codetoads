@@ -295,16 +295,9 @@ module.exports.getUserInfo = function(req, res) {
 };
 
 module.exports.incrementGames = function(req, res) {
-  console.log(req.params.id);
   User.filter({user_id: req.params.id}).run().then(function(users) {
     var user = users[0];
-
-    if (!user.gamesPlayed) {
-      user.gamesPlayed = 1;
-    } else {
-      user.gamesPlayed++;
-    }
-    console.log(user);
+    user.gamesPlayed++;
 
     user.save().then(function(result) {
       res.send(result);
@@ -315,12 +308,9 @@ module.exports.incrementGames = function(req, res) {
 };
 
 module.exports.updateSoloStats = function(req, res) {
-  console.log(req.body.user_id);
   User.filter({user_id: req.body.user_id}).run().then(function(users) {
     var user = users[0];
 
-    console.log(req.body.time);
-    console.log(user.fastest);
     if (!user.fastest) {
       user.fastest = req.body.time;
     } else if (req.body.time < user.fastest) {
