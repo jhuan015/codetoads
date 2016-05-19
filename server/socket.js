@@ -16,6 +16,7 @@ module.exports = function (socket) {
   if (!roomStatus[room]){
     roomStatus[room] = {
       player:[],
+      amount:0,
       started:false,
       password:password,
       creator:socket.name,
@@ -106,7 +107,6 @@ module.exports = function (socket) {
   socket.on('person:passed', function(data) {
     for (var i = 0; i < roomStatus[room].player.length; i++) {
       if (data.name === roomStatus[room].player[i].name) {
-        console.log('COUNTING UP');
         roomStatus[room].player[i].progress++;
         //emit to everyone and socket that sent it
         if (roomStatus[room].player[i].progress === 5 && roomStatus[room].winner === 'none') {
