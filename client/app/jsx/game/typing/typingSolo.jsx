@@ -44,6 +44,11 @@ class TypingSolo extends React.Component {
     this.setState({passed: true});
     this.setState({show: true})
   }
+  
+  _finishGame () {
+    this.setState({show: false});
+    this.props.closeAndFinish();
+  }
 
   render (){
     return (
@@ -62,7 +67,7 @@ class TypingSolo extends React.Component {
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
-          onConfirm={() => this.setState({show: false})}
+          onConfirm={this._finishGame.bind(this)}
         />
         <Frag expression={this.props.expression.split("")}
           term={this.state.term.split("")}

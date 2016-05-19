@@ -15,7 +15,7 @@ class MultiChoiceSolo extends React.Component {
       shuffled: []
     };
   }
-  
+
   componentDidMount () {
     if(this.props.session.choices !== this.state.choices){
       var _choices = [['a'], ['b'], ['c'], ['d']];
@@ -43,7 +43,7 @@ class MultiChoiceSolo extends React.Component {
       });
     }
   }
-  
+
   _submit () {
     if (this.state.selected === this.props.session.answer) {
       this.setState({
@@ -92,6 +92,11 @@ class MultiChoiceSolo extends React.Component {
     return arr;
   };
   
+  _finishGame () {
+    this.setState({show: false});
+    this.props.closeAndFinish();
+  }
+
   render () {
     return (
       <div>
@@ -112,12 +117,12 @@ class MultiChoiceSolo extends React.Component {
           showConfirmButton={false}
         />
         <SweetAlert
-          show={this.state.show && this.props.complete}
+          show={this.state.show && this.props.complete && this.state.passed}
           imageUrl= "app/img/jumping_frog.gif"
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
-          onConfirm={() => this.setState({show: false})}
+          onConfirm={this._finishGame.bind(this)}
         />
         <p>{this.props.session.question}</p>
         { this.state.shuffled.length !== 0 &&

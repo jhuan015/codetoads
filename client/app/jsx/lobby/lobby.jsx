@@ -10,7 +10,7 @@ class Lobby extends React.Component {
   render () {
     if(this.props.error){
       this.props.logoutUser();
-      window.location.reload;
+      window.location.reload();
     }
     return (
       <div className='lobby row'>
@@ -22,7 +22,7 @@ class Lobby extends React.Component {
               winStreak={this.props.winStreak}
               lostTo={this.props.lostTo}
               gamesPlayed={this.props.gamesPlayed}
-              quits={this.props.quits}
+              quits={this.props.gamesPlayed - this.props.completed}
               fastest={this.props.fastest}
               getUserInfo={this.props.getUserInfo} />}
           {this.props.isAuthenticated && <ChatApp />}
@@ -46,6 +46,7 @@ function mapStateToProps(state) {
            lostTo: state.user.lostTo,
            gamesPlayed: state.user.gamesPlayed,
            quits: state.user.quits,
+           completed: state.user.completed,
            fastest: state.user.fastest,
            user_id:state.user.user_id,
            error: state.user.error

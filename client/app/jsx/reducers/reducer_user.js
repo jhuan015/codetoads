@@ -1,15 +1,16 @@
-import { GET_USER_INFO } from '../actions/actions';
+import { GET_USER_INFO, INCREMENT_GAME, UPDATE_SOLO } from '../actions/actions';
 
 const INIT_STATE = {
   id: '',
   user_id: '',
-  username: 'Batman',
-  firstname: 'Bruce',
-  lastname: 'Wayne',
+  username: '',
+  firstname: '',
+  lastname: '',
   winStreak: 0,
-  lostTo: 'Superman',
+  lostTo: '',
   gamesPlayed: 0,
   quits: 0,
+  completed: 0,
   fastest: 0,
   email: '',
   picture: '',
@@ -29,10 +30,46 @@ export default function (state = INIT_STATE, action){
         lostTo: action.payload.data.lostTo || "You haven't lost yet",
         gamesPlayed: action.payload.data.gamesPlayed || 0,
         quits: action.payload.data.quits || 0,
+        completed: action.payload.data.completed || 0,
         fastest: action.payload.data.fastest || 0,
         email: action.payload.data.email || '',
         picture: action.payload.data.picture || '',
         error: action.error || false
+      };
+    case INCREMENT_GAME:
+      return {
+        id: state.id,
+        user_id: state.user_id,
+        username: state.username,
+        firstname: state.firstname,
+        lastname: state.lastname,
+        winStreak: state.winStreak,
+        lostTo: state.lostTo,
+        gamesPlayed: action.payload.data.gamesPlayed,
+        quits: state.quits,
+        completed: action.payload.data.completed,
+        fastest: state.fastest,
+        email: state.email,
+        picture: state.picture,
+        error: state.error || false
+      };
+      case UPDATE_SOLO:
+      console.log(action.payload)
+        return {
+          id: state.id,
+          user_id: state.user_id,
+          username: state.username,
+          firstname: state.firstname,
+          lastname: state.lastname,
+          winStreak: state.winStreak,
+          lostTo: state.lostTo,
+          gamesPlayed: action.payload.data.gamesPlayed,
+          quits: state.quits,
+          completed: state.completed,
+          fastest: state.fastest,
+          email: state.email,
+          picture: state.picture,
+          error: state.error || false
       };
     default:
     return state;

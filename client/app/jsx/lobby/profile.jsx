@@ -6,7 +6,15 @@ class Profile extends React.Component {
     this.props.getUserInfo();
   }
 
+  pad (d) {
+    return (d < 10) ? '0' + d.toString() : d.toString();
+  }
+
   render (){
+    var min = this.pad(Math.floor(this.props.fastest/60));
+    var seconds = this.pad(Math.floor(this.props.fastest%60));
+    var formatted = `${min}:${seconds}`;
+    console.log(formatted);
     return (
       <div>
         {this.props.firstname && this.props.lastname && <h2>{this.props.firstname} {this.props.lastname}</h2>}
@@ -15,7 +23,7 @@ class Profile extends React.Component {
         <ProfileRow title='Highest Win Streak' value={this.props.winStreak}/>
         <ProfileRow title='Last Wrecked By' value={this.props.lostTo}/>
         <ProfileRow title='Rage Quits' value={this.props.quits}/>
-        <ProfileRow title='Fastest Time' value={this.props.fastest}/>
+        <ProfileRow title='Fastest Time' value={formatted}/>
       </div>
     )
   }
