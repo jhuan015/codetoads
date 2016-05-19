@@ -1,12 +1,10 @@
- import { FETCH_PROMPTS, SUBMIT_ATTEMPT, CLOSE_ALERT, NEXT_PROMPT, CHEAT, UPDATE_PROMPTS, START_GAME, SAVE_GAME, UPDATE_USERS } from '../actions/actions';
+ import { FETCH_PROMPTS, SUBMIT_ATTEMPT, CLOSE_ALERT, NEXT_PROMPT, CHEAT, UPDATE_PROMPTS, START_GAME, SAVE_GAME, UPDATE_USERS, CLOSE_FINISH } from '../actions/actions';
 
-const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: false, index: 0, alert: false, started:false, users: []};
+const INITIAL_STATE = { prompts: [], attempt: { ouput: [], reason: ''}, passed: false, index: 0, alert: false, started:false, users: [], done: false};
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
   case FETCH_PROMPTS:
-  console.log('inside fetch prompts');
-  console.log(action.payload);
     return {
       prompts: action.payload.data,
       attempt: state.attempt,
@@ -14,7 +12,8 @@ export default function(state = INITIAL_STATE, action) {
       index: 0,
       alert: state.alert,
       started: false,
-      users: state.users
+      users: state.users,
+      done: state.done
     };
   case SUBMIT_ATTEMPT:
     return {
@@ -23,7 +22,9 @@ export default function(state = INITIAL_STATE, action) {
       passed: (JSON.parse(action.payload.data.response)).passed,
       index: state.index,
       alert: true,
-      users: state.users
+      started: state.started,
+      users: state.users,
+      done: state.done
     };
   case CLOSE_ALERT:
     return {
@@ -33,7 +34,8 @@ export default function(state = INITIAL_STATE, action) {
       index: state.index,
       alert: false,
       started: state.started,
-      users: state.users
+      users: state.users,
+      done: state.done
     }
   case NEXT_PROMPT:
     return {
@@ -43,7 +45,8 @@ export default function(state = INITIAL_STATE, action) {
       index: action.index,
       alert: state.alert,
       started: state.started,
-      users: state.users
+      users: state.users,
+      done: state.done
     }
   case CHEAT:
     return {
@@ -53,7 +56,8 @@ export default function(state = INITIAL_STATE, action) {
       index: state.index,
       alert: true,
       started: state.started,
-      users: state.users
+      users: state.users,
+      done: state.done
     }
   case UPDATE_PROMPTS:
     return {
@@ -63,7 +67,8 @@ export default function(state = INITIAL_STATE, action) {
       index: state.index,
       alert: state.alert,
       started: action.payload.started,
-      users: state.users
+      users: state.users,
+      done: state.done
     }
   case START_GAME:
     return {
@@ -73,7 +78,8 @@ export default function(state = INITIAL_STATE, action) {
       index: state.index,
       alert: state.alert,
       started: true,
-      users: state.users
+      users: state.users,
+      done: state.done
     }
   case SAVE_GAME:
     return {
@@ -83,7 +89,8 @@ export default function(state = INITIAL_STATE, action) {
       index: state.index,
       alert: state.alert,
       started: state.started,
-      users: state.users
+      users: state.users,
+      done: state.done
     }
   case UPDATE_USERS:
     return {
@@ -92,7 +99,19 @@ export default function(state = INITIAL_STATE, action) {
       passed: state.passed,
       index: state.index,
       alert: state.alert,
-      users: action.users
+      users: action.users,
+      done: state.done
+    }
+    case CLOSE_FINISH:
+    return {
+      prompts: state.prompts.slice(),
+      attempt: state.attempt,
+      passed: state.passed,
+      index: state.index,
+      alert: false,
+      started: state.started,
+      users: state.users,
+      done: true
     }
   default:
     return state;

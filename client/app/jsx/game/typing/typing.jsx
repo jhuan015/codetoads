@@ -17,22 +17,14 @@ class Typing extends React.Component {
       show: false
     };
   }
-
+  
   componentDidMount(){
-    ReactDOM.findDOMNode(this.refs.nameInput).focus();
+    ReactDOM.findDOMNode(this.refs.nameInput).focus(); 
   }
 
   _handlePress (event) {
     this.setState({
       current: event.keyCode
-    });
-  }
-
-  _decideWinner () {
-    this.setState({show: false});
-    console.log('CALLING DECIDE WINNER');
-    socket.emit('person:passed', {
-      name: JSON.parse(window.localStorage.profile).nickname
     });
   }
 
@@ -79,7 +71,7 @@ class Typing extends React.Component {
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
-          onConfirm={this._decideWinner.bind(this)}
+          onConfirm={() => this.setState({show: false})}
         />
         <Frag expression={this.props.expression.split("")}
           term={this.state.term.split("")}
