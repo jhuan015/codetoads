@@ -126,7 +126,19 @@ module.exports = function (socket) {
           this.to(room).emit('completed', {completed:data.name});
         }
         this.to(room).emit('update:game', roomStatus[room]);
-        socket.emit('update:game', roomStatus[room]);
+        if (data.name === roomStatus[room].winner) {
+          roomStatus[room].winnerStats = true;
+          socket.emit('update:game', roomStatus[room]);
+          delete roomStatus[room].winnerStats;
+        } else {
+          if (roomStatus[room].player[i].completed) {
+            roomStatus[room].player[i].saveComplete = true;
+            socket.emit('update:game', roomStatus[room]);
+            delete roomStatus[room].player[i].saveComplete;
+          } else {
+            socket.emit('update:game', roomStatus[room]);
+          }
+        }
         return;
       }
     }

@@ -202,31 +202,31 @@ module.exports.saveGame = function(req, res) {
   //need to fix this... somehow make winner only run once
   //it is currently running twice because winnerSaved alway defaults to false
   //this means completed and winStreak add more than intended
-  var winnerSaved = false;
-  if (req.body.winner !== 'none' && winnerSaved === false) {
-    winnerSaved = true;
-    for (var i = 0; i < req.body.player.length; i++) {
-      //find winner
-      if (req.body.player[i].name === req.body.winner) {
-        var winner = req.body.player[i];
+  if (req.body.winnerStats) {
+    if (req.body.winner !== 'none') {
+      for (var i = 0; i < req.body.player.length; i++) {
+        //find winner
+        if (req.body.player[i].name === req.body.winner) {
+          var winner = req.body.player[i];
+        }
       }
+      //update winner data
+      User.filter({username: req.body.winner}).run().then(function(users) {
+       var user = users[0];
+       var fastest = Math.floor((winner.time - req.body.startTime) / 1000);
+       if (user) {
+         if (!user.fastest) {
+           user.fastest = fastest;
+         } else if (fastest < user.fastest) {
+           user.fastest = fastest;
+         }
+          user.winStreak++;
+          user.completed++;
+        }
+        //do not send response because response is sent later underneath
+        user.save();
+      });
     }
-    //update winner data
-    User.filter({username: req.body.winner}).run().then(function(users) {
-     var user = users[0];
-     var fastest = Math.floor((winner.time - req.body.startTime) / 1000);
-     if (user) {
-       if (!user.fastest) {
-         user.fastest = fastest;
-       } else if (fastest < user.fastest) {
-         user.fastest = fastest;
-       }
-        user.winStreak++;
-        user.completed++;
-      }
-      //do not send response because response is sent later underneath
-      user.save();
-    });
   }
 
   //save loser data
@@ -238,8 +238,8 @@ module.exports.saveGame = function(req, res) {
         User.filter({username: loserUser.name}).run().then(function(users) {
           var otherUser = users[0];
           //if completed, check time and increment completed
-          if (loserUser.completed === true) {
-            var fastest = Math.floor((req.body.player[j].time - req.body.startTime) / 1000);
+          if (loserUser.saveComplete) {
+            var fastest = Math.floor((loserUser.time - req.body.startTime) / 1000);
             if (!otherUser.fastest) {
               otherUser.fastest = fastest;
             } else if (fastest < otherUser.fastest) {
