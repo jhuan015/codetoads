@@ -16,12 +16,12 @@ border: 1px solid #f9f9f9;
 -webkit-border-radius: 5px;
 }
 .fragment-letter {
-  color: red;
-  font-size: 3em;
+  color: #cc0000;
+  font-size: 2em;
 }
 .fragment-letter-green {
-  color: #00e600;
-  font-size: 3em;
+  color: #40bfb0;
+  font-size: 2em;
 }
 #keyboard {
 margin: 0;

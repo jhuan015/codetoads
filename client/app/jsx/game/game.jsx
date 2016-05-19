@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, incrementGames, updateSoloStats, closeAndFinish } from '../actions/actions';
+import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, incrementGames, updateSoloStats, closeAndFinish, resetGame } from '../actions/actions';
 import Race from './race';
 import Prompt from './prompt';
 import UserInputSolo from './userInputSolo';
@@ -13,6 +13,10 @@ class Game extends React.Component {
   componentWillMount() {
     this.props.fetchPrompts(this.props.difficulty);
     this.props.incrementGames();
+  }
+
+  componentWillUnmount() {
+    this.props.resetGame()
   }
 
   render (){
@@ -90,4 +94,4 @@ function mapStateToProps(state) {
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe, closeAlert, incrementGames, updateSoloStats, closeAndFinish })(Game);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe, closeAlert, incrementGames, updateSoloStats, closeAndFinish, resetGame })(Game);

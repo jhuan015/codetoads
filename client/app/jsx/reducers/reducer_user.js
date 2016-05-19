@@ -54,7 +54,6 @@ export default function (state = INIT_STATE, action){
         error: state.error || false
       };
       case UPDATE_SOLO:
-      console.log(action.payload)
         return {
           id: state.id,
           user_id: state.user_id,

@@ -29,7 +29,6 @@ class UserInputSolo extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
     if (nextProps.session.projectId !== this.state.projID) {
       this.setState({
         term: nextProps.session.setup,

@@ -14,7 +14,6 @@ class Profile extends React.Component {
     var min = this.pad(Math.floor(this.props.fastest/60));
     var seconds = this.pad(Math.floor(this.props.fastest%60));
     var formatted = `${min}:${seconds}`;
-    console.log(formatted);
     return (
       <div>
         {this.props.firstname && this.props.lastname && <h2>{this.props.firstname} {this.props.lastname}</h2>}

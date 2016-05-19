@@ -154,6 +154,19 @@ footer{
   font-size:18px;
   text-align:justify;
 }
+.multichoice {
+  background: #f8f8f8;
+  padding: 10px;
+  margin: 10px 10px 10px 0px;
+  border-radius: 2px;
+}
+.multichoice__question {
+  color: #38a69a;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 5px;
+  padding-bottom: 10px;
+}
 .multi-btn-select {
   margin:20px 0 40px;
 }

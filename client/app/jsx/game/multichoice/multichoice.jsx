@@ -137,17 +137,19 @@ class MultiChoice extends React.Component {
           text="You've finished all the prompts."
           onConfirm={this._decideWinner.bind(this)}
         />
-        <p>{this.props.session.question}</p>
-        { this.state.shuffled.length !== 0 && <div>
-          <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[0][0]} id="a1" onClick={this._selected.bind(this, this.state.shuffled[0][0])} />
-            <label htmlFor="a1">{this.state.shuffled[0][1]}</label><br />
-          <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[1][0]} id="a2" onClick={this._selected.bind(this, this.state.shuffled[1][0])} />
-            <label htmlFor="a2">{this.state.shuffled[1][1]}</label><br />
-          <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[2][0]} id="a3" onClick={this._selected.bind(this, this.state.shuffled[2][0])} />
-            <label htmlFor="a3">{this.state.shuffled[2][1]}</label><br />
-          <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[3][0]} id="a4" onClick={this._selected.bind(this, this.state.shuffled[3][0])} />
-            <label htmlFor="a4">{this.state.shuffled[3][1]}</label><br />
-        </div>}
+        <div className="multichoice">
+          <div dangerouslySetInnerHTML={{__html:this.props.session.question}} className='multichoice__question'></div>
+          { this.state.shuffled.length !== 0 && <div>
+            <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[0][0]} id="a1" onClick={this._selected.bind(this, this.state.shuffled[0][0])} />
+              <label htmlFor="a1">{this.state.shuffled[0][1]}</label><br />
+            <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[1][0]} id="a2" onClick={this._selected.bind(this, this.state.shuffled[1][0])} />
+              <label htmlFor="a2">{this.state.shuffled[1][1]}</label><br />
+            <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[2][0]} id="a3" onClick={this._selected.bind(this, this.state.shuffled[2][0])} />
+              <label htmlFor="a3">{this.state.shuffled[2][1]}</label><br />
+            <input className='with-gap' type="radio" name="q1" value={this.state.shuffled[3][0]} id="a4" onClick={this._selected.bind(this, this.state.shuffled[3][0])} />
+              <label htmlFor="a4">{this.state.shuffled[3][1]}</label><br />
+          </div>}
+        </div>
         {!this.state.passed && <Button bsStyle='primary' bsSize='large' onClick={this._submit.bind(this)}>Submit</Button>}
         {this.state.passed && !this.props.complete && <Button bsStyle='primary' className='pull-left' bsSize='large' onClick={this._getNextPrompt.bind(this)}>Next Prompt</Button>}
         {this.state.passed && this.props.complete && <Link to="/lobby" className='btn btn-primary pull-left'>Lobby</Link>}
