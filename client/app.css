@@ -96,6 +96,7 @@ div.console-passed {
   }
 }
 #expression {
+  margin-bottom: 20px;
  -webkit-user-select: none;
    -moz-user-select: -moz-none;
     -ms-user-select: none;

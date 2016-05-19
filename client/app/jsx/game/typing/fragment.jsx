@@ -21,7 +21,7 @@ class Frag extends React.Component {
 
   render (){
     return (
-      <div id='expression' className='container'>
+      <div id='expression'>
         {this._renderExpression()}
       </div>
     )
