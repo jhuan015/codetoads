@@ -103,12 +103,26 @@ div.console-passed {
 }
 .finishLine {
     width: 252px;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     position: absolute;
-    right: 3%;
+    right: -19px;
     bottom: 70px;
-    padding: 15px;
-    transform: rotate(74deg);
+    padding: 7px;
+    transform: rotate(70deg);
+    z-index: 0;
+    text-align: center;
+}
+.finishLine:after {
+    content: 'FINISH';
+    color: white;
+    font-size: 2em;
+}
+.finishLine-wrap {
+    position: absolute;
+    right: 0px;
+    width: 190px;
+    height: 190px;
+    overflow: hidden;
 }
 footer{
   height: 150px;
@@ -126,22 +140,22 @@ footer{
   transition:left 2s ease-in-out;
 }
 .frog1{
-  bottom: 25px;  
+  bottom: 10px;  
   background: url('app/img/toad1.gif') center /cover;
   z-index: 4;
 }
 .frog2{ 
-  bottom:70px; 
+  bottom:55px; 
   background: url('app/img/toad2.gif') center /cover;
   z-index: 3;
 }
 .frog3{ 
-  bottom:115px;  
+  bottom:90px;  
   background: url('app/img/toad3.gif') center /cover;
   z-index: 2;
 }
 .frog4{ 
-  bottom:160px;  
+  bottom:135px;  
   background: url('app/img/toad4.gif') center /cover;
   z-index: 1;
 }
@@ -396,13 +410,13 @@ footer{
 }
 .race-path {
   position:relative;
-  height:200px;
+  height:190px;
   background:url('app/img/path.png');
 }
 .race-path-wrap {
   position:relative;
-  height:200px;
-  bottom:200px;
+  height:190px;
+  bottom:190px;
 }
 .rad-inline {
   margin-right:30px;
