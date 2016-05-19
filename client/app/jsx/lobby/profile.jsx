@@ -11,9 +11,13 @@ class Profile extends React.Component {
   }
 
   render (){
-    var min = this.pad(Math.floor(this.props.fastest/60));
-    var seconds = this.pad(Math.floor(this.props.fastest%60));
-    var formatted = `${min}:${seconds}`;
+    if (this.props.fastest !== 0) {
+      var min = this.pad(Math.floor(this.props.fastest/60));
+      var seconds = this.pad(Math.floor(this.props.fastest%60));
+      var formatted = `${min}:${seconds}`;
+    } else {
+      var formatted = 'No games played!';
+    }
     return (
       <div>
         {this.props.firstname && this.props.lastname && <h2>{this.props.firstname} {this.props.lastname}</h2>}
