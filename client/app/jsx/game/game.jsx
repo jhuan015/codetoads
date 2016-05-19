@@ -11,6 +11,7 @@ import Timer from './timer'
 
 class Game extends React.Component {
   componentWillMount() {
+    console.log('fetchinggames')
     this.props.fetchPrompts(this.props.difficulty);
     this.props.incrementGames();
   }
@@ -20,7 +21,7 @@ class Game extends React.Component {
   }
 
   render (){
-    if(this.props.prompts.statusCode === 500){
+    if(!this.props.prompts.length || this.props.prompts.statusCode === 500){
       console.log('calling again');
       this.props.fetchPrompts(this.props.difficulty);
     }
@@ -62,7 +63,7 @@ class Game extends React.Component {
           </Tabs>
         </div>
         <div className='input-panel col-sm-8'>
-          <Timer updateSoloStats={this.props.updateSoloStats} done={this.props.done} />
+          <Timer updateSoloStats={this.props.updateSoloStats} done={this.props.done} solo={true}/>
           { this.props.prompts[this.props.index] &&
             <UserInputSolo
             fetchPrompts={this.props.fetchPrompts}

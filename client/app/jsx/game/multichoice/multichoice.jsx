@@ -16,13 +16,12 @@ class MultiChoice extends React.Component {
     };
   }
 
-    _decideWinner () {
-       this.setState({show: false});
-       socket.emit('person:passed', {
-         name: JSON.parse(window.localStorage.profile).nickname
-       });
-     }
-
+  _decideWinner () {
+     this.setState({show: false});
+     socket.emit('person:passed', {
+       name: JSON.parse(window.localStorage.profile).nickname
+     });
+   }
 
   componentDidMount () {
     if(this.props.session.choices !== this.state.choices){
@@ -95,6 +94,24 @@ class MultiChoice extends React.Component {
     });
     this.props.nextPrompt(this.props.index+1);
   }
+  
+  _getNextPromptAndClose () {
+    if(this.props.index+1 === this.props.amount){
+      socket.emit('person:won', {
+        test: 'you have won.'
+      });
+    } else {
+      socket.emit('person:passed', {
+        name: JSON.parse(window.localStorage.profile).nickname
+      });
+    }
+    this.setState({
+      selected: '',
+      passed: false,
+      show: false
+    });
+    this.props.nextPrompt(this.props.index+1);
+  }
 
   _shuffle(array) {
     var arr = Array.prototype.slice(array);
@@ -119,7 +136,7 @@ class MultiChoice extends React.Component {
           imageSize= '250x250'
           title="Success!"
           text={this.props.session.explanation}
-          onConfirm={() => this.setState({show: false})}
+          onConfirm={this._getNextPromptAndClose.bind(this)}
         />
         <SweetAlert
           show={this.state.show && !this.state.passed}
@@ -151,7 +168,7 @@ class MultiChoice extends React.Component {
           </div>}
         </div>
         {!this.state.passed && <Button bsStyle='primary' bsSize='large' onClick={this._submit.bind(this)}>Submit</Button>}
-        {this.state.passed && !this.props.complete && <Button bsStyle='primary' className='pull-left' bsSize='large' onClick={this._getNextPrompt.bind(this)}>Next Prompt</Button>}
+        {/*this.state.passed && !this.props.complete && <Button bsStyle='primary' className='pull-left' bsSize='large' onClick={this._getNextPrompt.bind(this)}>Next Prompt</Button>*/}
         {this.state.passed && this.props.complete && <Link to="/lobby" className='btn btn-primary pull-left'>Lobby</Link>}
       </div>
     )
