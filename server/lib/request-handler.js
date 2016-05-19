@@ -17,7 +17,11 @@ module.exports.saveUser = function(req, res) {
        firstname: req.body.given_name,
        lastname: req.body.family_name,
        email: req.body.email,
-       picture: req.body.picture
+       picture: req.body.picture,
+       quits: 0,
+       gamesPlayed: 0,
+       winStreak: 0,
+       completed: 0
     }
 
     User.filter({user_id: req.body.user_id}).run()
@@ -194,25 +198,61 @@ module.exports.joinGame = function(req, res) {
 };
 
 module.exports.saveGame = function(req, res) {
-      // ADD FASTEST TIME STAT TO users
-     // ADD LAST LOST TO THE users
-     console.log(req.body);
 
-     if(req.body.winner) {
-       User.filter({username: req.body.winner}).run().then(function(users) {
-         var user = users[0];
-        if (user) {
-           user.winStreak++;
-           user.completed++;
-         }
-         console.log(user);
-         user.save().then(function(result) {
-           res.send(result);
-         }).error(function (err) {
-           res.send(err);
-         });
-       });
-     }
+  //need to fix this... somehow make winner only run once
+  var winnerSaved = false;
+  if (req.body.winner !== 'none' && winnerSaved === false) {
+    winnerSaved = true;
+    for (var i = 0; i < req.body.player.length; i++) {
+      if (req.body.player[i].name === req.body.winner) {
+        var winner = req.body.player[i];
+      }
+    }
+    User.filter({username: req.body.winner}).run().then(function(users) {
+     var user = users[0];
+     var fastest = Math.floor((winner.time - req.body.startTime) / 1000);
+     if (user) {
+       if (!user.fastest) {
+         user.fastest = fastest;
+       } else if (fastest < user.fastest) {
+         user.fastest = fastest;
+       }
+        user.winStreak++;
+        user.completed++;
+      }
+      //do not send response because response is sent later underneath
+      user.save();
+    });
+  }
+
+  if (req.body.winner !== 'none') {
+    for (var j = 0; j < req.body.player.length; j++) {
+      if (req.body.player[j].name !== req.body.winner) {
+        var loserUser = req.body.player[j];
+        User.filter({username: loserUser.name}).run().then(function(users) {
+          var otherUser = users[0];
+          if (loserUser.completed === true) {
+            var fastest = Math.floor((req.body.player[j].time - req.body.startTime) / 1000);
+            if (!otherUser.fastest) {
+              otherUser.fastest = fastest;
+            } else if (fastest < otherUser.fastest) {
+              otherUser.fastest = fastest;
+            }
+            otherUser.completed++;
+          } else {
+            otherUser.winStreak = 0;
+            otherUser.lostTo = req.body.winner;
+          }
+          otherUser.save().then(function(result) {
+            res.send(result);
+          }).error(function (err) {
+            res.send(err);
+          });
+        });
+      }
+    }
+  }
+
      // Game.filter({roomname: req.body.roomname}).run()
      //         .then(function (games) {
      //           var game = games[0];

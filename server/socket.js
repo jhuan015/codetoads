@@ -172,7 +172,7 @@ module.exports = function (socket) {
         }
       });
       if (!roomStatus[room].started){
-        roomStatus[room].player.splice(nameIndex, 1);        
+        roomStatus[room].player.splice(nameIndex, 1);
       }
       if (roomStatus[room].player.length === 0){
         delete roomStatus[room];
