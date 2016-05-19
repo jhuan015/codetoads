@@ -232,3 +232,30 @@ module.exports.incrementGames = function(req, res) {
     });
   });
 };
+
+module.exports.updateSoloStats = function(req, res) {
+  console.log(req.body.user_id);
+  User.filter({user_id: req.body.user_id}).run().then(function(users) {
+    var user = users[0];
+
+    console.log(req.body.time);
+    console.log(user.fastest);
+    if (!user.fastest) {
+      user.fastest = req.body.time;
+    } else if (req.body.time < user.fastest) {
+      user.fastest = req.body.time;
+    }
+
+    if (!user.completed) {
+      user.completed = 1;
+    } else {
+      user.completed++;
+    }
+
+    user.save().then(function(result) {
+      res.send(result);
+    }).error(function (err) {
+      res.send(err);
+    });
+  });
+};

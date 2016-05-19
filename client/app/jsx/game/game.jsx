@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, incrementGames } from '../actions/actions';
+import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, incrementGames, updateSoloStats, closeAndFinish } from '../actions/actions';
 import Race from './race';
 import Prompt from './prompt';
 import UserInputSolo from './userInputSolo';
@@ -36,7 +36,7 @@ class Game extends React.Component {
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
-          onConfirm={() => this.props.closeAlert()}
+          onConfirm={() => this.props.closeAndFinish()}
         />
         <SweetAlert
           show={this.props.alert && !this.props.passed}
@@ -57,15 +57,15 @@ class Game extends React.Component {
             </Tab>
           </Tabs>
         </div>
-        {/*<Timer start={new Date()} />*/}
         <div className='input-panel col-sm-8'>
-          <Timer />
+          <Timer updateSoloStats={this.props.updateSoloStats} done={this.props.done} />
           { this.props.prompts[this.props.index] &&
             <UserInputSolo
             fetchPrompts={this.props.fetchPrompts}
             submitAttempt={this.props.submitAttempt}
             nextPrompt={this.props.nextPrompt}
             cheatMe={this.props.cheatMe}
+            closeAndFinish={this.props.closeAndFinish}
             session={this.props.prompts[this.props.index].session}
             passed={this.props.passed}
             index={this.props.index}
@@ -85,8 +85,9 @@ function mapStateToProps(state) {
            index: state.game.index,
            amount: state.selection.amount,
            difficulty: state.selection.difficulty,
-           alert: state.game.alert
+           alert: state.game.alert,
+           done: state.game.done
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe, closeAlert, incrementGames })(Game);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, nextPrompt, cheatMe, closeAlert, incrementGames, updateSoloStats, closeAndFinish })(Game);

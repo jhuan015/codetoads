@@ -17,6 +17,8 @@ export const UPDATE_PROMPTS = 'UPDATE_PROMPTS';
 export const START_GAME = 'START_GAME';
 export const UPDATE_USERS = 'UPDATE_USERS';
 export const INCREMENT_GAME = 'INCREMENT_GAME';
+export const UPDATE_SOLO = 'UPDATE_SOLO';
+export const CLOSE_FINISH = 'CLOSE_FINISH';
 
 export function fetchPrompts(difficulty) {
   const request = axios.post('/api/makeGame', { "difficulty": difficulty, "numPrompt": 5});
@@ -133,5 +135,24 @@ export function incrementGames() {
   return {
     type: INCREMENT_GAME,
     payload: request
+  }
+}
+export function updateSoloStats(time) {
+  //update time if faster (seconds);
+  //update completed
+  var data = {
+    user_id: JSON.parse(localStorage.profile).user_id,
+    time: time
+  }
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
+  const request = axios.post('/api/updateSoloStats', data);
+  return {
+    type: UPDATE_SOLO,
+    payload: request
+  }
+}
+export function closeAndFinish(){
+  return {
+    type: CLOSE_FINISH
   }
 }

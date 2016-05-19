@@ -91,6 +91,11 @@ class MultiChoiceSolo extends React.Component {
 
     return arr;
   };
+  
+  _finishGame () {
+    this.setState({show: false});
+    this.props.closeAndFinish();
+  }
 
   render () {
     return (
@@ -117,7 +122,7 @@ class MultiChoiceSolo extends React.Component {
           imageSize= '250x250'
           title="Great job!"
           text="You've finished all the prompts."
-          onConfirm={() => this.setState({show: false})}
+          onConfirm={this._finishGame.bind(this)}
         />
         <p>{this.props.session.question}</p>
         { this.state.shuffled.length !== 0 &&

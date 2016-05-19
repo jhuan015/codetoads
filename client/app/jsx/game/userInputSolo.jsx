@@ -62,6 +62,7 @@ class UserInputSolo extends React.Component {
           index={this.props.index}
           complete={this.props.complete}
           nextPrompt={this.props.nextPrompt}
+          closeAndFinish={this.props.closeAndFinish}
         />
         </div>
       )
@@ -72,6 +73,7 @@ class UserInputSolo extends React.Component {
           session={this.props.session}
           complete={this.props.complete}
           nextPrompt={this.props.nextPrompt}
+          closeAndFinish={this.props.closeAndFinish}
         />
       )
     }
