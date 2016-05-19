@@ -124,6 +124,9 @@ export function updatePrompts(data) {
   }
 }
 export function startGame(data) {
+  var user = JSON.parse(localStorage.profile).user_id;
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
+  const request = axios.put('/api/incrementGames/' + user);
   data = {};
   return {
     type: START_GAME,
