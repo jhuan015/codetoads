@@ -97,9 +97,9 @@ export function setCreate() {
     type: SET_CREATE
   }
 }
-export function saveGame(roomname, users, prompts) {
+export function saveGame(data) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
-  const request = axios.post('/api/saveGame', {'roomname': roomname, users:users, prompts:prompts});
+  const request = axios.post('/api/saveGame', data);
 return {
     type: SAVE_GAME,
     payload: request

@@ -13,7 +13,7 @@ class Footer extends React.Component {
                 <li className="footer-menu-divider">&#9679;</li>
                 <li><Link to="/lobby">Lobby</Link></li>
               </ul>
-              <p className="copyright text-muted small">Copyright © CoadToads 2016. All Rights Reserved</p>
+              <p className="copyright text-muted small">Copyright © CodeToads 2016. All Rights Reserved</p>
             </div>
           </div>
         </div>
