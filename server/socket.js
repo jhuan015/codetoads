@@ -137,12 +137,14 @@ module.exports = function (socket) {
   } else if (socket.name === roomStatus[room].creator && (roomStatus[room].started)){
     socket.emit('sharegame:users', roomStatus[room]);
   }
-  if (socket.name !== roomStatus[room].creator){
+  if (socket.name !== roomStatus[room].creator && roomStatus[room].started){
+    socket.emit('reconnect:game', roomStatus[room]);
+  } else if (socket.name !== roomStatus[room].creator){
     // console.log('sending initial prompts');
     // console.log(roomStatus[room]);
     socket.emit('sharegame:users', {prompts:roomStatus[room].prompts, started:roomStatus[room].started, users:roomStatus[room].player});
     this.to(room).emit('sharegame:users', {prompts:roomStatus[room].prompts, started:roomStatus[room].started, users:roomStatus[room].player});
-    }
+  }
   //share game with joined users
   socket.on('sharegame:users', function(data) {
     // console.log('data to be saved');
@@ -179,4 +181,7 @@ module.exports = function (socket) {
         });
       }
   });
+  socket.on('getGame', function(data){
+    socket.emit('getGame', roomStatus[room]);
+  })
 };

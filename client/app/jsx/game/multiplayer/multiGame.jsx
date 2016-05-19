@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers } from '../../actions/actions';
+import { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers, reconnect } from '../../actions/actions';
 import Race from '../race';
 import Prompt from '../prompt';
 import UserInput from '../userInput';
@@ -23,6 +23,7 @@ class MultiGame extends React.Component {
     socket.on('sharegame:users', this._shareGame.bind(this));
     socket.on('gameStart', this.props.startGame);
     socket.on('called:share', this._calledShared.bind(this));
+    socket.on('reconnect:game', this._reconnect.bind(this));
   }
   componentWillMount() {
     //join socket with roomname and clients username
@@ -65,6 +66,9 @@ class MultiGame extends React.Component {
 
     this.props.saveGame(this.props.params.name.split('&')[0], this.props.users, this.props.prompts);
     this.props.startGame();
+  }
+  _reconnect (data){
+    this.props.reconnect(data);
   }
   _shareGame (data){
     console.log(data);
@@ -128,7 +132,7 @@ class MultiGame extends React.Component {
           <GameChat />
         </div>
         <div className='input-panel col-sm-8'>
-          <div className='race clearfix'>
+          <div className='clearfix'>
             {this.props.started && <Race
             saveGame={this.props.saveGame}
             />}
@@ -164,4 +168,4 @@ function mapStateToProps(state) {
           };
 }
 
-export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers })(MultiGame);
+export default connect(mapStateToProps, { fetchPrompts, submitAttempt, closeAlert, nextPrompt, cheatMe, updatePrompts, startGame, saveGame, updateUsers, reconnect })(MultiGame);

@@ -95,6 +95,12 @@ div.console-passed {
     width:20%;
   }
 }
+#expression {
+ -webkit-user-select: none;
+   -moz-user-select: -moz-none;
+    -ms-user-select: none;
+        user-select: none;
+}
 footer{
   height: 150px;
   background-color:#F8F8F8;
@@ -410,4 +416,77 @@ footer{
 .testResults__body {
     color: red;
     white-space: pre-wrap;
+}
+
+
+/*Race animations*/
+.grass-wrap {
+  overflow:hidden;
+  height:100px;
+}
+.grass {
+  background: url("app/img/grass.png") repeat-x;
+  height: 100%;
+  width: 4068px;
+  animation: grassslide 60s linear infinite;
+}
+.frog {
+  position: absolute;
+   left: 0; 
+  width: 103px;
+  height: 75px;
+  transition:left 2s ease-in-out;
+}
+.frog1{
+  bottom: 10px;  
+  background: url('app/img/toad1.gif') center /cover;
+  z-index: 4;
+}
+.frog2{ 
+  bottom:50px; 
+  background: url('app/img/toad2.gif') center /cover;
+  z-index: 3;
+}
+.frog3{ 
+  bottom:90px;  
+  background: url('app/img/toad3.gif') center /cover;
+  z-index: 2;
+}
+.frog4{ 
+  bottom:130px;  
+  background: url('app/img/toad4.gif') center /cover;
+  z-index: 1;
+}
+.path20 {
+  left:20%;
+}
+.path40 {
+  left:40%;
+}
+.path60 {
+  left:60%;
+}
+.path80 {
+  left:80%;
+}
+.path100 {
+  left:100%;
+}
+
+@keyframes grassslide{
+  0%{
+    transform: translate3d(0, 0, 0);
+  }
+  100%{
+    transform: translate3d(-2034px, 0, 0);
+  }
+}
+.race {
+  height:300px;
+  background:white;
+  border:1px solid black;
+}
+.race-path {
+  position:relative;
+  height:200px;
 }
