@@ -87,6 +87,7 @@ class UserInput extends React.Component {
           theme="tomorrow"
           tabSize={2}
           width="100%"
+          height='350px'
           showGutter={false}
           onChange={this._onInputChange.bind(this)}
           value={this.state.term}
