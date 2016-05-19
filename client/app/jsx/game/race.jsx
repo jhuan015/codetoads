@@ -1,6 +1,7 @@
 const React = require('react');
 import Bar from './bar';
 import Timer from './timer';
+import { Tooltip } from 'react-bootstrap';
 
 class Race extends React.Component {
   constructor (){
@@ -42,9 +43,9 @@ class Race extends React.Component {
       {this.state.game.player && <div className='race-path-wrap'><div className='finishLine-wrap'><div className='finishLine'></div></div>
             {this.state.game.player.map((user, i) => {
               return (
-                <div key={i} className={'frog frog' + (i+1) + ' path' +(user.progress * 20)}>
-                </div>
-              );
+                <div key={i} className={'frog frog' + (i+1) + ' path' +(user.progress * 20)}><Tooltip id={user.name} placement='left' className='in frog-tooltip'>                
+                {user.name}</Tooltip></div>
+                );
             })}</div>
           }
       </div>

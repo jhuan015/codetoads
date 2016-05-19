@@ -151,14 +151,19 @@ footer{
   z-index: 3;
 }
 .frog3{ 
-  bottom:90px;  
+  bottom:100px;  
   background: url('app/img/toad3.gif') center /cover;
   z-index: 2;
 }
 .frog4{ 
-  bottom:135px;  
+  bottom:145px;  
   background: url('app/img/toad4.gif') center /cover;
   z-index: 1;
+}
+.frog-tooltip{
+  position:absolute;
+  right:100px;
+  top:15px;
 }
 .game {
     display: flex;
@@ -199,6 +204,7 @@ footer{
   background-color:#fff;
   height:initial;
   margin-bottom:30px;
+  overflow-y:scroll;
 }
 .intro {
   min-height:70vh;
@@ -304,6 +310,41 @@ footer{
   color: #FFFFFF;
   transition: left 1.5s ease-in-out;
 }
+.profile-panel__chat__message-wrap {
+  width:75%;
+  height:100%;
+  float:left;
+  padding-left:10px;
+}
+.profile-panel__chat__messages {
+    height: calc(100% - 100px);
+}
+.profile-panel__chat__messages h3, .profile-panel__chat__userlist h3 {
+  margin:30px 0 40px;
+  padding-bottom:30px;
+  border-bottom:1px solid white;
+}
+.profile-panel__chat__messages__message-wrap{
+    overflow-y: scroll;
+    height: calc(100% - 150px);
+    border: 1px solid white;
+    background-color: #C1BEC5;
+    color: #1C1923;
+    padding: 10px;
+}
+.profile-panel__chat__messages__message {
+  font-weight:bold;
+}
+.profile-panel__chat__wrap {
+  height:100%;
+}
+.profile-panel__chat__userlist {
+    float: left;
+    width: 25%;
+    height: 100%;
+    border-right: 1px solid white;
+    padding-right:10px;
+}
 .profile-panel__chat-show {
   left:0;
 }
@@ -331,7 +372,7 @@ footer{
   border-top:70px solid transparent;
   border-bottom:70px solid transparent;
   border-right:70px solid #fff;
-  right:0;
+  left:calc(100% - 70px);
 }
 .profile-panel__chat__arrow--back{
   top:calc(70% - 10px);
@@ -342,7 +383,7 @@ footer{
 }
 .profile-panel__chat__arrow--alt.profile-panel__chat__arrow--back {
   top:calc(5% - 10px);
-  right:0;
+  left:calc(100% - 80px);
   border-top:80px solid transparent;
   border-bottom:80px solid transparent;
   border-right:80px solid #4B4454; 
