@@ -15,7 +15,6 @@ class Race extends React.Component {
   componentDidMount() {
     socket.on('update:game', this._updateGame.bind(this));
     socket.on('winner', this._winner.bind(this));
-    socket.on('completed', this._completed.bind(this));
     socket.on('getGame', this._updateGame.bind(this));
     socket.emit('getGame', {});
   }
