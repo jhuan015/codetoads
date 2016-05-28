@@ -53,6 +53,7 @@ npm start
 ### Tasks <a id="tasks"></a>
 
 From within the root directory:
+
 1. Signup for Auth0.
 1. Signup for CodeWars and get an API key.
 1. Create a .ENV file with your API Keys.
